@@ -7,4 +7,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="WaskDialogText">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/waskGrayFont</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="divider">
+        <item name="android:background">@color/dividerGray</item>
+    </style>
+
 </resources>
