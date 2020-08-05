@@ -42,14 +42,15 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_card"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginHorizontal="@dimen/layout_card_horizontal_margin_size"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/ic_card_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintHeight_percent="0.35"
             app:layout_constraintVertical_bias="0.185">
 
             <ImageView
@@ -60,7 +61,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.417"
+                app:layout_constraintVertical_bias="0.32"
                 app:srcCompat="@drawable/ic_good" />
 
             <TextView
@@ -74,15 +75,18 @@
                 app:layout_constraintBottom_toTopOf="@+id/iv_people"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_emotion" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_emotion"
+                app:layout_constraintVertical_bias="0.44" />
 
             <ImageView
                 android:id="@+id/iv_people"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 app:layout_constraintBottom_toTopOf="@id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.6"
                 app:srcCompat="@drawable/ic_people" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -90,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="8dp" />
+                app:layout_constraintGuide_percent="0.9649123" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
