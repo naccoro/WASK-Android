@@ -5,6 +5,6 @@
     <dimen name="layout_card_horizontal_margin_size">31dp</dimen>
 
     <dimen name="main_card_font_size">13sp</dimen>
-    <dimen name="main_use_period_font_size">40sp</dimen>
-    <dimen name="main_use_period_msg_font_size">18sp</dimen>
+    <dimen name="main_use_period_font_size">56sp</dimen>
+    <dimen name="main_use_period_msg_font_size">20sp</dimen>
 </resources>

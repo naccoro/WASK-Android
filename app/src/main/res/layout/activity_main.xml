@@ -95,14 +95,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
+            android:id="@+id/layout_use_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_change"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_card"
-            app:layout_constraintVertical_bias="0.178">
+            app:layout_constraintTop_toBottomOf="@+id/layout_card">
 
             <TextView
                 android:id="@+id/tv_use_period"
@@ -117,11 +117,28 @@
                 android:id="@+id/tv_use_period_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="일 째 사용중"
+                android:text="@string/main_use_period_msg"
                 android:textColor="@color/darkGray"
                 android:textSize="@dimen/main_use_period_msg_font_size"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_change"
+            android:layout_width="160dp"
+            android:layout_height="51dp"
+            android:background="@drawable/bg_btn_change"
+            android:elevation="10dp"
+            android:letterSpacing="-0.02"
+            android:text="@string/main_change_button"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_card"
+            app:layout_constraintVertical_bias="0.377" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
