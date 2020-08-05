@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.199">
+            app:layout_constraintVertical_bias="0.185">
 
             <ImageView
                 android:id="@+id/iv_emotion"
@@ -136,9 +136,9 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_card"
-            app:layout_constraintVertical_bias="0.377" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
