@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.naccoro.wask.R;
@@ -83,10 +84,10 @@ public class WaskDialog extends DialogFragment {
         initTextView(textViewDialogMessage, message);
 
         if (contentRes != -1) {
-            contentView = inflater.inflate(contentRes, container);
-            linearLayoutDialogContent.addView(contentView);
+            contentView = inflater.inflate(contentRes, linearLayoutDialogContent);
         } else {
-            linearLayoutDialogContent.setPadding(0, (int) MetricsUtil.convertDpToPixel(19f, getContext()), 0, 0);
+            ((ConstraintLayout.LayoutParams) linearLayoutDialogContent.getLayoutParams())
+                    .setMargins(0, (int) MetricsUtil.convertDpToPixel(19, getContext()), 0, 0);
         }
 
         if (verticalButtons != null) {
@@ -145,5 +146,9 @@ public class WaskDialog extends DialogFragment {
         if (message != null && contentRes != -1) {
             throw new IllegalArgumentException("Message cannot be used with ContentRes. Please choose one of the two.");
         }
+    }
+
+    public interface OnClickListener {
+        void onClick(WaskDialog dialog, View view);
     }
 }
