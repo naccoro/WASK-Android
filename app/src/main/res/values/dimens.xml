@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="layout_top_margin_size">80dp</dimen>
-    <dimen name="ic_horizontal_margin_size">16dp</dimen>
+    <dimen name="top_button_horizontal_margin_size">16dp</dimen>
 
     <dimen name="main_card_font_size">13sp</dimen>
     <dimen name="main_use_period_font_size">56sp</dimen>
-    <dimen name="main_use_period_msg_font_size">20sp</dimen>
+    <dimen name="main_use_period_message_font_size">20sp</dimen>
 </resources>

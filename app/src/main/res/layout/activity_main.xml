@@ -8,40 +8,40 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/iv_main_logo"
+        android:id="@+id/imageview_main_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/layout_content"
+        app:layout_constraintBottom_toTopOf="@+id/constraintlayout_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_activity_main_logo" />
+        app:srcCompat="@drawable/ic_main_logo" />
 
     <ImageView
-        android:id="@+id/btn_setting"
+        android:id="@+id/imageview_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/ic_horizontal_margin_size"
-        app:layout_constraintBottom_toTopOf="@+id/layout_content"
+        android:layout_marginRight="@dimen/top_button_horizontal_margin_size"
+        app:layout_constraintBottom_toTopOf="@+id/constraintlayout_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/iv_main_logo"
+        app:layout_constraintStart_toEndOf="@+id/imageview_main_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_setting" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_content"
+        android:id="@+id/constraintlayout_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/layout_top_margin_size"
-        android:background="@drawable/bg_layout"
+        android:background="@drawable/bg_layout_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_card"
+            android:id="@+id/constraintlayout_card"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/ic_card_white"
@@ -54,11 +54,11 @@
             app:layout_constraintVertical_bias="0.185">
 
             <ImageView
-                android:id="@+id/iv_emotion"
+                android:id="@+id/imageview_emotion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                app:layout_constraintBottom_toTopOf="@+id/iv_people"
+                app:layout_constraintBottom_toTopOf="@+id/imageview_people"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -67,21 +67,21 @@
                 app:srcCompat="@drawable/ic_good" />
 
             <TextView
-                android:id="@+id/tv_card_message"
+                android:id="@+id/textview_card_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="-0.02"
                 android:text="@string/main_card_good"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/main_card_font_size"
-                app:layout_constraintBottom_toTopOf="@+id/iv_people"
+                app:layout_constraintBottom_toTopOf="@+id/imageview_people"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_emotion"
+                app:layout_constraintTop_toBottomOf="@+id/imageview_emotion"
                 app:layout_constraintVertical_bias="0.44" />
 
             <ImageView
-                android:id="@+id/iv_people"
+                android:id="@+id/imageview_people"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -101,17 +101,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/layout_use_period"
+            android:id="@+id/constraintlayout_use_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/btn_change"
+            app:layout_constraintBottom_toTopOf="@+id/button_change"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_card">
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_card">
 
             <TextView
-                android:id="@+id/tv_use_period"
+                android:id="@+id/textview_use_period"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
@@ -120,20 +120,20 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_use_period_msg"
+                android:id="@+id/textview_use_period_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/main_use_period_msg"
-                android:textColor="@color/darkGray"
-                android:textSize="@dimen/main_use_period_msg_font_size"
+                android:text="@string/main_use_period_message"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="@dimen/main_use_period_message_font_size"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_change"
+            android:id="@+id/button_change"
             android:layout_width="0dp"
             android:layout_height="51dp"
-            android:background="@drawable/bg_btn_change"
+            android:background="@drawable/bg_button_change"
             android:elevation="10dp"
             android:letterSpacing="-0.02"
             android:text="@string/main_change_button"
@@ -143,7 +143,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_card"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_card"
             app:layout_constraintWidth_percent="0.44"
             app:layout_constraintDimensionRatio="3.13"/>
 

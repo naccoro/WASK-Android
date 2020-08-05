@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        settingBtn = findViewById(R.id.btn_setting);
-        emotionIv = findViewById(R.id.iv_emotion);
-        cardMessageTv = findViewById(R.id.tv_card_message);
-        usePeriodTv = findViewById(R.id.tv_use_period);
-        changeBtn = findViewById(R.id.btn_change);
+        settingBtn = findViewById(R.id.imageview_setting);
+        emotionIv = findViewById(R.id.imageview_emotion);
+        cardMessageTv = findViewById(R.id.textview_card_message);
+        usePeriodTv = findViewById(R.id.textview_use_period);
+        changeBtn = findViewById(R.id.button_change);
 
         settingBtn.setOnClickListener(this);
         changeBtn.setOnClickListener(this);
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.id.btn_setting:
+            case R.id.imageview_setting:
                 // 셋팅 액티비티로 이동
                 break;
-            case R.id.btn_change:
+            case R.id.button_change:
                 // '교체하기' 버튼을 눌렀을 때
                 break;
         }
