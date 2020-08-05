@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WASK-Android</string>
+
+    <string name="test_String">2020년</string>
 </resources>

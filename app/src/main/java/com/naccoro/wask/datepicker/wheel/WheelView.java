@@ -1,8 +1,10 @@
 package com.naccoro.wask.datepicker.wheel;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -18,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +46,24 @@ public class WheelView extends ScrollView {
 //    private ScrollView scrollView;
 
     private LinearLayout views;
+
+    private static int DEFAULT_LABEL_SIZE = 15;
+    private static int DEFAULT_LABEL_PADDING = 15;
+
+    private final int FIRST_LABEL_POSITION = 0;
+    private final int SECOND_LABEL_POSITION = 1;
+    private final int THIRD_LABEL_POSITION = 2;
+
+    private final int selectedLabelColor = Color.parseColor("#707070");
+    private final int nonSelectedLabelColor = Color.parseColor("#a0a7ad");
+    private final int lineColor = Color.parseColor("#707070");
+
+    private final int selectedLabelSize = 20;
+    private final int secondLabelSize = 18;
+    private final int thirdLabelSize = 15;
+
+    private final int selectedLabelPadding = 15;
+    private final int nonSelectedLabelPadding = 15;
 
     public WheelView(Context context) {
         super(context);
@@ -79,11 +101,10 @@ public class WheelView extends ScrollView {
         }
 
         initData();
-
     }
 
 
-    public static final int OFF_SET_DEFAULT = 1;
+    public static final int OFF_SET_DEFAULT = 2;
     int offset = OFF_SET_DEFAULT; // 偏移量（需要在最前面和最后面补全）
 
     public int getOffset() {
@@ -125,7 +146,7 @@ public class WheelView extends ScrollView {
                     if (remainder == 0) {
                         selectedIndex = divided + offset;
 
-                        onSeletedCallBack();
+                        onSelectedCallBack();
                     } else {
                         if (remainder > itemHeight / 2) {
                             WheelView.this.post(new Runnable() {
@@ -133,7 +154,7 @@ public class WheelView extends ScrollView {
                                 public void run() {
                                     WheelView.this.smoothScrollTo(0, initialY - remainder + itemHeight);
                                     selectedIndex = divided + offset + 1;
-                                    onSeletedCallBack();
+                                    onSelectedCallBack();
                                 }
                             });
                         } else {
@@ -142,7 +163,7 @@ public class WheelView extends ScrollView {
                                 public void run() {
                                     WheelView.this.smoothScrollTo(0, initialY - remainder);
                                     selectedIndex = divided + offset;
-                                    onSeletedCallBack();
+                                    onSelectedCallBack();
                                 }
                             });
                         }
@@ -157,8 +178,22 @@ public class WheelView extends ScrollView {
                 }
             }
         };
+    }
 
+    private void initHeight() {
+            int allItemHeight = 0;
+            TextView text = createView("", selectedLabelSize, selectedLabelPadding);
+            allItemHeight += getViewMeasuredHeight(text);
+             itemHeight = allItemHeight;
+                Log.d(TAG, "itemHeight: " + itemHeight);
+            text = createView("", secondLabelSize, nonSelectedLabelPadding);
+            allItemHeight += getViewMeasuredHeight(text) * 2;
+            text = createView("", thirdLabelSize, nonSelectedLabelPadding);
+            allItemHeight += getViewMeasuredHeight(text) * 2;
 
+            views.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, allItemHeight));
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) this.getLayoutParams();
+            this.setLayoutParams(new LinearLayout.LayoutParams(lp.width, allItemHeight));
     }
 
     int initialY;
@@ -175,8 +210,11 @@ public class WheelView extends ScrollView {
     private void initData() {
         displayItemCount = offset * 2 + 1;
 
+
+        initHeight();
+
         for (String item : items) {
-            views.addView(createView(item));
+            views.addView(createView(item,DEFAULT_LABEL_SIZE, DEFAULT_LABEL_PADDING));
         }
 
         refreshItemView(0);
@@ -184,22 +222,17 @@ public class WheelView extends ScrollView {
 
     int itemHeight = 0;
 
-    private TextView createView(String item) {
+    private TextView createView(String item, int labelSize, int labelPadding) {
         TextView tv = new TextView(context);
         tv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv.setSingleLine(true);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize);
         tv.setText(item);
         tv.setGravity(Gravity.CENTER);
-        int padding = dip2px(15);
+        int padding = dip2px(labelPadding);
         tv.setPadding(padding, padding, padding, padding);
-        if (0 == itemHeight) {
-            itemHeight = getViewMeasuredHeight(tv);
-            Log.d(TAG, "itemHeight: " + itemHeight);
-            views.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight * displayItemCount));
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) this.getLayoutParams();
-            this.setLayoutParams(new LinearLayout.LayoutParams(lp.width, itemHeight * displayItemCount));
-        }
+
         return tv;
     }
 
@@ -283,11 +316,30 @@ public class WheelView extends ScrollView {
             if (null == itemView) {
                 return;
             }
-            if (position == i) {
-                itemView.setTextColor(Color.parseColor("#0288ce"));
+
+            int viewDistance = Math.abs(position - i);
+            int padding = 0;
+            // 컬러변경
+            if (viewDistance == FIRST_LABEL_POSITION) {
+                itemView.setTextColor(selectedLabelColor);
+                itemView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedLabelSize);
+
+                padding = dip2px(selectedLabelPadding);
+                itemView.setPadding(padding, padding, padding, padding);
+            } else if (viewDistance == SECOND_LABEL_POSITION){
+                itemView.setTextColor(nonSelectedLabelColor);
+                itemView.setTextSize(TypedValue.COMPLEX_UNIT_SP,  secondLabelSize);
+
+                padding = dip2px(nonSelectedLabelPadding);
+                itemView.setPadding(padding, padding, padding, padding);
             } else {
-                itemView.setTextColor(Color.parseColor("#bbbbbb"));
+                itemView.setTextColor(nonSelectedLabelColor);
+                itemView.setTextSize(TypedValue.COMPLEX_UNIT_SP,  thirdLabelSize);
+
+                padding = dip2px(nonSelectedLabelPadding);
+                itemView.setPadding(padding, padding, padding, padding);
             }
+
         }
     }
 
@@ -317,13 +369,14 @@ public class WheelView extends ScrollView {
     public void setBackgroundDrawable(Drawable background) {
 
         if (viewWidth == 0) {
-            viewWidth = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
+            Activity activity = unwrap(context);
+            viewWidth = getWidth();
             Log.d(TAG, "viewWidth: " + viewWidth);
         }
 
         if (null == paint) {
             paint = new Paint();
-            paint.setColor(Color.parseColor("#83cde6"));
+            paint.setColor(lineColor);
             paint.setStrokeWidth(dip2px(1f));
         }
 
@@ -366,14 +419,14 @@ public class WheelView extends ScrollView {
     /**
      * 选中回调
      */
-    private void onSeletedCallBack() {
+    private void onSelectedCallBack() {
         if (null != onWheelViewListener) {
             onWheelViewListener.onSelected(selectedIndex, items.get(selectedIndex));
         }
 
     }
 
-    public void setSeletion(int position) {
+    public void setSelection(int position) {
         final int p = position;
         selectedIndex = p + offset;
         this.post(new Runnable() {
@@ -385,11 +438,11 @@ public class WheelView extends ScrollView {
 
     }
 
-    public String getSeletedItem() {
+    public String getSelectedItem() {
         return items.get(selectedIndex);
     }
 
-    public int getSeletedIndex() {
+    public int getSelectedIndex() {
         return selectedIndex - offset;
     }
 
@@ -429,5 +482,14 @@ public class WheelView extends ScrollView {
         view.measure(width, expandSpec);
         return view.getMeasuredHeight();
     }
+
+    private static Activity unwrap(Context context) {
+        while (!(context instanceof Activity) && context instanceof ContextWrapper) {
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+
+        return (Activity) context;
+    }
+
 
 }

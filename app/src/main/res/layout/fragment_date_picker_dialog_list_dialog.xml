@@ -4,13 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="horizontal">
 
-    <com.naccoro.wask.datepicker.wheel.WheelView
-        android:id="@+id/wheel_view"
+    <com.naccoro.wask.datepicker.wheel.WheelDatePicker
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/date_picker"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

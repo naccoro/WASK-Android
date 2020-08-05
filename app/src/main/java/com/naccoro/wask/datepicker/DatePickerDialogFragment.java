@@ -1,11 +1,15 @@
 package com.naccoro.wask.datepicker;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +26,7 @@ import android.widget.TextView;
 import com.naccoro.wask.R;
 import com.naccoro.wask.datepicker.wheel.WheelView;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 /**
@@ -33,11 +38,12 @@ import java.util.Arrays;
  */
 public class DatePickerDialogFragment extends BottomSheetDialogFragment {
 
+    BottomSheetBehavior behavior;
     // TODO: Customize parameter argument names
     private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
     // TODO: Customize parameters
     public static DatePickerDialogFragment newInstance() {
-        return new DatePickerDialogFragment();
+       return new DatePickerDialogFragment();
     }
 
     @Nullable
@@ -49,14 +55,21 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        WheelView wva = (WheelView) view.findViewById(R.id.wheel_view);
-        wva.setOffset(1);
-        wva.setItems(Arrays.asList(PLANETS));
-        wva.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-            @Override
-            public void onSelected(int selectedIndex, String item) {
-                Log.d("datePicker", "selectedIndex: " + selectedIndex + ", item: " + item);
-            }
-        });
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        if (!(dialog instanceof BottomSheetDialog)) return dialog;
+
+        BottomSheetDialog sheetDialog = (BottomSheetDialog)dialog;
+        behavior = sheetDialog.getBehavior();
+        behavior.setHideable(false);
+        return sheetDialog;
+    }
+
+    public void dismiss() {
+        this.dismiss();
     }
 }
