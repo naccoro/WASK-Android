@@ -41,16 +41,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_card"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_marginHorizontal="@dimen/layout_card_horizontal_margin_size"
             android:background="@drawable/ic_card_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.262">
+            app:layout_constraintVertical_bias="0.199">
 
             <ImageView
                 android:id="@+id/iv_emotion"
@@ -67,10 +67,10 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/main_card_good"
-                android:textSize="@dimen/main_card_font_size"
-                android:textColor="@color/blue"
                 android:letterSpacing="-0.02"
+                android:text="@string/main_card_good"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/main_card_font_size"
                 app:layout_constraintBottom_toTopOf="@+id/iv_people"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,6 +93,35 @@
                 app:layout_constraintGuide_end="8dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_card"
+            app:layout_constraintVertical_bias="0.178">
+
+            <TextView
+                android:id="@+id/tv_use_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/main_use_period_font_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_use_period_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일 째 사용중"
+                android:textColor="@color/darkGray"
+                android:textSize="@dimen/main_use_period_msg_font_size"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
