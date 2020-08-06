@@ -104,11 +104,11 @@ public class WheelRecyclerView extends RecyclerView {
         adapter.setRecyclerType(type);
     }
 
-    public void setRecyclerViewRange(int startDateValue, int endDateValue, boolean change) {
+    public void setRecyclerViewRange(int startDateValue, int endDateValue) {
         this.startDateValue = startDateValue;
         this.endDateValue = endDateValue;
 
-        adapter.setRange(startDateValue, endDateValue, change);
+        adapter.setRange(startDateValue, endDateValue);
     }
 
     /**
@@ -212,17 +212,16 @@ public class WheelRecyclerView extends RecyclerView {
          *
          * @param startValue : 1일
          * @param endValue   : 31일
-         * @param change     : 범위를 설정한 뒤 바로 UI를 변경할 지
          */
-        public void setRange(int startValue, int endValue, boolean change) {
+        public void setRange(int startValue, int endValue) {
             this.startDateValue = startValue;
             this.endDateValue = endValue;
-            if (change) {
-                this.centerPosition = defaultPosition;
-                this.notifyDataSetChanged();
-            }
         }
 
+        /**
+         * centerPosition과 그 양 옆 2개의 Item만 변경해준다.
+         * @param centerPosition : Selected position
+         */
         void setCenterPosition(int centerPosition) {
             this.centerPosition = centerPosition;
             this.notifyItemRangeChanged(centerPosition - 2, centerPosition + 2);

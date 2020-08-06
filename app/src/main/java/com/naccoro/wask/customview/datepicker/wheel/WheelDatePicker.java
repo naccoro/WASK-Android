@@ -113,9 +113,9 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         monthRecyclerView.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.MONTH);
         dayRecyclerView.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.DAY);
 
-        yearRecyclerView.setRecyclerViewRange(startYearValue, endYearValue, false);
-        monthRecyclerView.setRecyclerViewRange(1, endMonthValue, false);
-        dayRecyclerView.setRecyclerViewRange(1, endDayOfMonthValue, false);
+        yearRecyclerView.setRecyclerViewRange(startYearValue, endYearValue);
+        monthRecyclerView.setRecyclerViewRange(1, endMonthValue);
+        dayRecyclerView.setRecyclerViewRange(1, endDayOfMonthValue);
 
         //year, month, day 모두 snap Listener 적용
         yearRecyclerView.attachSnapHelperWithListener(new LinearSnapHelper(),
@@ -204,7 +204,7 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
                 int endValue = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
                 //마지막 일이 변경될 경우 RecyclerView 범위 초기화
                 if (dayRecyclerView.endDateValue != endValue) {
-                    dayRecyclerView.setRecyclerViewRange(1, endValue, scrollTo);
+                    dayRecyclerView.setRecyclerViewRange(1, endValue);
 
                     int centerPosition = dayRecyclerView.adapter.centerPosition;
                     if (scrollTo && centerPosition > endValue) {
