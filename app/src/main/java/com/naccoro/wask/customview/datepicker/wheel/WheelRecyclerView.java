@@ -217,8 +217,8 @@ public class WheelRecyclerView extends RecyclerView {
         public void setRange(int startValue, int endValue, boolean change) {
             this.startDateValue = startValue;
             this.endDateValue = endValue;
-            this.centerPosition = defaultPosition;
             if (change) {
+                this.centerPosition = defaultPosition;
                 this.notifyDataSetChanged();
             }
         }
