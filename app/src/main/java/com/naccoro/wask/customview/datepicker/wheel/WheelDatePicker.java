@@ -209,8 +209,13 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
                     int centerPosition = dayRecyclerView.adapter.centerPosition;
                     if (scrollTo && centerPosition > endValue) {
 
-                        int dayInitPosition = dayRecyclerView.adapter.getEmptySpace() * 2;
-                        dayRecyclerView.smoothScrollToPosition(dayInitPosition);
+                        int dayInitPosition = 0;
+
+                        LinearLayoutManager manager = (LinearLayoutManager) dayRecyclerView.getLayoutManager();
+                        if (manager != null) {
+                            dayRecyclerView.adapter.setCenterPosition(dayRecyclerView.adapter.getEmptySpace());
+                            manager.scrollToPositionWithOffset(dayInitPosition, 0);
+                        }
                     }
                 }
             }
