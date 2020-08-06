@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@color/waskBlue"
     tools:context=".MainActivity">
 
     <ImageView
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:letterSpacing="-0.02"
                 android:text="@string/main_card_good"
-                android:textColor="@color/blue"
+                android:textColor="@color/waskBlue"
                 android:textSize="@dimen/main_card_font_size"
                 app:layout_constraintBottom_toTopOf="@+id/imageview_people"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
-                android:textColor="@color/blue"
+                android:textColor="@color/waskBlue"
                 android:textSize="@dimen/main_use_period_font_size"
                 android:textStyle="bold" />
 
