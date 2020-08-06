@@ -39,8 +39,7 @@ import java.util.Arrays;
 public class DatePickerDialogFragment extends BottomSheetDialogFragment {
 
     BottomSheetBehavior behavior;
-    // TODO: Customize parameter argument names
-    private static final String[] PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
+
     // TODO: Customize parameters
     public static DatePickerDialogFragment newInstance() {
        return new DatePickerDialogFragment();
@@ -64,6 +63,7 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
         if (!(dialog instanceof BottomSheetDialog)) return dialog;
 
         BottomSheetDialog sheetDialog = (BottomSheetDialog)dialog;
+
         behavior = sheetDialog.getBehavior();
         behavior.setHideable(false);
         return sheetDialog;

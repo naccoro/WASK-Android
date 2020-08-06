@@ -66,7 +66,7 @@ public class WheelSnapScrollListener extends RecyclerView.OnScrollListener {
         int snapPosition = getSnapPosition(recyclerView);
         boolean isSnapPositionChanged = this.snapPosition != snapPosition;
         if (isSnapPositionChanged && snapPositionChangeListener != null) {
-            snapPositionChangeListener.onSnapPositionChange(snapPosition);
+            snapPositionChangeListener.onSnapPositionChange(recyclerView, snapPosition);
             this.snapPosition = snapPosition;
         }
     }
@@ -78,6 +78,6 @@ public class WheelSnapScrollListener extends RecyclerView.OnScrollListener {
     }
 
     interface OnSnapPositionChangeListener {
-        public void  onSnapPositionChange(int position);
+        public void  onSnapPositionChange(RecyclerView recyclerView, int position);
     }
 }

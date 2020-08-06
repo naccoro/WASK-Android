@@ -9,8 +9,13 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -20,9 +25,7 @@ import java.util.Arrays;
  * Email: jaeryo2357@naver.com
  * Date: 8/5/20.
  */
-public class WheelDatePicker extends NestedScrollView {
-
-    private static final String[] TEST_PLANETS = new String[]{"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Uranus", "Neptune", "Pluto"};
+public class WheelDatePicker extends NestedScrollView  implements WheelSnapScrollListener.OnSnapPositionChangeListener{
 
     private LinearLayout parent;
     WheelRecyclerView yearRecycler;
@@ -64,10 +67,69 @@ public class WheelDatePicker extends NestedScrollView {
         parent.addView(monthRecycler, params);
         parent.addView(dayRecycler, params);
 
-        yearRecycler.setItemList(Arrays.asList(TEST_PLANETS));
-        monthRecycler.setItemList(Arrays.asList(TEST_PLANETS));
-        dayRecycler.setItemList(Arrays.asList(TEST_PLANETS));
+        yearRecycler.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.YEAR);
+        monthRecycler.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.MONTH);
+        dayRecycler.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.DAY);
 
-        yearRecycler.scrollToPosition(6);
+
+        //year, month, day 모두 snap Listener 적용
+        yearRecycler.attachSnapHelperWithListener(new LinearSnapHelper(),
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL,
+                this);
+
+        monthRecycler.attachSnapHelperWithListener(new LinearSnapHelper(),
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL,
+                this);
+
+        dayRecycler.attachSnapHelperWithListener(new LinearSnapHelper(),
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL,
+                this);
+        Calendar calendar = new GregorianCalendar();
+        yearRecycler.setRecyclerViewRange(2000, 2030);
+        monthRecycler.setRecyclerViewRange(1, 12);
+        dayRecycler.setRecyclerViewRange(1, 31);
+    }
+
+    /**
+     * snapPosition을 Adapter에 등록하여 Text 스타일 변경
+     *
+     * @param position 변경된 snapPosition
+     */
+    @Override
+    public void onSnapPositionChange(RecyclerView recyclerView, final int position) {
+        if (!(recyclerView instanceof WheelRecyclerView)) {
+            return;
+        }
+
+        final WheelRecyclerView wheelRecyclerView = (WheelRecyclerView) recyclerView;
+        wheelRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                wheelRecyclerView.adapter.setCenterPosition(position);
+            }
+        });
+
+        switch (wheelRecyclerView.recyclerViewType) {
+            case YEAR:
+            case MONTH:
+                setRangeDay();
+        }
+    }
+
+    private void setRangeDay() {
+        int year = yearRecycler.startDateValue + (yearRecycler.adapter.centerPosition - yearRecycler.adapter.getEmptySpace());
+        int month = monthRecycler.startDateValue + (monthRecycler.adapter.centerPosition - monthRecycler.adapter.getEmptySpace());
+
+        final Calendar calendar = new GregorianCalendar(year, month - 1, 1);
+        dayRecycler.post(new Runnable() {
+            @Override
+            public void run() {
+                int endValue  = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                if (dayRecycler.endDateValue != endValue) {
+                    dayRecycler.setRecyclerViewRange(1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+                    dayRecycler.scrollToPosition(dayRecycler.adapter.getEmptySpace());
+                }
+            }
+        });
     }
 }

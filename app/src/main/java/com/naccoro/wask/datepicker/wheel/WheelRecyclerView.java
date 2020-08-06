@@ -1,19 +1,13 @@
 package com.naccoro.wask.datepicker.wheel;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,12 +18,15 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.naccoro.wask.R;
 
-import java.util.List;
-
-public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollListener.OnSnapPositionChangeListener {
+public class WheelRecyclerView extends RecyclerView {
 
     Context context;
     WheelRecyclerAdapter adapter;
+    private final WheelRecyclerViewType defaultType = WheelRecyclerViewType.YEAR;
+    WheelRecyclerViewType recyclerViewType = defaultType;
+
+    int startDateValue = 1;
+    int endDateValue = 1;
 
     private final int SECOND_LABEL_POSITION = 1;
 
@@ -61,29 +58,45 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     private void init(Context context) {
         this.context = context;
+        this.setItemAnimator(null);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         this.setLayoutManager(manager);
 
-        adapter = new WheelRecyclerAdapter();
+        adapter = new WheelRecyclerAdapter(defaultType);
         this.setAdapter(adapter);
+    }
 
-        //스크롤시 중앙에 아이탬을 고정하도록 도와주는 snapHelper 적용
-        SnapHelper helper = new LinearSnapHelper();
+    /** //스크롤시 중앙에 아이탬을 고정하도록 도와주는 snapHelper 적용
+     *
+     * @param helper
+     * @param behavior : listener가 호출 되는 시점 Idle or Scroll
+     * @param listener : snap position 변경 시 호출
+     */
+    public void attachSnapHelperWithListener(SnapHelper helper,
+                                             WheelSnapScrollListener.Behavior behavior,
+                                             WheelSnapScrollListener.OnSnapPositionChangeListener listener) {
         helper.attachToRecyclerView(this);
 
         WheelSnapScrollListener wheelSnapScrollListener = new WheelSnapScrollListener(
-                helper, WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE, this);
+                helper, behavior, listener);
         this.addOnScrollListener(wheelSnapScrollListener);
     }
 
-
-    public void setItemList(List<String> itemList) {
-        this.adapter.setItemList(itemList);
+    public void setRecyclerViewType(WheelRecyclerViewType type) {
+        recyclerViewType = type;
+        adapter.setRecyclerType(type);
     }
 
+    public void setRecyclerViewRange(int startDateValue, int endDateValue) {
+        this.startDateValue = startDateValue;
+        this.endDateValue = endDateValue;
+
+        adapter.setRange(startDateValue, endDateValue);
+    }
 
     /**
      * Height 값이 다른 5개의 TextView 높이 값을 모두 더해서 총 RecyclerView 높이를 구함
+     *
      * @return recyclerView 높이
      */
     public int getMaxHeight() {
@@ -99,12 +112,13 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     }
 
     /**
-     *  recyclerView의 높이를 고정시키기 위해 Height 크기가 다른 TextView 5개를 만들기 위한 함수
-     * @param textSize : testSize
+     * recyclerView의 높이를 고정시키기 위해 Height 크기가 다른 TextView 5개를 만들기 위한 함수
+     *
+     * @param textSize    : testSize
      * @param paddingSize : TextView 사이의 간격
      */
     private TextView createItemView(int textSize, int paddingSize) {
-        TextView textView = (TextView)LayoutInflater.from(context).inflate(R.layout.date_picker_item, null);
+        TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.date_picker_item, null);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         int padding = dip2px(paddingSize);
         textView.setPadding(padding, padding, padding, padding);
@@ -114,6 +128,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     /**
      * dp 값을 px로 변경
+     *
      * @param dpValue
      * @return px로 변경된 값
      */
@@ -124,6 +139,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     /**
      * viwe의 높이를 측정하는 함수
+     *
      * @param view
      * @return 생성된 view의 높이
      */
@@ -135,6 +151,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     /**
      * RecyclerView의 posiiton으로 스크롤이 이동하는 동시에 snapPosition으로 지정
+     *
      * @param position
      */
     @Override
@@ -143,19 +160,48 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         adapter.setCenterPosition(position - 2);
     }
 
-    /**
-     * snapPosition을 Adapter에 등록하여 Text 스타일 변경
-     * @param position 변경된 snapPosition
-     */
-    @Override
-    public void onSnapPositionChange(int position) {
-        adapter.setCenterPosition(position);
-    }
 
     class WheelRecyclerAdapter extends RecyclerView.Adapter<WheelRecyclerAdapter.WheelViewHolder> {
 
-        List<String> itemList;
-        int centerPosition = -1;
+        private final int emptySpace = 2;
+        private final int defaultPosition = 2;
+
+        private WheelRecyclerViewType type;
+
+        int centerPosition = defaultPosition;
+        int startDateValue = 1;
+        int endDateValue = 1;
+
+        WheelRecyclerAdapter(WheelRecyclerViewType type) {
+            this.type = type;
+        }
+
+        public int getEmptySpace() {
+            return emptySpace;
+        }
+
+        public void setRecyclerType(WheelRecyclerViewType type) {
+            this.type = type;
+            this.notifyDataSetChanged();
+        }
+
+        /**
+         * WheelRecyclerView의 범위를 결정
+         *
+         * @param startValue : 1일
+         * @param endValue   : 31일
+         */
+        public void setRange(int startValue, int endValue) {
+            this.startDateValue = startValue;
+            this.endDateValue = endValue;
+            this.centerPosition = defaultPosition;
+            this.notifyDataSetChanged();
+        }
+
+        void setCenterPosition(int centerPosition) {
+            this.centerPosition = centerPosition;
+            this.notifyItemRangeChanged(centerPosition - 2, centerPosition + 2);
+        }
 
         @NonNull
         @Override
@@ -164,14 +210,6 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
             return new WheelViewHolder(view);
         }
 
-        public void setItemList(List<String> itemList) {
-            this.itemList = itemList;
-        }
-
-        void setCenterPosition(int centerPosition) {
-            this.centerPosition = centerPosition;
-            this.notifyDataSetChanged();
-        }
 
         @Override
         public void onBindViewHolder(@NonNull WheelViewHolder holder, int position) {
@@ -180,10 +218,10 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
             int textSize;
             int padding;
 
-            if (position >= 2 && itemList.size() + 2 > position) {
-                itemBody = itemList.get(position - 2);
+            if (position >= emptySpace && (endDateValue - startDateValue) + emptySpace > position) {
+                itemBody = getDateString(position - emptySpace);
             } else {
-                itemBody = ""; // recyclerView 양 끝에 빈공간 2개를 생성
+                itemBody = ""; // recyclerView 양 끝에 빈공간을 생성
             }
 
             if (centerPosition == position) {
@@ -201,23 +239,50 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
             }
 
             holder.itemLabel.setTextColor(textColor);
-            holder.itemLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP,  textSize);
+            holder.itemLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
             holder.itemLabel.setPadding(padding, padding, padding, padding);
             holder.itemLabel.setText(itemBody);
         }
 
         @Override
         public int getItemCount() {
-            return itemList.size() + 4;
+            return (endDateValue - startDateValue + 1) + emptySpace * 2;
+        }
+
+        private String getDateString(int position) {
+            switch (type) {
+                case YEAR:
+                    return getYearString(startDateValue + position);
+                case MONTH:
+                    return getMonthString(startDateValue + position);
+                default:
+                    return getDayString(startDateValue + position);
+            }
+        }
+
+        private String getYearString(int year) {
+            return year + "년";
+        }
+
+        private String getMonthString(int month) {
+            return month + "월";
+        }
+
+        private String getDayString(int day) {
+            return day + "일";
         }
 
         class WheelViewHolder extends RecyclerView.ViewHolder {
             TextView itemLabel;
 
-          public WheelViewHolder(@NonNull View itemView) {
-              super(itemView);
-              itemLabel = (TextView)itemView;
-          }
-      }
+            public WheelViewHolder(@NonNull View itemView) {
+                super(itemView);
+                itemLabel = (TextView) itemView;
+            }
+        }
+    }
+
+    enum WheelRecyclerViewType {
+        YEAR, MONTH, DAY
     }
 }
