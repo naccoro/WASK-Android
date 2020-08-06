@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.naccoro.wask.datepicker.wheel.WheelDatePicker
+    <com.naccoro.wask.customview.datepicker.wheel.WheelDatePicker
         android:id="@+id/datepicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

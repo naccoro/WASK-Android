@@ -1,9 +1,7 @@
-package com.naccoro.wask.datepicker.wheel;
+package com.naccoro.wask.customview.datepicker.wheel;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.utils.MetricsUtil;
 
 /**
  * centerPosition의 item의 크기를 가장 크게
@@ -160,21 +159,10 @@ public class WheelRecyclerView extends RecyclerView {
     private TextView createItemView(int textSize, int paddingSize) {
         TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.date_picker_item, null);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-        int padding = dip2px(paddingSize);
+        int padding = (int) MetricsUtil.convertDpToPixel(paddingSize, getContext());
         textView.setPadding(padding, padding, padding, padding);
 
         return textView;
-    }
-
-    /**
-     * dp 값을 px로 변경
-     *
-     * @param dpValue
-     * @return px로 변경된 값
-     */
-    private int dip2px(float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 
     /**
@@ -224,7 +212,7 @@ public class WheelRecyclerView extends RecyclerView {
          *
          * @param startValue : 1일
          * @param endValue   : 31일
-         * @param change : 범위를 설정한 뒤 바로 UI를 변경할 지
+         * @param change     : 범위를 설정한 뒤 바로 UI를 변경할 지
          */
         public void setRange(int startValue, int endValue, boolean change) {
             this.startDateValue = startValue;
@@ -275,7 +263,7 @@ public class WheelRecyclerView extends RecyclerView {
                 padding = nonSelectedLabelPadding;
             }
 
-            int paddingSize = dip2px(padding);
+            int paddingSize = (int) MetricsUtil.convertDpToPixel(padding, getContext());
             holder.itemLabel.setTextColor(textColor);
             holder.itemLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
             holder.itemLabel.setPadding(paddingSize, paddingSize, paddingSize, paddingSize);

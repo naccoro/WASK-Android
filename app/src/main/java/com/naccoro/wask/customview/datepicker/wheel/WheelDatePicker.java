@@ -1,4 +1,4 @@
-package com.naccoro.wask.datepicker.wheel;
+package com.naccoro.wask.customview.datepicker.wheel;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -187,6 +187,7 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
 
     /**
      * dayRecyclerView의 범위를 설정한다. (1일 ~ 31일, 1일 ~ 29일)
+     *
      * @param scrollTo : 범위를 설정하고 스크롤 할지를 묻는 변수
      */
     private void setRangeDay(final boolean scrollTo) {
@@ -230,6 +231,7 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
 
     /**
      * DatePicker의 달력 초기 값을 설정하는 함수
+     *
      * @param year
      * @param month
      * @param day

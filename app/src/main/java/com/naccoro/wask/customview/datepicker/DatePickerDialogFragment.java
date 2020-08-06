@@ -1,8 +1,6 @@
-package com.naccoro.wask.datepicker;
+package com.naccoro.wask.customview.datepicker;
 
 import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -18,12 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.naccoro.wask.R;
-import com.naccoro.wask.datepicker.wheel.WheelDatePicker;
+import com.naccoro.wask.customview.datepicker.wheel.WheelDatePicker;
 
 /**
  * @author jaeryo
- *@since 2020.08.06
- *
+ * @since 2020.08.06
+ * <p>
  * DatePicker 기능을 하는 Modal BottomSheet Dialog 입니다.
  * 사용하기 위해서는 아래와 같이 호출해주면 됩니다.
  * <pre>
@@ -48,7 +46,7 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
 
     // TODO: Customize parameters
     public static DatePickerDialogFragment newInstance() {
-       return new DatePickerDialogFragment();
+        return new DatePickerDialogFragment();
     }
 
     @NonNull
@@ -57,7 +55,7 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         if (!(dialog instanceof BottomSheetDialog)) return dialog;
 
-        BottomSheetDialog sheetDialog = (BottomSheetDialog)dialog;
+        BottomSheetDialog sheetDialog = (BottomSheetDialog) dialog;
 
         //BottomSheet 상태관리하는 객체인 BottomSheetBehavior
         //아래로 스크롤 시 화면 아래로 숨겨지지 않게 설정
