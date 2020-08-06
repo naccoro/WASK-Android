@@ -3,6 +3,7 @@ package com.naccoro.wask;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.naccoro.wask.datepicker.DatePickerDialogFragment;
 
@@ -13,6 +14,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatePickerDialogFragment.newInstance().show(getSupportFragmentManager(), "dialog");
+        DatePickerDialogFragment.newInstance().setOnDateChangedListener(new DatePickerDialogFragment.OnDateChangedListener() {
+            @Override
+            public void onDateChange(int year, int month, int day) {
+                Toast.makeText(MainActivity.this, year + "," + month + ", " + day, Toast.LENGTH_LONG).show();
+            }
+        }).setDate(2022,5,12).show(getSupportFragmentManager(), "dialog");
     }
 }

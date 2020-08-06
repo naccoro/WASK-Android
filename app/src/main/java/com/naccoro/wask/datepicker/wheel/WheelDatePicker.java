@@ -4,21 +4,20 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import com.naccoro.wask.R;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -27,20 +26,37 @@ import java.util.GregorianCalendar;
  * Modified by: WheelView - wangjie
  * link : https://github.com/wangjiegulu/WheelView
  * <p>
- * Email: jaeryo2357@naver.com
- * Date: 8/5/20.
+ *
+ * @author jaeryo / Email: jaeryo2357@naver.com
+ * @since 2020-08-06.
+ * <p>
+ * WheelDatePicker는 3개의 Vertical RecyclerView를 가진 Custom View입니다.
+ * 각 RecyclerView는 year, month, day를 나타냅니다.
+ * 한 레이아웃에서 3개의 RecyclerView 스크롤을 인식하기 위해 NestedScrollView를 사용합니다.
  */
 public class WheelDatePicker extends NestedScrollView implements WheelSnapScrollListener.OnSnapPositionChangeListener {
 
-    private LinearLayout parent;
-    WheelRecyclerView yearRecycler;
-    WheelRecyclerView monthRecycler;
-    WheelRecyclerView dayRecycler;
+    //picker에 표시할 년도의 범위를 2000년도~2030년도로 설정 (변경가능)
+    private final int startYear = 2000;
+    private final int endYear = 2030;
 
+    //picker에 표시되는 월의 범위를 1(고정)~12월로 설정
+    private final int endMonth = 12;
+
+    //picker에 표시되는 일의 범위를 1(고정)~31일로 설정 (이후 로직에서 변경)
+    private final int endDayOfMonth = 31;
+
+
+    boolean isBehaviorIdle = false;
+
+    private WheelRecyclerView yearRecycler;
+    private WheelRecyclerView monthRecycler;
+    private WheelRecyclerView dayRecycler;
+
+    //selected Area Line 을 그리기한 paint
     Paint linePaint;
+    //recyclerview 모두 5개의 크기가 다른 item을 보여주기 위한 높이를 저장하는 변수
     float recyclerHeight = 0f;
-
-    private final int lineColor = Color.parseColor("#a0a7ad");
 
     public WheelDatePicker(Context context) {
         super(context);
@@ -58,31 +74,41 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
     }
 
     private void init(Context context) {
-        parent = new LinearLayout(context);
+
+        //사용자가 Nested ScrollView의 뷰 끝에서 스크롤을 시도할 시 번지는 효과 제거
+        this.setOverScrollMode(OVER_SCROLL_NEVER);
+
+        //RecyclerView 3개를 넣기위한 LinearLayout을 생성, weight로 동일한 비율의 뷰를 정렬하기에 편안
+        LinearLayout parent = new LinearLayout(context);
         parent.setOrientation(LinearLayout.HORIZONTAL);
         parent.setGravity(Gravity.CENTER);
         parent.setWeightSum(3);
-        NestedScrollView.LayoutParams rootParams = (NestedScrollView.LayoutParams)getLayoutParams();
+        NestedScrollView.LayoutParams rootParams = (NestedScrollView.LayoutParams) getLayoutParams();
         if (rootParams == null) {
             rootParams = new NestedScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            rootParams.leftMargin = (int)getResources().getDimension(R.dimen.datePicker_margin);
-            rootParams.rightMargin = (int)getResources().getDimension(R.dimen.datePicker_margin);
+            rootParams.leftMargin = (int) getResources().getDimension(R.dimen.datePicker_margin);
+            rootParams.rightMargin = (int) getResources().getDimension(R.dimen.datePicker_margin);
         }
         this.addView(parent, rootParams);
 
         yearRecycler = new WheelRecyclerView(context);
+        //사용자가 RecyclerView의 뷰 끝에서 스크롤을 시도할 시 번지는 효과 제거
+        yearRecycler.setOverScrollMode(OVER_SCROLL_NEVER);
         monthRecycler = new WheelRecyclerView(context);
+        monthRecycler.setOverScrollMode(OVER_SCROLL_NEVER);
         dayRecycler = new WheelRecyclerView(context);
+        dayRecycler.setOverScrollMode(OVER_SCROLL_NEVER);
 
         recyclerHeight = yearRecycler.getMaxHeight();
 
         //3개의 recyclerView를 동일한 크기로 정렬하기 위해 weight 값을 1로 설정
-        LinearLayout.LayoutParams parentParams = new LinearLayout.LayoutParams(0, (int)recyclerHeight, 1);
+        LinearLayout.LayoutParams parentParams = new LinearLayout.LayoutParams(0, (int) recyclerHeight, 1);
 
         parent.addView(yearRecycler, parentParams);
         parent.addView(monthRecycler, parentParams);
         parent.addView(dayRecycler, parentParams);
 
+        //각각 RecyclerView의 Date Type 지정
         yearRecycler.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.YEAR);
         monthRecycler.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.MONTH);
         dayRecycler.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.DAY);
@@ -90,22 +116,25 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
 
         //year, month, day 모두 snap Listener 적용
         yearRecycler.attachSnapHelperWithListener(new LinearSnapHelper(),
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL,
-                this);
-
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
         monthRecycler.attachSnapHelperWithListener(new LinearSnapHelper(),
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL,
-                this);
-
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
         dayRecycler.attachSnapHelperWithListener(new LinearSnapHelper(),
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL,
-                this);
-        Calendar calendar = new GregorianCalendar();
-        yearRecycler.setRecyclerViewRange(2000, 2030);
-        monthRecycler.setRecyclerViewRange(1, 12);
-        dayRecycler.setRecyclerViewRange(1, 31);
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
+
+        yearRecycler.setRecyclerViewRange(startYear, endYear);
+        monthRecycler.setRecyclerViewRange(1, endMonth);
+        dayRecycler.setRecyclerViewRange(1, endDayOfMonth);
     }
 
+
+    /**
+     * 화면에 UI를 그리는 함수 onDraw()
+     * super 키워드로 상위 클래스의 onDraw()를 호출하여 NestedScrollView가 그려짐과 동시에
+     * selected Area 영역에 라인을 그린다.
+     *
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -113,15 +142,18 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         if (linePaint == null) {
             linePaint = new Paint();
         }
-        linePaint.setColor(lineColor);
+        linePaint.setColor(getContext().getColor(R.color.colorDatePickerLine));
         linePaint.setStrokeWidth(1.5f);
 
-        canvas.drawLine(0, recyclerHeight / 3 + 10f, this.getMeasuredWidth(), recyclerHeight / 3 + 10f, linePaint);
-        canvas.drawLine(0, (recyclerHeight / 3) * 2 - 10f, this.getMeasuredWidth(), (recyclerHeight / 3) * 2 - 10f, linePaint);
+
+        float lineHeight = yearRecycler.getSecondLabelHeight() + yearRecycler.getThirdLabelHeight();
+        canvas.drawLine(0, lineHeight, this.getMeasuredWidth(), lineHeight, linePaint);
+        canvas.drawLine(0, lineHeight + yearRecycler.getSelectedLabelHeight(), this.getMeasuredWidth(), lineHeight + yearRecycler.getSelectedLabelHeight(), linePaint);
     }
 
     /**
-     * snapPosition을 Adapter에 등록하여 Text 스타일 변경
+     * snapPosition은 사용자가 스크롤하여 설정한 Date의 값(위치)을 의미한다.
+     * WheelRecyclerView는 snapPosition에 따라 item의 크기, 색이 달라지므로 이를 아래 함수에서 변경시켜주어야 한다.
      *
      * @param position 변경된 snapPosition
      */
@@ -143,23 +175,106 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
             case YEAR:
             case MONTH:
                 setRangeDay();
+                break;
+            case DAY:
+                if (isBehaviorIdle) {
+                    setAllSnapListenerScroll();
+                    isBehaviorIdle = false;
+                }
         }
     }
 
     private void setRangeDay() {
-        int year = yearRecycler.startDateValue + (yearRecycler.adapter.centerPosition - yearRecycler.adapter.getEmptySpace());
-        int month = monthRecycler.startDateValue + (monthRecycler.adapter.centerPosition - monthRecycler.adapter.getEmptySpace());
+        int year = getYear();
+        int month = getMonth();
 
-        final Calendar calendar = new GregorianCalendar(year, month - 1, 1);
-        dayRecycler.post(new Runnable() {
+        final Calendar calendar = new GregorianCalendar(year, month, 1);
+
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //해당일자 년 달력의 마지막 요일을 계산
                 int endValue = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                //마지막 일이 변경될 경우 RecyclerView 범위 초기화
                 if (dayRecycler.endDateValue != endValue) {
                     dayRecycler.setRecyclerViewRange(1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-                    dayRecycler.scrollToPosition(dayRecycler.adapter.getEmptySpace());
+                    int daySelectedPosition = dayRecycler.adapter.getEmptySpace();
+                    dayRecycler.smoothScrollToPosition(daySelectedPosition);
                 }
             }
-        });
+        }, 200);
     }
+
+    public int getYear() {
+        int year = yearRecycler.adapter.getDate();
+        return year;
+    }
+
+    public int getMonth() {
+        int month = monthRecycler.adapter.getDate() - 1;
+        return month;
+    }
+
+    public int getDay() {
+        int day = dayRecycler.adapter.getDate();
+        return day;
+    }
+
+    public void setDate(final int year, final int month, final int day) {
+
+        setAllSnapListenerScrollIdle();
+        isBehaviorIdle = true;
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                final int yearPosition = (year - startYear) + yearRecycler.adapter.getEmptySpace() * 2;
+                yearRecycler.smoothScrollToPosition(yearPosition);
+            }
+        }, 200);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                final int monthPosition = (month) + yearRecycler.adapter.getEmptySpace() + 1;
+                monthRecycler.smoothScrollToPosition(monthPosition);
+            }
+        }, 200);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //변경된 년도 달력에 따라 마지막 요일 적용
+                setRangeDay();
+                final int dayPosition = day + dayRecycler.adapter.getEmptySpace() * 2;
+                dayRecycler.smoothScrollToPosition(dayPosition);
+            }
+        }, 300);
+    }
+
+    private void setAllSnapListenerScrollIdle() {
+        //year, month, day 모두 snap Listener 적용
+        yearRecycler.setSnapBehaviorType(
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE);
+
+        monthRecycler.setSnapBehaviorType(
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE);
+
+        dayRecycler.setSnapBehaviorType(
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE);
+    }
+
+    private void setAllSnapListenerScroll() {
+        //year, month, day 모두 snap Listener 적용
+        yearRecycler.setSnapBehaviorType(
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL);
+
+        monthRecycler.setSnapBehaviorType(
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL);
+
+        dayRecycler.setSnapBehaviorType(
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL);
+    }
+
+
 }
