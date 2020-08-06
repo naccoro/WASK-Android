@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView settingBtn;
-    ImageView emotionIv;
-    TextView cardMessageTv;
-    TextView usePeriodTv;
-    Button changeBtn;
+    ImageView settingButton;
+    ImageView emotionImageView;
+    TextView cardMessageTextView;
+    TextView usePeriodTextView;
+    Button changeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        settingBtn = findViewById(R.id.imageview_setting);
-        emotionIv = findViewById(R.id.imageview_emotion);
-        cardMessageTv = findViewById(R.id.textview_card_message);
-        usePeriodTv = findViewById(R.id.textview_use_period);
-        changeBtn = findViewById(R.id.button_change);
+        settingButton = findViewById(R.id.imageview_setting);
+        emotionImageView = findViewById(R.id.imageview_emotion);
+        cardMessageTextView = findViewById(R.id.textview_card_message);
+        usePeriodTextView = findViewById(R.id.textview_use_period);
+        changeButton = findViewById(R.id.button_change);
 
-        settingBtn.setOnClickListener(this);
-        changeBtn.setOnClickListener(this);
+        settingButton.setOnClickListener(this);
+        changeButton.setOnClickListener(this);
     }
 
     @Override
