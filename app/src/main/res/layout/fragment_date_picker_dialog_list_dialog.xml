@@ -13,22 +13,22 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/datePicker_xBtn"
-            android:layout_width="13dp"
-            android:layout_height="13dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:id="@+id/datepicker_x_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
             android:background="@null"
             android:src="@drawable/main_calendar_x"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginEnd="16dp"
-            android:id="@+id/datePicker_okBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="17dp"
+            android:paddingRight="16dp"
+            android:id="@+id/datepicker_ok_btn"
             android:background="@null"
             android:src="@drawable/main_calendar_ok"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.naccoro.wask.datepicker.wheel.WheelDatePicker
-        android:id="@+id/date_picker"
+        android:id="@+id/datepicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/datePicker_top_margin"

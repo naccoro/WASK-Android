@@ -28,6 +28,14 @@ import com.naccoro.wask.datepicker.wheel.WheelDatePicker;
  * 사용하기 위해서는 아래와 같이 호출해주면 됩니다.
  * <pre>
  *     DatePickerDialogFragment.newInstance().show(getSupportFragmentManager(), "dialog");
+ *
+ *
+ *     DatePickerDialogFragment.newInstance().setOnDateChangedListener(new DatePickerDialogFragment.OnDateChangedListener() {
+ *             @Override
+ *             public void onDateChange(int year, int month, int day) {
+ *                 Toast.makeText(MainActivity.this, year + "," + month + ", " + day, Toast.LENGTH_LONG).show();
+ *             }
+ *         }).setDate(2022,5,12).show(getSupportFragmentManager(), "dialog");
  * </pre>
  */
 public class DatePickerDialogFragment extends BottomSheetDialogFragment {
@@ -70,19 +78,19 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
         //corner style 적용하기
         setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_DatePicker_BottomSheetDialog);
 
-        datePicker = view.findViewById(R.id.date_picker);
+        datePicker = view.findViewById(R.id.datepicker);
         if (year != -1 && month != -1 && day != -1) {
             datePicker.setDate(year, month, day);
         }
 
-        view.findViewById(R.id.datePicker_xBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.datepicker_x_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 datePickerDismiss();
             }
         });
 
-        view.findViewById(R.id.datePicker_okBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.datepicker_ok_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //날짜 반환
