@@ -16,6 +16,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="WaskDialogButtonText" parent="WaskDialogText">
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <style name="divider">
         <item name="android:background">@color/dividerGray</item>
     </style>
