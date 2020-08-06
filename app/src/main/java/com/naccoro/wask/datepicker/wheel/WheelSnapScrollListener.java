@@ -30,6 +30,7 @@ public class WheelSnapScrollListener extends RecyclerView.OnScrollListener {
         this.behavior = behavior;
         this.snapPositionChangeListener = listener;
     }
+
     @Override
     public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
@@ -59,6 +60,7 @@ public class WheelSnapScrollListener extends RecyclerView.OnScrollListener {
 
     /**
      * 스크롤로 변경된 RecyclerView의 Snap Position을 구한 뒤 변경되면 Notify
+     *
      * @param recyclerView : 스크롤된 RecyclerView
      */
     private void maybeNotifySnapPositionChange(RecyclerView recyclerView) {
@@ -78,6 +80,6 @@ public class WheelSnapScrollListener extends RecyclerView.OnScrollListener {
     }
 
     interface OnSnapPositionChangeListener {
-        public void  onSnapPositionChange(RecyclerView recyclerView, int position);
+        public void onSnapPositionChange(RecyclerView recyclerView, int position);
     }
 }

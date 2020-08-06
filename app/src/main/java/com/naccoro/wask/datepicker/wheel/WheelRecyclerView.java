@@ -32,14 +32,13 @@ public class WheelRecyclerView extends RecyclerView {
 
     private final int selectedLabelColor = Color.parseColor("#707070");
     private final int nonSelectedLabelColor = Color.parseColor("#a0a7ad");
-    private final int lineColor = Color.parseColor("#707070");
 
     private final int selectedLabelSize = 20;
     private final int secondLabelSize = 18;
     private final int thirdLabelSize = 15;
 
-    private final int selectedLabelPadding = 15;
-    private final int nonSelectedLabelPadding = 2;
+    private final int selectedLabelPadding = 20;
+    private final int nonSelectedLabelPadding = 1;
 
     public WheelRecyclerView(@NonNull Context context) {
         super(context);
@@ -66,7 +65,8 @@ public class WheelRecyclerView extends RecyclerView {
         this.setAdapter(adapter);
     }
 
-    /** //스크롤시 중앙에 아이탬을 고정하도록 도와주는 snapHelper 적용
+    /**
+     * //스크롤시 중앙에 아이탬을 고정하도록 도와주는 snapHelper 적용
      *
      * @param helper
      * @param behavior : listener가 호출 되는 시점 Idle or Scroll
@@ -99,8 +99,8 @@ public class WheelRecyclerView extends RecyclerView {
      *
      * @return recyclerView 높이
      */
-    public int getMaxHeight() {
-        int allItemHeight = 0;
+    public float getMaxHeight() {
+        float allItemHeight = 0;
         TextView text = createItemView(selectedLabelSize, selectedLabelPadding);
         allItemHeight += getViewMeasuredHeight(text);
         text = createItemView(secondLabelSize, nonSelectedLabelPadding);

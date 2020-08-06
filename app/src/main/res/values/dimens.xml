@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <dimen name="datePicker_margin">79dp</dimen>
+    <dimen name="datePicker_margin">68dp</dimen>
+    <dimen name="datePicker_bottom_margin">40dp</dimen>
+    <dimen name="datePicker_top_margin">16dp</dimen>
 </resources>
