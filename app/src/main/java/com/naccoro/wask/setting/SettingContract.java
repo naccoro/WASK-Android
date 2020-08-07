@@ -19,5 +19,11 @@ public interface SettingContract {
         void clickPushAlert();
 
         void changeAlertVisibleSwitch(boolean value);
+
+        void changePushAlertValue(String value);
+
+        void changeReplacementCycleValue(int cycleValue);
+
+        void changeReplaceLaterValue(int laterValue);
     }
 }
