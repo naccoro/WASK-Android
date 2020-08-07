@@ -7,4 +7,5 @@
     <color name="waskBlue">#597AFB</color>
     <color name="waskRed">#EF3E15</color>
     <color name="waskGrayFont">#707070</color>
+    <color name="dividerGray">#e2e2e2</color>
 </resources>
