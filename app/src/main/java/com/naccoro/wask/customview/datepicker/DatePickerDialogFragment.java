@@ -36,7 +36,7 @@ import com.naccoro.wask.customview.datepicker.wheel.WheelDatePicker;
  *         }).setDate(2022,5,12).show(getSupportFragmentManager(), "dialog");
  * </pre>
  */
-public class DatePickerDialogFragment extends BottomSheetDialogFragment {
+public class DatePickerDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
     private OnDateChangedListener dateChangedListener;
     WheelDatePicker datePicker;
@@ -81,27 +81,23 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
             datePicker.setDate(year, month, day);
         }
 
-        view.findViewById(R.id.datepicker_x_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDismiss();
-            }
-        });
+        view.findViewById(R.id.datepicker_x_button).setOnClickListener(this);
 
-        view.findViewById(R.id.datepicker_ok_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //날짜 반환
-                if (dateChangedListener != null) {
-                    int year = datePicker.getYear();
-                    int month = datePicker.getMonth();
-                    int day = datePicker.getDay();
-                    dateChangedListener.onDateChange(year, month, day);
-                }
-                datePickerDismiss();
-            }
-        });
+        view.findViewById(R.id.datepicker_ok_button).setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.datepicker_ok_button:
+                clickDatePickerOkButton();
+                break;
+
+            case R.id.datepicker_x_button:
+                clickDatePickerXButton();
+        }
+    }
+
 
     public DatePickerDialogFragment setOnDateChangedListener(OnDateChangedListener dateChangedListener) {
         this.dateChangedListener = dateChangedListener;
@@ -116,10 +112,24 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
         return this;
     }
 
+    private void clickDatePickerXButton(){
+        datePickerDismiss();
+    }
+
+    private void clickDatePickerOkButton() {
+        if (dateChangedListener != null) {
+            int year = datePicker.getYear();
+            int month = datePicker.getMonth();
+            int day = datePicker.getDay();
+            dateChangedListener.onDateChange(year, month, day);
+        }
+        datePickerDismiss();
+    }
+
     /**
      * Dialog 종료
      */
-    public void datePickerDismiss() {
+    private void datePickerDismiss() {
         this.dismiss();
     }
 

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-
 
     <color name="colorDatePickerLine">#a0a7ad</color>
     <color name="colorDatePickerSelectedLabel">#707070</color>
     <color name="colorDatePickerNoSelectedLabel">#a0a7ad</color>
+
+    <color name="colorPrimary">@color/waskBlue</color>
+    <color name="colorPrimaryDark">@color/waskBlue</color>
+    <color name="colorAccent">@color/waskBlue</color>
+
+    <color name="waskBlue">#597AFB</color>
+    <color name="waskRed">#EF3E15</color>
 
     <color name="waskGrayFont">#707070</color>
     <color name="dividerGray">#e2e2e2</color>

@@ -5,13 +5,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.DatePicker.BottomSheetDialog</item>
     </style>
 
-    <style
-        name="ThemeOverlay.DatePicker.BottomSheetDialog"
-        parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <style name="ThemeOverlay.DatePicker.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.DatePicker.BottomSheet</item>
     </style>
 
