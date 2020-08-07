@@ -41,12 +41,12 @@ public class WheelRecyclerView extends RecyclerView {
     private int selectedLabelColor = 0;
     private int nonSelectedLabelColor = 0;
 
-    private final int selectedLabelSize = 20;
-    private final int secondLabelSize = 18;
-    private final int thirdLabelSize = 15;
+    private final int SELECTED_LABEL_SIZE = 20;
+    private final int SECOND_LABEL_SIZE = 18;
+    private final int THIRD_LABEL_SIZE = 15;
 
-    private final int selectedLabelPadding = 5;
-    private final int nonSelectedLabelPadding = 2;
+    private final int SELECTED_LABEL_PADDING = 5;
+    private final int NON_SELECTED_LABEL_PADDING = 2;
 
     public WheelRecyclerView(@NonNull Context context) {
         super(context);
@@ -136,17 +136,17 @@ public class WheelRecyclerView extends RecyclerView {
     }
 
     public float getSelectedLabelHeight() {
-        TextView text = createItemView(selectedLabelSize, selectedLabelPadding);
+        TextView text = createItemView(SELECTED_LABEL_SIZE, SELECTED_LABEL_PADDING);
         return getViewMeasuredHeight(text);
     }
 
     public float getSecondLabelHeight() {
-        TextView text = createItemView(secondLabelSize, nonSelectedLabelPadding);
+        TextView text = createItemView(SECOND_LABEL_SIZE, NON_SELECTED_LABEL_PADDING);
         return getViewMeasuredHeight(text);
     }
 
     public float getThirdLabelHeight() {
-        TextView text = createItemView(thirdLabelSize, nonSelectedLabelPadding);
+        TextView text = createItemView(THIRD_LABEL_SIZE, NON_SELECTED_LABEL_PADDING);
         return getViewMeasuredHeight(text);
     }
 
@@ -250,16 +250,16 @@ public class WheelRecyclerView extends RecyclerView {
 
             if (centerPosition == position) {
                 textColor = selectedLabelColor;
-                textSize = selectedLabelSize;
-                padding = selectedLabelPadding;
+                textSize = SELECTED_LABEL_SIZE;
+                padding = SELECTED_LABEL_PADDING;
             } else {
                 if (Math.abs(centerPosition - position) == SECOND_LABEL_POSITION) { //가운데 포지션과 차이가 1이라면
-                    textSize = secondLabelSize;
+                    textSize = SECOND_LABEL_SIZE;
                 } else {
-                    textSize = thirdLabelSize;
+                    textSize = THIRD_LABEL_SIZE;
                 }
                 textColor = nonSelectedLabelColor;
-                padding = nonSelectedLabelPadding;
+                padding = NON_SELECTED_LABEL_PADDING;
             }
 
             int paddingSize = (int) MetricsUtil.convertDpToPixel(padding, getContext());

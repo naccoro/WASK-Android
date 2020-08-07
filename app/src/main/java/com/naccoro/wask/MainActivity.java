@@ -14,12 +14,5 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatePickerDialogFragment.newInstance().
-                setOnDateChangedListener(new DatePickerDialogFragment.OnDateChangedListener() {
-                    @Override
-                    public void onDateChange(int year, int month, int day) {
-                        Toast.makeText(MainActivity.this, year + "," + month + ", " + day, Toast.LENGTH_LONG).show();
-                    }
-                }).show(getSupportFragmentManager(), "dialog");
     }
 }

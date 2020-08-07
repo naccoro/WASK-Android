@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -37,14 +36,14 @@ import java.util.GregorianCalendar;
 public class WheelDatePicker extends NestedScrollView implements WheelSnapScrollListener.OnSnapPositionChangeListener {
 
     //picker에 표시할 년도의 범위를 2000년도~2030년도로 설정 (변경가능)
-    private final int startYearValue = 2000;
-    private final int endYearValue = 2030;
+    private final int START_YEAR_VALUE = 2000;
+    private final int END_YEAR_VALUE = 2030;
 
     //picker에 표시되는 월의 범위를 1(고정)~12월로 설정
-    private final int endMonthValue = 12;
+    private final int END_MONTH_VALUE = 12;
 
     //picker에 표시되는 일의 범위를 1(고정)~31일로 설정 (이후 로직에서 변경)
-    private final int endDayOfMonthValue = 31;
+    private final int END_DAY_OF_MONTH_VALUE = 31;
 
 
     boolean isDateInitDone = true;
@@ -113,9 +112,9 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         monthRecyclerView.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.MONTH);
         dayRecyclerView.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.DAY);
 
-        yearRecyclerView.setRecyclerViewRange(startYearValue, endYearValue);
-        monthRecyclerView.setRecyclerViewRange(1, endMonthValue);
-        dayRecyclerView.setRecyclerViewRange(1, endDayOfMonthValue);
+        yearRecyclerView.setRecyclerViewRange(START_YEAR_VALUE, END_YEAR_VALUE);
+        monthRecyclerView.setRecyclerViewRange(1, END_MONTH_VALUE);
+        dayRecyclerView.setRecyclerViewRange(1, END_DAY_OF_MONTH_VALUE);
 
         //year, month, day 모두 snap Listener 적용
         yearRecyclerView.attachSnapHelperWithListener(new LinearSnapHelper(),
@@ -252,7 +251,7 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                final int yearPosition = (year - startYearValue);
+                final int yearPosition = (year - START_YEAR_VALUE);
                 LinearLayoutManager manager = (LinearLayoutManager) yearRecyclerView.getLayoutManager();
                 if (manager != null) {
                     //기존 RecyclerView.smoothScrollToPosition or scrollToPosition은 잘못된 스크롤 동작 방식이 여러 보고 되었다.

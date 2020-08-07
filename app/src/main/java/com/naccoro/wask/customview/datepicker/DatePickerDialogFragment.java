@@ -81,14 +81,14 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment {
             datePicker.setDate(year, month, day);
         }
 
-        view.findViewById(R.id.datepicker_x_btn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.datepicker_x_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 datePickerDismiss();
             }
         });
 
-        view.findViewById(R.id.datepicker_ok_btn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.datepicker_ok_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //날짜 반환
