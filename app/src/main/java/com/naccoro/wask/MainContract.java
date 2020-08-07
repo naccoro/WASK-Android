@@ -1,6 +1,6 @@
 package com.naccoro.wask;
 
-public interface Main {
+public interface MainContract {
 
     interface View {
 
