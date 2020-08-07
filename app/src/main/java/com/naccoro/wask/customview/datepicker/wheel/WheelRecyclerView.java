@@ -26,20 +26,7 @@ import com.naccoro.wask.utils.MetricsUtil;
  */
 public class WheelRecyclerView extends RecyclerView {
 
-    Context context;
-    WheelRecyclerAdapter adapter;
-    private final WheelRecyclerViewType defaultType = WheelRecyclerViewType.YEAR;
-    WheelRecyclerViewType recyclerViewType = defaultType;
-    WheelSnapScrollListener wheelSnapScrollListener;
-
-    //이 RecyclerView가 보여주는 범위를 저장한다.
-    int startDateValue = 1;
-    int endDateValue = 1;
-
     private final int SECOND_LABEL_POSITION = 1;
-
-    private int selectedLabelColor = 0;
-    private int nonSelectedLabelColor = 0;
 
     private final int SELECTED_LABEL_SIZE = 20;
     private final int SECOND_LABEL_SIZE = 18;
@@ -47,6 +34,31 @@ public class WheelRecyclerView extends RecyclerView {
 
     private final int SELECTED_LABEL_PADDING = 5;
     private final int NON_SELECTED_LABEL_PADDING = 2;
+
+    //picker에 표시할 년도의 범위를 2000년도~2030년도로 설정 (변경가능)
+    public static final int START_YEAR_VALUE = 2000;
+    public static final int END_YEAR_VALUE = 2030;
+
+    //picker에 표시되는 월의 범위를 1(고정)~12월로 설정
+    public static final int END_MONTH_VALUE = 12;
+
+    //picker에 표시되는 일의 범위를 1(고정)~31일로 설정 (이후 로직에서 변경)
+    public static final int END_DAY_OF_MONTH_VALUE = 31;
+
+    private final WheelRecyclerViewType DEFAULT_TYPE = WheelRecyclerViewType.NONE;
+
+    private int selectedLabelColor = 0;
+    private int nonSelectedLabelColor = 0;
+
+    Context context;
+    WheelRecyclerAdapter adapter;
+    WheelRecyclerViewType recyclerViewType = DEFAULT_TYPE;
+    WheelSnapScrollListener wheelSnapScrollListener;
+
+    //이 RecyclerView가 보여주는 범위를 저장한다.
+    int startDateValue = 1;
+    int endDateValue = 1;
+
 
     public WheelRecyclerView(@NonNull Context context) {
         super(context);
@@ -69,7 +81,7 @@ public class WheelRecyclerView extends RecyclerView {
         LinearLayoutManager manager = new LinearLayoutManager(context);
         this.setLayoutManager(manager);
 
-        adapter = new WheelRecyclerAdapter(defaultType);
+        adapter = new WheelRecyclerAdapter(recyclerViewType);
         this.setAdapter(adapter);
 
         selectedLabelColor = context.getColor(R.color.colorDatePickerSelectedLabel);
@@ -101,6 +113,16 @@ public class WheelRecyclerView extends RecyclerView {
 
     public void setRecyclerViewType(WheelRecyclerViewType type) {
         recyclerViewType = type;
+        switch (type) {
+            case YEAR:
+                setRecyclerViewRange(START_YEAR_VALUE, END_YEAR_VALUE);
+                break;
+            case MONTH:
+                setRecyclerViewRange(1, END_MONTH_VALUE);
+                break;
+            case DAY:
+                setRecyclerViewRange(1, END_DAY_OF_MONTH_VALUE);
+        }
         adapter.setRecyclerType(type);
     }
 
@@ -287,13 +309,16 @@ public class WheelRecyclerView extends RecyclerView {
         }
 
         private String getDateString(int position) {
+            int dateValue = startDateValue + position;
             switch (type) {
                 case YEAR:
-                    return getYearString(startDateValue + position);
+                    return getYearString(dateValue);
                 case MONTH:
-                    return getMonthString(startDateValue + position);
+                    return getMonthString(dateValue);
+                case DAY:
+                    return getDayString(dateValue);
                 default:
-                    return getDayString(startDateValue + position);
+                    return dateValue + "";
             }
         }
 
@@ -320,6 +345,6 @@ public class WheelRecyclerView extends RecyclerView {
     }
 
     enum WheelRecyclerViewType {
-        YEAR, MONTH, DAY
+        YEAR, MONTH, DAY, NONE
     }
 }
