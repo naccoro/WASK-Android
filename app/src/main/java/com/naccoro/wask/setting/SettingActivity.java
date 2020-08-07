@@ -31,6 +31,8 @@ public class SettingActivity extends AppCompatActivity  implements SettingContra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        presenter = new SettingPresenter(this);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(R.string.setting_title);
@@ -41,7 +43,7 @@ public class SettingActivity extends AppCompatActivity  implements SettingContra
         replaceLaterLabel = findViewById(R.id.mask_replace_later);
         pushAlertLabel = findViewById(R.id.mask_push_alert);
 
-        findViewById(R.id.replace_later_layout).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.replacement_cycle_alert_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenter.clickReplacementCycle();
@@ -87,7 +89,7 @@ public class SettingActivity extends AppCompatActivity  implements SettingContra
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replacement_cycle))
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
-
+                    dialog.dismiss();
                 })
                 .build()
                 .show(getSupportFragmentManager(), "replacementCycle");
@@ -98,7 +100,7 @@ public class SettingActivity extends AppCompatActivity  implements SettingContra
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replace_later))
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
-
+                    dialog.dismiss();
                 })
                 .build()
                 .show(getSupportFragmentManager(), "replaceLater");
@@ -109,16 +111,16 @@ public class SettingActivity extends AppCompatActivity  implements SettingContra
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_push_alert))
                 .addVerticalButton(getString(R.string.setting_push_alert_sound), (dialog, view) -> {
-
+                    dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_vibration), (dialog, view) -> {
-
+                    dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_all), (dialog, view) -> {
-
+                    dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_none), (dialog, view) -> {
-
+                    dialog.dismiss();
                 })
                 .build()
                 .show(getSupportFragmentManager(), "replaceLater");
