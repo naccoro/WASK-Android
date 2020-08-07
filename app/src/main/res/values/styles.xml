@@ -7,12 +7,12 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!--custom font-family 적용-->
-        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="android:textViewStyle">@style/waskTextViewFontStyle</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
-        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
-        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
-        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
+        <item name="android:buttonStyle">@style/waskButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/waskEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/waskRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/waskCheckboxFontStyle</item>
     </style>
 
 </resources>
