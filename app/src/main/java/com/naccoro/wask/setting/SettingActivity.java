@@ -16,7 +16,8 @@ import android.widget.Toast;
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 
-public class SettingActivity extends AppCompatActivity implements SettingContract.View {
+public class SettingActivity extends AppCompatActivity
+        implements SettingContract.View, View.OnClickListener {
 
     //마스크 교체 주기
     TextView replacementCycleAlertLabel;
@@ -44,26 +45,11 @@ public class SettingActivity extends AppCompatActivity implements SettingContrac
         replaceLaterLabel = findViewById(R.id.mask_replace_later);
         pushAlertLabel = findViewById(R.id.mask_push_alert);
 
-        findViewById(R.id.replacement_cycle_alert_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.clickReplacementCycle();
-            }
-        });
+        findViewById(R.id.replacement_cycle_alert_layout).setOnClickListener(this);
 
-        findViewById(R.id.replace_later_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.clickReplaceLater();
-            }
-        });
+        findViewById(R.id.replace_later_layout).setOnClickListener(this);
 
-        findViewById(R.id.push_alert_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.clickPushAlert();
-            }
-        });
+        findViewById(R.id.push_alert_layout).setOnClickListener(this);
 
         Switch alertVisibleSwitch = findViewById(R.id.mask_foreground_alert_visible_switch);
 
@@ -135,5 +121,21 @@ public class SettingActivity extends AppCompatActivity implements SettingContrac
                 })
                 .build()
                 .show(getSupportFragmentManager(), "replaceLater");
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.replacement_cycle_alert_layout:
+                presenter.clickReplacementCycle();
+                break;
+
+            case R.id.replace_later_layout:
+                presenter.clickReplaceLater();
+                break;
+
+            case R.id.push_alert_layout:
+                presenter.clickPushAlert();
+        }
     }
 }
