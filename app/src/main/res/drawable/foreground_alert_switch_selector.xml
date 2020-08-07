@@ -1,0 +1,10 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_setting_button_toggle_gray"
+        android:state_checked="false"/>
+
+    <item
+        android:drawable="@drawable/ic_setting_on_button_toggle_blue"
+        android:state_checked="true"/>
+
+</selector>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".setting.SettingActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mask_replacement_cycle_alert_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/setting_margin"
+            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="8sp"
+            android:textColor="@color/waskGrayFont"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/setting_replacement_cycle" />
+
+        <TextView
+            android:id="@+id/mask_replacement_cycle_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="6sp"
+            android:textColor="@color/waskAccentFont"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/mask_replacement_cycle_alert_textview"
+            app:layout_constraintTop_toBottomOf="@+id/mask_replacement_cycle_alert_textview"
+            tools:text="3일" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:id="@+id/constraintlayout_second"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_first">
+
+        <TextView
+            android:id="@+id/mask_replace_later_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/setting_margin"
+            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="8sp"
+            android:textColor="@color/waskGrayFont"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/setting_replace_later" />
+
+        <TextView
+            android:id="@+id/mask_replace_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="6sp"
+            android:textColor="@color/waskAccentFont"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/mask_replace_later_textview"
+            app:layout_constraintTop_toBottomOf="@+id/mask_replace_later_textview"
+            tools:text="1일" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:id="@+id/constraintlayout_third"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_second">
+
+        <TextView
+            android:id="@+id/mask_push_alert_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/setting_margin"
+            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="8sp"
+            android:textColor="@color/waskGrayFont"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/setting_push_alert"/>
+
+        <TextView
+            android:id="@+id/mask_push_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="6sp"
+            android:textColor="@color/waskAccentFont"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/mask_push_alert_textview"
+            app:layout_constraintTop_toBottomOf="@+id/mask_push_alert_textview"
+            tools:text="소리+진동" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:id="@+id/constraintlayout_fourth"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_third">
+
+        <TextView
+            android:id="@+id/mask_foreground_alert_visible_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/setting_margin"
+            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="8sp"
+            android:textColor="@color/waskGrayFont"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/setting_foreground_alert" />
+
+        <Switch
+            android:id="@+id/mask_foreground_alert_visible_switch"
+            style="@style/SwitchThumb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:track="@drawable/foreground_alert_switch_selector"
+            android:layout_marginRight="@dimen/setting_attribute_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mask_foreground_alert_visible_textview"></Switch>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
