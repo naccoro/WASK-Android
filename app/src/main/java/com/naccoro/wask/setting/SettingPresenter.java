@@ -6,6 +6,7 @@ public class SettingPresenter implements SettingContract.Presenter {
     SettingPresenter(SettingActivity settingView) {
         this.settingView = settingView;
     }
+
     @Override
     public void clickHomeButton() {
         settingView.finish();

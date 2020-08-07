@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 
-public class SettingActivity extends AppCompatActivity  implements SettingContract.View{
+public class SettingActivity extends AppCompatActivity implements SettingContract.View {
 
     //마스크 교체 주기
     TextView replacementCycleAlertLabel;
@@ -26,6 +26,7 @@ public class SettingActivity extends AppCompatActivity  implements SettingContra
     TextView pushAlertLabel;
 
     SettingPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class SettingActivity extends AppCompatActivity  implements SettingContra
         });
 
         Switch alertVisibleSwitch = findViewById(R.id.mask_foreground_alert_visible_switch);
-        
+
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean newValue) {
