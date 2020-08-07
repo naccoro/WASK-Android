@@ -6,4 +6,9 @@
     <string name="setting_replace_later">나중에 교체하기</string>
     <string name="setting_push_alert">푸시알람</string>
     <string name="setting_foreground_alert">마스크 사용 일자 알림바 보이기</string>
+    <string name="setting_dialog_ok">확인</string>
+    <string name="setting_push_alert_sound">소리</string>
+    <string name="setting_push_alert_vibration">진동</string>
+    <string name="setting_push_alert_all">소리+진동</string>
+    <string name="setting_push_alert_none">없음</string>
 </resources>

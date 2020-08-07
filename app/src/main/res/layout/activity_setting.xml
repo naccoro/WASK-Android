@@ -8,7 +8,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintlayout_first"
+        android:id="@+id/replacement_cycle_alert_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -47,12 +47,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:id="@+id/constraintlayout_second"
+        android:id="@+id/replace_later_layout"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_first">
+        app:layout_constraintTop_toBottomOf="@+id/replacement_cycle_alert_layout">
 
         <TextView
             android:id="@+id/mask_replace_later_textview"
@@ -86,12 +86,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:id="@+id/constraintlayout_third"
+        android:id="@+id/push_alert_layout"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_second">
+        app:layout_constraintTop_toBottomOf="@+id/replace_later_layout">
 
         <TextView
             android:id="@+id/mask_push_alert_textview"
@@ -130,7 +130,7 @@
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_third">
+        app:layout_constraintTop_toBottomOf="@+id/push_alert_layout">
 
         <TextView
             android:id="@+id/mask_foreground_alert_visible_textview"
