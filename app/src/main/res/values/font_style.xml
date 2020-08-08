@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Custom font 적용 -->
+    <style name="waskTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/notosans_font_family</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="waskButtonFontStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:fontFamily">@font/notosans_font_family</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="waskEditTextFontStyle" parent="@android:style/Widget.DeviceDefault.EditText">
+        <item name="android:fontFamily">@font/notosans_font_family</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="waskRadioButtonFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton">
+        <item name="android:fontFamily">@font/notosans_font_family</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="waskCheckboxFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/notosans_font_family</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+</resources>
