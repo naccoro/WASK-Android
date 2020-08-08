@@ -18,13 +18,13 @@ public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
 
     //마스크 교체 주기
-    TextView replacementCycleAlertLabel;
+    private TextView replacementCycleAlertLabel;
     //나중에 교체하기
-    TextView replaceLaterLabel;
+    private TextView replaceLaterLabel;
     //푸시 알람
-    TextView pushAlertLabel;
+    private TextView pushAlertLabel;
 
-    SettingPresenter presenter;
+    private SettingPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,10 @@ public class SettingActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+       init();
+    }
+
+    private void init() {
         replacementCycleAlertLabel = findViewById(R.id.textview_replacementcyclealert_body);
         replaceLaterLabel = findViewById(R.id.textview_replacelater_body);
         pushAlertLabel = findViewById(R.id.textview_pushalert_body);
