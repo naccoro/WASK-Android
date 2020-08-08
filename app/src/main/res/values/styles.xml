@@ -1,12 +1,25 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.DatePicker.BottomSheetDialog</item>
+    </style>
+
+    <style name="ThemeOverlay.DatePicker.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.DatePicker.BottomSheet</item>
+    </style>
+
+    <style name="Widget.DatePicker.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.DatePicker</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.DatePicker" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 
     <style name="SettingTheme" parent="Theme.AppCompat.Light.DarkActionBar">
