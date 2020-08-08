@@ -1,7 +1,10 @@
-package com.naccoro.wask.database;
+package com.naccoro.wask.replacement.repository;
 
 import androidx.room.Dao;
 import androidx.room.Query;
+
+import com.naccoro.wask.base.BaseDao;
+import com.naccoro.wask.replacement.model.ReplacementHistoryEntity;
 
 import java.util.List;
 

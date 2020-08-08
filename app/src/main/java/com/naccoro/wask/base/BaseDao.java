@@ -1,4 +1,4 @@
-package com.naccoro.wask.database;
+package com.naccoro.wask.base;
 
 import androidx.room.Delete;
 import androidx.room.Insert;

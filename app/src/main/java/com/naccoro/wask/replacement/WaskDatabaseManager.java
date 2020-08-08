@@ -1,10 +1,13 @@
-package com.naccoro.wask.database;
+package com.naccoro.wask.replacement;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.naccoro.wask.replacement.model.ReplacementHistoryEntity;
+import com.naccoro.wask.replacement.repository.ReplacementHistoryDao;
 
 @Database(entities = {ReplacementHistoryEntity.class}, version = 1)
 public abstract class WaskDatabaseManager extends RoomDatabase {

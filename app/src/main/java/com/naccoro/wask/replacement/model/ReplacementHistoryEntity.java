@@ -1,4 +1,4 @@
-package com.naccoro.wask.database;
+package com.naccoro.wask.replacement.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

@@ -1,7 +1,10 @@
-package com.naccoro.wask.database;
+package com.naccoro.wask.replacement.repository;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.naccoro.wask.replacement.WaskDatabaseManager;
+import com.naccoro.wask.replacement.model.ReplacementHistoryEntity;
 
 import java.util.List;
 
