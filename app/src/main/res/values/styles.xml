@@ -5,6 +5,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!--custom font-family 적용-->
+        <item name="android:textViewStyle">@style/waskTextViewFontStyle</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:buttonStyle">@style/waskButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/waskEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/waskRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/waskCheckboxFontStyle</item>
+      
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+      
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.DatePicker.BottomSheetDialog</item>
     </style>
 
