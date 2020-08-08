@@ -1,5 +1,6 @@
 package com.naccoro.wask.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -19,8 +20,7 @@ public class ReplacementHistoryEntity {
     @ColumnInfo(name = "replace_date_month")
     private int monthOfReplaceDate;
 
-    public ReplacementHistoryEntity(int id, String replacedDate) {
-        this.id = id;
+    public ReplacementHistoryEntity(String replacedDate) {
         this.replacedDate = replacedDate;
         this.monthOfReplaceDate = DateUtils.getMonth(replacedDate);
     }
@@ -43,12 +43,17 @@ public class ReplacementHistoryEntity {
 
     public void setReplacedDate(String replacedDate) {
         this.replacedDate = replacedDate;
-        setMonthOfReplaceDate(DateUtils.getMonth(replacedDate));
+        this.monthOfReplaceDate = DateUtils.getMonth(replacedDate);
     }
 
     public void setMonthOfReplaceDate(int monthOfReplaceDate) {
         DateUtils.checkMonthFormat(monthOfReplaceDate);
-        this.monthOfReplaceDate = monthOfReplaceDate;
         setReplacedDate(DateUtils.replaceMonthOfDateFormat(getReplacedDate(), monthOfReplaceDate));
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "[id : " + getId() + " date : " + getReplacedDate() + "]";
     }
 }

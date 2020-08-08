@@ -17,6 +17,7 @@ public abstract class WaskDatabaseManager extends RoomDatabase {
             synchronized (WaskDatabaseManager.class) {
                 instance = Room
                         .databaseBuilder(context.getApplicationContext(), WaskDatabaseManager.class, "wask.db")
+                        .allowMainThreadQueries()
                         .build();
             }
         }
