@@ -1,4 +1,4 @@
-package com.naccoro.wask;
+package com.naccoro.wask.preferences;
 
 /**
  * SharedPreference의 사용을 도와줌 (Setting값)

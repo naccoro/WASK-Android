@@ -1,4 +1,4 @@
-package com.naccoro.wask;
+package com.naccoro.wask.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

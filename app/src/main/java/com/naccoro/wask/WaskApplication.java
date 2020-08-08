@@ -2,6 +2,8 @@ package com.naccoro.wask;
 
 import android.app.Application;
 
+import com.naccoro.wask.preferences.SharedPreferenceManager;
+
 public class WaskApplication extends Application {
 
     @Override
