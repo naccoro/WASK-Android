@@ -47,6 +47,8 @@ public class ReplacementHistoryEntity {
     }
 
     public void setMonthOfReplaceDate(int monthOfReplaceDate) {
+        DateUtils.checkMonthFormat(monthOfReplaceDate);
         this.monthOfReplaceDate = monthOfReplaceDate;
+        setReplacedDate(DateUtils.replaceMonthOfDateFormat(getReplacedDate(), monthOfReplaceDate));
     }
 }
