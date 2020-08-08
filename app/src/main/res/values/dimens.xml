@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <resources>
 
-    <dimen name="setting_margin">40dp</dimen>
-    <dimen name="setting_attribute_margin">19dp</dimen>
+    <dimen name="margin_setting_left">40dp</dimen>
+    <dimen name="margin_settingChild_top">19dp</dimen>
+    <dimen name="textsize_setting_title">17sp</dimen>
+    <dimen name="textsize_setting_body">12sp</dimen>
 
     <dimen name="margin_datepicker_layout">60dp</dimen>
     <dimen name="margin_datepicker_bottom">40dp</dimen>

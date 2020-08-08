@@ -8,78 +8,73 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/replacement_cycle_alert_layout"
+        android:id="@+id/constraintlayout_replacementcyclealert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
         android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/mask_replacement_cycle_alert_textview"
+            android:id="@+id/textview_replacementcyclealert_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/setting_margin"
-            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:layout_marginLeft="@dimen/margin_setting_left"
+            android:layout_marginTop="@dimen/margin_settingChild_top"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="8sp"
             android:textColor="@color/waskGrayFont"
-            android:textSize="17sp"
+            android:textSize="@dimen/textsize_setting_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/setting_replacement_cycle" />
 
         <TextView
-            android:id="@+id/mask_replacement_cycle_alert"
+            android:id="@+id/textview_replacementcyclealert_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="6sp"
             android:textColor="@color/waskAccentFont"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/mask_replacement_cycle_alert_textview"
-            app:layout_constraintTop_toBottomOf="@+id/mask_replacement_cycle_alert_textview"
+            android:textSize="@dimen/textsize_setting_body"
+            app:layout_constraintStart_toStartOf="@+id/textview_replacementcyclealert_title"
+            app:layout_constraintTop_toBottomOf="@+id/textview_replacementcyclealert_title"
             tools:text="3일" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:id="@+id/replace_later_layout"
-        android:layout_marginTop="1dp"
+        android:id="@+id/constraintlayout_replacelater"
         android:background="?android:attr/selectableItemBackground"
-        android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/replacement_cycle_alert_layout">
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_replacementcyclealert">
 
         <TextView
-            android:id="@+id/mask_replace_later_textview"
+            android:id="@+id/textview_replacelater_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/setting_margin"
-            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:layout_marginLeft="@dimen/margin_setting_left"
+            android:layout_marginTop="@dimen/margin_settingChild_top"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="8sp"
             android:textColor="@color/waskGrayFont"
-            android:textSize="17sp"
+            android:textSize="@dimen/textsize_setting_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/setting_replace_later" />
 
         <TextView
-            android:id="@+id/mask_replace_later"
+            android:id="@+id/textview_replacelater_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="6sp"
             android:textColor="@color/waskAccentFont"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/mask_replace_later_textview"
-            app:layout_constraintTop_toBottomOf="@+id/mask_replace_later_textview"
+            android:textSize="@dimen/textsize_setting_body"
+            app:layout_constraintStart_toStartOf="@+id/textview_replacelater_title"
+            app:layout_constraintTop_toBottomOf="@+id/textview_replacelater_title"
             tools:text="1일" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,39 +82,36 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:id="@+id/push_alert_layout"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
+        android:id="@+id/constraintlayout_pushalert"
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/replace_later_layout">
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_replacelater">
 
         <TextView
-            android:id="@+id/mask_push_alert_textview"
+            android:id="@+id/textview_pushalert_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/setting_margin"
-            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:layout_marginLeft="@dimen/margin_setting_left"
+            android:layout_marginTop="@dimen/margin_settingChild_top"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="8sp"
             android:textColor="@color/waskGrayFont"
-            android:textSize="17sp"
+            android:textSize="@dimen/textsize_setting_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/setting_push_alert"/>
 
         <TextView
-            android:id="@+id/mask_push_alert"
+            android:id="@+id/textview_pushalert_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="6sp"
             android:textColor="@color/waskAccentFont"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/mask_push_alert_textview"
-            app:layout_constraintTop_toBottomOf="@+id/mask_push_alert_textview"
+            android:textSize="@dimen/textsize_setting_body"
+            app:layout_constraintStart_toStartOf="@+id/textview_pushalert_title"
+            app:layout_constraintTop_toBottomOf="@+id/textview_pushalert_title"
             tools:text="소리+진동" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -127,37 +119,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:id="@+id/constraintlayout_fourth"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
+        android:id="@+id/constraintlayout_foregroundalert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/push_alert_layout">
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_pushalert">
 
         <TextView
-            android:id="@+id/mask_foreground_alert_visible_textview"
+            android:id="@+id/textview_foregroundalert_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/setting_margin"
-            android:layout_marginTop="@dimen/setting_attribute_margin"
+            android:layout_marginLeft="@dimen/margin_setting_left"
+            android:layout_marginTop="@dimen/margin_settingChild_top"
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="8sp"
             android:textColor="@color/waskGrayFont"
-            android:textSize="17sp"
+            android:textSize="@dimen/textsize_setting_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/setting_foreground_alert" />
 
         <Switch
-            android:id="@+id/mask_foreground_alert_visible_switch"
+            android:id="@+id/switch_foregroundalert"
             style="@style/SwitchThumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:track="@drawable/foreground_alert_switch_selector"
-            android:layout_marginRight="@dimen/setting_attribute_margin"
+            android:track="@drawable/selector_foregroundalert_switch"
+            android:layout_marginRight="@dimen/margin_settingChild_top"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mask_foreground_alert_visible_textview"></Switch>
+            app:layout_constraintTop_toTopOf="@+id/textview_foregroundalert_title"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

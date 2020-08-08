@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
@@ -41,17 +39,17 @@ public class SettingActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        replacementCycleAlertLabel = findViewById(R.id.mask_replacement_cycle_alert);
-        replaceLaterLabel = findViewById(R.id.mask_replace_later);
-        pushAlertLabel = findViewById(R.id.mask_push_alert);
+        replacementCycleAlertLabel = findViewById(R.id.textview_replacementcyclealert_body);
+        replaceLaterLabel = findViewById(R.id.textview_replacelater_body);
+        pushAlertLabel = findViewById(R.id.textview_pushalert_body);
 
-        findViewById(R.id.replacement_cycle_alert_layout).setOnClickListener(this);
+        findViewById(R.id.constraintlayout_replacementcyclealert).setOnClickListener(this);
 
-        findViewById(R.id.replace_later_layout).setOnClickListener(this);
+        findViewById(R.id.constraintlayout_replacelater).setOnClickListener(this);
 
-        findViewById(R.id.push_alert_layout).setOnClickListener(this);
+        findViewById(R.id.constraintlayout_pushalert).setOnClickListener(this);
 
-        Switch alertVisibleSwitch = findViewById(R.id.mask_foreground_alert_visible_switch);
+        Switch alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -126,15 +124,15 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.replacement_cycle_alert_layout:
+            case R.id.constraintlayout_replacementcyclealert:
                 presenter.clickReplacementCycle();
                 break;
 
-            case R.id.replace_later_layout:
+            case R.id.constraintlayout_replacelater:
                 presenter.clickReplaceLater();
                 break;
 
-            case R.id.push_alert_layout:
+            case R.id.constraintlayout_pushalert:
                 presenter.clickPushAlert();
         }
     }
