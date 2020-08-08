@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">WASK-Android</string>
+
     <string name="main_card_good">마스크 1일 1사용을 권장합니다</string>
     <string name="main_card_bad">마스크를 교체하는 것을 권장합니다</string>
     <string name="main_use_period_message">일 째 사용중</string>
     <string name="main_change_button">교체하기</string>
+
 </resources>
