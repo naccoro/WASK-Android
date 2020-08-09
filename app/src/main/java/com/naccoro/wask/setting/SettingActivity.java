@@ -23,8 +23,11 @@ public class SettingActivity extends AppCompatActivity
     private TextView replaceLaterLabel;
     //푸시 알람
     private TextView pushAlertLabel;
+    //포그라운드 서비스 알람
+    private Switch alertVisibleSwitch;
 
     private SettingPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,9 @@ public class SettingActivity extends AppCompatActivity
         }
 
        init();
+
+        //start()함수를 호출하여 초기 설정값을 불러옴
+       presenter.start();
     }
 
     private void init() {
@@ -53,7 +59,7 @@ public class SettingActivity extends AppCompatActivity
 
         findViewById(R.id.constraintlayout_pushalert).setOnClickListener(this);
 
-        Switch alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
+        alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -123,6 +129,26 @@ public class SettingActivity extends AppCompatActivity
                 })
                 .build()
                 .show(getSupportFragmentManager(), "replaceLater");
+    }
+
+    @Override
+    public void showReplacementCycleValue(int cycleValue) {
+        replacementCycleAlertLabel.setText(cycleValue + "");
+    }
+
+    @Override
+    public void showReplaceLaterValue(int laterValue) {
+        replaceLaterLabel.setText(laterValue + "");
+    }
+
+    @Override
+    public void showPushAlertValue(String pushAlertValue) {
+        pushAlertLabel.setText(pushAlertValue);
+    }
+
+    @Override
+    public void setAlertVisibleSwitchValue(boolean value) {
+        alertVisibleSwitch.setChecked(value);
     }
 
     @Override

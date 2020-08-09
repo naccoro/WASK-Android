@@ -51,10 +51,11 @@ public class SharedPreferenceManager {
     /**
      * String 값 로드
      * @param key   value에 대응하는 key 문자열
-     * @return  key에 해당하는 String (default: "")
+     * @param defaultValue key에 대응하는 value가 없으면 반환될 문자열
+     * @return  key에 해당하는 String or defaultValue
      */
-    public String getString(String key) {
-        return sharedPreferences.getString(key, "");
+    public String getString(String key,String defaultValue) {
+        return sharedPreferences.getString(key, defaultValue);
     }
 
     /**
@@ -69,10 +70,11 @@ public class SharedPreferenceManager {
     /**
      * int 값 로드
      * @param key   value에 대응하는 key 문자열
-     * @return  key에 해당하는 int (default: -1)
+     * @param defaultValue key에 대응하는 값이 없을 경우 반환될 값
+     * @return  key에 해당하는 int or default value
      */
-    public int getInt(String key) {
-        return sharedPreferences.getInt(key, -1);
+    public int getInt(String key, int defaultValue) {
+        return sharedPreferences.getInt(key, defaultValue);
     }
 
     /**
@@ -87,10 +89,11 @@ public class SharedPreferenceManager {
     /**
      * boolean 값 로드
      * @param key   value에 대응하는 key 문자열
-     * @return  key에 해당하는 boolean (default: false)
+     * @param defaultValue key에 대응하는 value가 없을경우 반환될 값
+     * @return  key에 해당하는 boolean or defaultValue
      */
-    public boolean getBoolean(String key) {
-        return sharedPreferences.getBoolean(key, false);
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return sharedPreferences.getBoolean(key, defaultValue);
     }
 
     /**
