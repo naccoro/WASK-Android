@@ -3,7 +3,9 @@ package com.naccoro.wask.setting;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.notification.WaskService;
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
@@ -56,9 +59,19 @@ public class SettingActivity extends AppCompatActivity
         Switch alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean newValue) {
-                presenter.changeAlertVisibleSwitch(newValue);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                presenter.changeAlertVisibleSwitch(isChecked); //
+
+                if (isChecked) {
+                    Intent service = new Intent(SettingActivity.this, WaskService.class);
+                    ContextCompat.startForegroundService(SettingActivity.this, service);
+                }
+                else {
+                    Intent service = new Intent(SettingActivity.this, WaskService.class);
+                    stopService(service);
+                }
             }
         });
     }

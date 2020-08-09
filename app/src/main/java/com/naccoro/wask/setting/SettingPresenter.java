@@ -30,10 +30,10 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     /**
      * 사용자가 Foregorund Alert Visible Switch의 값을 변경했을 때
-     * @param value : 변경된 값
+     * @param isChecked : 변경된 값
      */
     @Override
-    public void changeAlertVisibleSwitch(boolean value) {
+    public void changeAlertVisibleSwitch(boolean isChecked) {
 
     }
 
