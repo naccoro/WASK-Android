@@ -1,14 +1,20 @@
-package com.naccoro.wask;
+package com.naccoro.wask.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.naccoro.wask.R;
+import com.naccoro.wask.setting.SettingActivity;
+
+public class MainActivity extends AppCompatActivity
+        implements View.OnClickListener, MainContract.View {
+    MainPresenter presenter;
 
     ImageView settingButton;
     ImageView calendarButton;
@@ -21,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        presenter = new MainPresenter(this);
         initView();
     }
 
@@ -40,9 +46,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.imageview_setting:
                 // 셋팅 액티비티로 이동
+                presenter.clickSettingButton();
                 break;
             case R.id.imageview_calendar:
                 // 캘린더 액티비티로 이동
@@ -51,5 +58,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // '교체하기' 버튼을 눌렀을 때
                 break;
         }
+    }
+
+    @Override
+    public void showSettingView() {
+        Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+        startActivity(intent);
     }
 }

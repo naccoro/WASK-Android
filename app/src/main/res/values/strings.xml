@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">WASK-Android</string>
 
+    <string name="setting_title">설정</string>
+    <string name="setting_replacement_cycle">마스크 교체 알림 주기</string>
+    <string name="setting_replace_later">나중에 교체하기</string>
+    <string name="setting_push_alert">푸시알람</string>
+    <string name="setting_foreground_alert">마스크 사용 일자 알림바 보이기</string>
+    <string name="setting_dialog_ok">확인</string>
+    <string name="setting_push_alert_sound">소리</string>
+    <string name="setting_push_alert_vibration">진동</string>
+    <string name="setting_push_alert_all">소리+진동</string>
+    <string name="setting_push_alert_none">없음</string>
+
     <string name="main_card_good">마스크 1일 1사용을 권장합니다</string>
     <string name="main_card_bad">마스크를 교체하는 것을 권장합니다</string>
     <string name="main_use_period_message">일 째 사용중</string>

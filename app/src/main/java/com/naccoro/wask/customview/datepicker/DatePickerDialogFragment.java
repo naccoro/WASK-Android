@@ -76,24 +76,24 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment implemen
         //corner style 적용하기
         setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_DatePicker_BottomSheetDialog);
 
-        datePicker = view.findViewById(R.id.datepicker);
+        datePicker = view.findViewById(R.id.wheeldatepicker_datepicker);
         if (year != -1 && month != -1 && day != -1) {
             datePicker.setDate(year, month, day);
         }
 
-        view.findViewById(R.id.datepicker_x_button).setOnClickListener(this);
+        view.findViewById(R.id.imagebutton_datepicker_ok).setOnClickListener(this);
 
-        view.findViewById(R.id.datepicker_ok_button).setOnClickListener(this);
+        view.findViewById(R.id.imagebutton_datepicker_x).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.datepicker_ok_button:
+            case R.id.imagebutton_datepicker_ok:
                 clickDatePickerOkButton();
                 break;
 
-            case R.id.datepicker_x_button:
+            case R.id.imagebutton_datepicker_x:
                 clickDatePickerXButton();
         }
     }

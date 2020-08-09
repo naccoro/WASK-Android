@@ -15,4 +15,6 @@
     <color name="waskGrayFont">#707070</color>
     <color name="dividerGray">#e2e2e2</color>
 
+    <color name="waskAccentFont">@color/waskBlue</color>
+
 </resources>

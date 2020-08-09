@@ -74,8 +74,8 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         NestedScrollView.LayoutParams rootParams = (NestedScrollView.LayoutParams) getLayoutParams();
         if (rootParams == null) {
             rootParams = new NestedScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            rootParams.leftMargin = (int) getResources().getDimension(R.dimen.datePicker_margin);
-            rootParams.rightMargin = (int) getResources().getDimension(R.dimen.datePicker_margin);
+            rootParams.leftMargin = (int) getResources().getDimension(R.dimen.margin_datepicker_layout);
+            rootParams.rightMargin = (int) getResources().getDimension(R.dimen.margin_datepicker_layout);
         }
         this.addView(parent, rootParams);
 

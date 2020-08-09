@@ -34,6 +34,12 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
+    <style name="SettingTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_appbarback</item>
+    </style>
+
     <style name="WaskDialogText">
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/waskGrayFont</item>
@@ -49,6 +55,12 @@
 
     <style name="divider">
         <item name="android:background">@color/dividerGray</item>
+    </style>
+
+    <style name="SwitchThumb" parent="Widget.AppCompat.CompoundButton.Switch">
+
+        <item name="android:colorForeground">@android:color/white</item>
+        <item name="android:colorControlActivated">@android:color/white</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
