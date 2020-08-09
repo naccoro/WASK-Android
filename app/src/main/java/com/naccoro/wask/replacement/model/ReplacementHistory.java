@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 import com.naccoro.wask.utils.DateUtils;
 
 @Entity(tableName = "replacement_histories")
-public class ReplacementHistoryEntity {
+public class ReplacementHistory {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="replacement_histories_id")
     private int id;
@@ -20,7 +20,7 @@ public class ReplacementHistoryEntity {
     @ColumnInfo(name = "replace_date_month")
     private int monthOfReplaceDate;
 
-    public ReplacementHistoryEntity(String replacedDate) {
+    public ReplacementHistory(String replacedDate) {
         this.replacedDate = replacedDate;
         this.monthOfReplaceDate = DateUtils.getMonth(replacedDate);
     }

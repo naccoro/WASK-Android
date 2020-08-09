@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.naccoro.wask.replacement.WaskDatabaseManager;
-import com.naccoro.wask.replacement.model.ReplacementHistoryEntity;
+import com.naccoro.wask.replacement.model.ReplacementHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,85 +15,97 @@ public class ReplacementHistoryRepository {
 
     private ReplacementHistoryDao dao;
 
-    private List<ReplacementHistoryEntity> cachedReplacementHistory = null;
+    private List<ReplacementHistory> cachedReplacementHistory = null;
+
+    boolean cacheIsDirty = false;
 
     public ReplacementHistoryRepository(Context context) {
         dao = WaskDatabaseManager.getInstance(context).replacementHistoryDao();
     }
 
-    public List<ReplacementHistoryEntity> getAll() {
-        return getAll(-1);
+    public void getAll(LoadHistoriesCallback callback) {
+        getAll(-1, callback);
     }
 
-    public List<ReplacementHistoryEntity> getAll(int month) {
-        if (cachedReplacementHistory == null) {
-            updateCachedHistory();
+    public void getAll(int month, LoadHistoriesCallback callback) {
+        if (cachedReplacementHistory == null || cacheIsDirty) {
+            updateCachedHistories();
         }
-        List<ReplacementHistoryEntity> result = getAllFromCached(month);
+        List<ReplacementHistory> result = getAllFromCached(month);
         Log.d(TAG, "getAll: " + result.toString());
-        return result;
+
+        if (result.isEmpty()) {
+            callback.onDataNotAvailable();
+        } else {
+            callback.onHistoriesLoaded(result);
+        }
     }
 
-    public ReplacementHistoryEntity get(String date) {
-        if (cachedReplacementHistory == null) {
-            updateCachedHistory();
+    public void get(String date, GetHistoriesCallback callback) {
+        if (cachedReplacementHistory == null || cacheIsDirty) {
+            updateCachedHistories();
         }
 
-        ReplacementHistoryEntity result = getAllFromCached(date);
+        ReplacementHistory result = getAllFromCached(date);
 
         if (result != null) {
             Log.d(TAG, "get: " + result.toString());
+            callback.onTaskLoaded(result);
         } else {
             Log.d(TAG, "get: " + null);
+            callback.onDataNotAvailable();
         }
-        return result;
-    }
-
-    public void updateCachedHistory() {
-        cachedReplacementHistory = dao.getAll();
-        Log.d(TAG, "updateCachedHistory: cache is updated");
     }
     
-    public void insert(ReplacementHistoryEntity newReplacementHistory) {
+    public void insert(ReplacementHistory newReplacementHistory) {
         Log.d(TAG, "insert: " + newReplacementHistory.toString());
         dao.insert(newReplacementHistory);
-        updateCachedHistory();
+        updateHistories();
     }
     
     public void insert(String date) {
-        ReplacementHistoryEntity newReplacementHistory = new ReplacementHistoryEntity(date);
+        ReplacementHistory newReplacementHistory = new ReplacementHistory(date);
         insert(newReplacementHistory);
-        updateCachedHistory();
     }
 
-    public void delete(ReplacementHistoryEntity deleteReplacementHistory) {
+    public void delete(ReplacementHistory deleteReplacementHistory) {
         Log.d(TAG, "delete: " + deleteReplacementHistory);
         dao.delete(deleteReplacementHistory);
-        updateCachedHistory();
+        cachedReplacementHistory = null;
     }
 
     public void delete(String date) {
         Log.d(TAG, "delete: " + date);
         dao.delete(date);
-        updateCachedHistory();
+        updateHistories();
     }
     
     public void deleteAll() {
         Log.d(TAG, "deleteAll: delete all of record");
         dao.deleteAll();
-        updateCachedHistory();
+        updateHistories();
     }
 
-    public void update(ReplacementHistoryEntity updatedReplacementHistory) {
+    public void update(ReplacementHistory updatedReplacementHistory) {
         Log.d(TAG, "update: " + updatedReplacementHistory.toString());
         dao.update(updatedReplacementHistory);
-        updateCachedHistory();
+        updateHistories();
     }
 
-    private List<ReplacementHistoryEntity> getAllFromCached(int month) {
+    public void updateHistories() {
+        cacheIsDirty = true;
+    }
+
+    private void updateCachedHistories() {
+        cachedReplacementHistory = dao.getAll();
+        Log.d(TAG, "updateCachedHistory: cache is updated");
+        cacheIsDirty = false;
+    }
+
+    private List<ReplacementHistory> getAllFromCached(int month) {
         if (month != -1) {
-            List<ReplacementHistoryEntity> result = new ArrayList<>();
-            for (ReplacementHistoryEntity history : cachedReplacementHistory) {
+            List<ReplacementHistory> result = new ArrayList<>();
+            for (ReplacementHistory history : cachedReplacementHistory) {
                 if (history.getMonthOfReplaceDate() == month) {
                     result.add(history);
                 }
@@ -104,12 +116,26 @@ public class ReplacementHistoryRepository {
         }
     }
 
-    private ReplacementHistoryEntity getAllFromCached(String date) {
-        for (ReplacementHistoryEntity history : cachedReplacementHistory) {
+    private ReplacementHistory getAllFromCached(String date) {
+        for (ReplacementHistory history : cachedReplacementHistory) {
             if (history.getReplacedDate().equals(date)) {
                 return history;
             }
         }
         return null;
+    }
+
+    public interface LoadHistoriesCallback {
+
+        void onHistoriesLoaded(List<ReplacementHistory> histories);
+
+        void onDataNotAvailable();
+    }
+
+    public interface GetHistoriesCallback {
+
+        void onTaskLoaded(ReplacementHistory history);
+
+        void onDataNotAvailable();
     }
 }
