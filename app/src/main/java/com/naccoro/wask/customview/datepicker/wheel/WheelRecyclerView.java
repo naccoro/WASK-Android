@@ -171,6 +171,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     /**
      * 교체 주기, 나중에 교체하기 주기 다이얼로그에서 일자를 선택할 때 3개의 item만 보여주기 위한 높이
+     *
      * @return 3개의 item 높이
      */
     public float getNoneHeight() {
@@ -184,6 +185,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     /**
      * 현재 사용자의 스크롤에 의해서 가운데에 보이는 값을 가져옴
+     *
      * @return 가운데에 있는 값
      */
     public int getSnapValue() {
@@ -235,14 +237,15 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     /**
      * 커스텀 뷰의 높이를 측정하는 오버라이드 함수
      * setMeasuredDimension 함수를 통해 매개변수의 넓이, 가로를 강제 설정
-     * @param widthSpec : 넓이
+     *
+     * @param widthSpec  : 넓이
      * @param heightSpec : 높이
      */
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
-        int height = (int)getMaxHeight();
+        int height = (int) getMaxHeight();
         if (recyclerViewType == WheelRecyclerViewType.NONE) {
-            height = (int)getNoneHeight();
+            height = (int) getNoneHeight();
         }
         setMeasuredDimension(widthSpec, height);
     }
@@ -298,6 +301,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
         /**
          * centerPosition과 그 양 옆 2개의 Item만 변경해준다.
+         *
          * @param centerPosition : Selected position
          */
         void setCenterPosition(int centerPosition) {

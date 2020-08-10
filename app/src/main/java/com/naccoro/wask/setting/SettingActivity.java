@@ -44,10 +44,10 @@ public class SettingActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-       init();
+        init();
 
         //start()함수를 호출하여 초기 설정값을 불러옴
-       presenter.start();
+        presenter.start();
     }
 
     private void init() {
