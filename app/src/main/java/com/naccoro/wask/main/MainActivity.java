@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.calendar.CalendarActivity;
 import com.naccoro.wask.setting.SettingActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.imageview_calendar:
                 // 캘린더 액티비티로 이동
+                presenter.clickCalendarButton();
                 break;
             case R.id.button_change:
                 // '교체하기' 버튼을 눌렀을 때 (버튼 동작을 확인하기위해 toast메시지를 띄워놓았습니다.)
@@ -64,6 +66,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showSettingView() {
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
+
+    @Override
+    public void showCalendarView() {
+        Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
     }
