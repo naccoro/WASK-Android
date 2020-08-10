@@ -16,7 +16,8 @@ public class SharedPreferenceManager {
     /**
      * getInstance()를 통해서만 객체가 생성되도록 private 설정
      */
-    private SharedPreferenceManager() { }
+    private SharedPreferenceManager() {
+    }
 
     private static class LazyHolder {
         private static final SharedPreferenceManager instance = new SharedPreferenceManager();
@@ -24,6 +25,7 @@ public class SharedPreferenceManager {
 
     /**
      * instance, editor 초기화
+     *
      * @param context
      */
     public void initInstance(Context context) {
@@ -33,6 +35,7 @@ public class SharedPreferenceManager {
 
     /**
      * LazyHolder.instance 를 참조하는 순간 Class가 로딩되고 초기화가 진행
+     *
      * @return SharedPreferenceManager 객체 (온리원!)
      */
     public static SharedPreferenceManager getInstance() {
@@ -41,6 +44,7 @@ public class SharedPreferenceManager {
 
     /**
      * String 값 저장
+     *
      * @param key   value에 대응하는 key 문자열
      * @param value 저장할 String
      */
@@ -50,16 +54,18 @@ public class SharedPreferenceManager {
 
     /**
      * String 값 로드
-     * @param key   value에 대응하는 key 문자열
+     *
+     * @param key          value에 대응하는 key 문자열
      * @param defaultValue key에 대응하는 value가 없으면 반환될 문자열
-     * @return  key에 해당하는 String or defaultValue
+     * @return key에 해당하는 String or defaultValue
      */
-    public String getString(String key,String defaultValue) {
+    public String getString(String key, String defaultValue) {
         return sharedPreferences.getString(key, defaultValue);
     }
 
     /**
      * int 값 저장
+     *
      * @param key   value에 대응하는 key 문자열
      * @param value 저장할 int
      */
@@ -69,9 +75,10 @@ public class SharedPreferenceManager {
 
     /**
      * int 값 로드
-     * @param key   value에 대응하는 key 문자열
+     *
+     * @param key          value에 대응하는 key 문자열
      * @param defaultValue key에 대응하는 값이 없을 경우 반환될 값
-     * @return  key에 해당하는 int or default value
+     * @return key에 해당하는 int or default value
      */
     public int getInt(String key, int defaultValue) {
         return sharedPreferences.getInt(key, defaultValue);
@@ -79,6 +86,7 @@ public class SharedPreferenceManager {
 
     /**
      * boolean 값 저장
+     *
      * @param key   value에 대응하는 key 문자열
      * @param value 저장할 boolean
      */
@@ -88,9 +96,10 @@ public class SharedPreferenceManager {
 
     /**
      * boolean 값 로드
-     * @param key   value에 대응하는 key 문자열
+     *
+     * @param key          value에 대응하는 key 문자열
      * @param defaultValue key에 대응하는 value가 없을경우 반환될 값
-     * @return  key에 해당하는 boolean or defaultValue
+     * @return key에 해당하는 boolean or defaultValue
      */
     public boolean getBoolean(String key, boolean defaultValue) {
         return sharedPreferences.getBoolean(key, defaultValue);
@@ -98,7 +107,8 @@ public class SharedPreferenceManager {
 
     /**
      * 모든 저장 데이터 삭제
-     * @return  성공여부
+     *
+     * @return 성공여부
      */
     public boolean clear() {
         return editor.clear().commit();

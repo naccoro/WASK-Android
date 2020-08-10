@@ -309,7 +309,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         }
 
         /**
-         * centerPosition과 그 양 옆 2개의 Item만 변경해준다.
+         * centerPosition과 그 양 옆 emptySpace개의 Item만 변경해준다.
          *
          * @param centerPosition : Selected position
          */
