@@ -15,6 +15,7 @@
     <dimen name="textsize_mainuseperiod_number">56sp</dimen>
     <dimen name="textsize_mainuseperiod_text">20sp</dimen>
     <dimen name="margin_mainlayout_top">56dp</dimen>
+    <dimen name="height_main_imagebutton">23dp</dimen>
 
     <dimen name="padding_all_imagebutton">16dp</dimen>
 
