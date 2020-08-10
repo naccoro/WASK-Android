@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="margin_setting_left">40dp</dimen>
-    <dimen name="margin_settingChild_top">19dp</dimen>
+    <dimen name="margin_settingchild_top">19dp</dimen>
     <dimen name="textsize_setting_title">17sp</dimen>
     <dimen name="textsize_setting_body">12sp</dimen>
 
@@ -11,11 +11,11 @@
     <dimen name="margin_datepicker_top">16dp</dimen>
     <dimen name="textsize_datepicker_text">20sp</dimen>
 
-    <dimen name="layout_top_margin_size">56dp</dimen>
-    <dimen name="top_button_horizontal_margin_size">16dp</dimen>
+    <dimen name="textsize_maincard">13sp</dimen>
+    <dimen name="textsize_mainuseperiod_number">56sp</dimen>
+    <dimen name="textsize_mainuseperiod_text">20sp</dimen>
+    <dimen name="margin_mainlayout_top">56dp</dimen>
 
-    <dimen name="main_card_font_size">13sp</dimen>
-    <dimen name="main_use_period_font_size">56sp</dimen>
-    <dimen name="main_use_period_message_font_size">20sp</dimen>
+    <dimen name="padding_all_imagebutton">16dp</dimen>
 
 </resources>

@@ -21,7 +21,7 @@
         android:id="@+id/imageview_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_button_horizontal_margin_size"
+        android:paddingHorizontal="@dimen/padding_all_imagebutton"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
         app:layout_constraintEnd_toStartOf="@+id/imageview_main_logo"
         app:layout_constraintHorizontal_bias="0.0"
@@ -33,7 +33,7 @@
         android:id="@+id/imageview_calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/top_button_horizontal_margin_size"
+        android:paddingHorizontal="@dimen/padding_all_imagebutton"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -45,7 +45,7 @@
         android:id="@+id/constraintlayout_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/layout_top_margin_size"
+        android:layout_marginTop="@dimen/margin_mainlayout_top"
         android:background="@drawable/bg_layout_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
                 android:letterSpacing="-0.02"
                 android:text="@string/main_card_good"
                 android:textColor="@color/waskBlue"
-                android:textSize="@dimen/main_card_font_size"
+                android:textSize="@dimen/textsize_maincard"
                 app:layout_constraintBottom_toTopOf="@+id/imageview_people"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:textColor="@color/waskBlue"
-                android:textSize="@dimen/main_use_period_font_size"
+                android:textSize="@dimen/textsize_mainuseperiod_number"
                 android:textStyle="bold" />
 
             <TextView
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/main_use_period_message"
                 android:textColor="@color/waskGrayFont"
-                android:textSize="@dimen/main_use_period_message_font_size"
+                android:textSize="@dimen/textsize_mainuseperiod_text"
                 android:textStyle="bold" />
         </LinearLayout>
 
