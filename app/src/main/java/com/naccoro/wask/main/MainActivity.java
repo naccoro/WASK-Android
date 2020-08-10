@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.setting.SettingActivity;
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity
     ImageView emotionImageView;
     TextView cardMessageTextView;
     TextView usePeriodTextView;
-    TextView changeButton;
+    Button changeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity
                 // 캘린더 액티비티로 이동
                 break;
             case R.id.button_change:
-                // '교체하기' 버튼을 눌렀을 때 (버튼 동작을 확인하기위해 toast메시지를 띄워놓았습니다.)
-                Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+                // '교체하기' 버튼을 눌렀을 때
                 break;
         }
     }

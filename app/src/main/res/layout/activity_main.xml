@@ -8,19 +8,6 @@
     tools:context=".main.MainActivity">
 
     <ImageView
-        android:id="@+id/imageview_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/height_main_imagebutton"
-        android:adjustViewBounds="true"
-        android:paddingHorizontal="@dimen/padding_all_imagebutton"
-        app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
-        app:layout_constraintEnd_toStartOf="@+id/imageview_main_logo"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageview_main_logo"
-        app:srcCompat="@drawable/ic_setting" />
-
-    <ImageView
         android:id="@+id/imageview_main_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,10 +18,21 @@
         app:srcCompat="@drawable/ic_main_logo" />
 
     <ImageView
+        android:id="@+id/imageview_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/padding_all_imagebutton"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_main_logo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageview_main_logo"
+        app:srcCompat="@drawable/ic_setting" />
+
+    <ImageView
         android:id="@+id/imageview_calendar"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/height_main_imagebutton"
-        android:adjustViewBounds="true"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/padding_all_imagebutton"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +82,7 @@
                 android:id="@+id/textview_card_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:letterSpacing="-0.02"
                 android:text="@string/main_card_good"
                 android:textColor="@color/waskBlue"
                 android:textSize="@dimen/textsize_maincard"
@@ -142,23 +141,23 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
+        <Button
             android:id="@+id/button_change"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="51dp"
             android:background="@drawable/bg_button_change"
-            android:elevation="8dp"
+            android:elevation="10dp"
+            android:letterSpacing="-0.02"
             android:text="@string/main_change_button"
             android:textColor="@android:color/white"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintlayout_card"
-            app:layout_constraintWidth_percent="0.4"
-            app:layout_constraintDimensionRatio="3.07" />
+            app:layout_constraintWidth_percent="0.44"
+            app:layout_constraintDimensionRatio="3.13"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

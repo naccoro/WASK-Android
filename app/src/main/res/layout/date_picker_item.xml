@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:textSize="20sp"
     android:textColor="@color/waskGrayFont"
+    android:letterSpacing="-0.02"
     android:lineSpacingExtra="9sp"
     android:lines="1"
     android:gravity="center">
