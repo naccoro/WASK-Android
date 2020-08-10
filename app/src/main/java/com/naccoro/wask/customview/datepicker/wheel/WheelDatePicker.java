@@ -101,6 +101,13 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         monthRecyclerView.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.MONTH);
         dayRecyclerView.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.DAY);
 
+        //각 RecyclerView의 Snap 기능 on, Snap Listener 적용
+        yearRecyclerView.attachSnapHelperWithListener(new LinearSnapHelper(),
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
+        monthRecyclerView.attachSnapHelperWithListener(new LinearSnapHelper(),
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
+        dayRecyclerView.attachSnapHelperWithListener(new LinearSnapHelper(),
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
     }
 
 

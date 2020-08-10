@@ -109,8 +109,12 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     public void attachSnapHelperWithListener(SnapHelper helper,
                                              WheelSnapScrollListener.Behavior behavior,
                                              WheelSnapScrollListener.OnSnapPositionChangeListener listener) {
-        helper.attachToRecyclerView(this);
+        //이전에 Snap을 등록했다면 해제 시켜주어야 함
+        if (wheelSnapScrollListener != null) {
+            wheelSnapScrollListener.helper.attachToRecyclerView(null);
+        }
 
+        helper.attachToRecyclerView(this);
         wheelSnapScrollListener = new WheelSnapScrollListener(
                 helper, behavior, listener);
         this.addOnScrollListener(wheelSnapScrollListener);
@@ -280,10 +284,15 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
             return emptySpace;
         }
 
+        /**
+         *  type이 None이 아닐 경우 emptySpace를 2로 설정한다. 보여주어야 하는 Item이 5개 이기 때문.
+         * @param type : year, month, day, none
+         */
         public void setRecyclerType(WheelRecyclerViewType type) {
             this.type = type;
             if (type != WheelRecyclerViewType.NONE) {
                 this.emptySpace = 2;
+                this.centerPosition = 2;
             }
             this.notifyDataSetChanged();
         }
