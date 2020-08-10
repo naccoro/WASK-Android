@@ -18,4 +18,8 @@
     <dimen name="main_use_period_font_size">56sp</dimen>
     <dimen name="main_use_period_message_font_size">20sp</dimen>
 
+    <dimen name="textsize_dialogreplacementcycle_body">15sp</dimen>
+    <dimen name="margin_dialogreplacementcycle_top">35dp</dimen>
+    <dimen name="margin_dialogreplacementcycle_bottom">31dp</dimen>
+
 </resources>

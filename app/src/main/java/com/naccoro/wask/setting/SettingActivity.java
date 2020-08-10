@@ -12,6 +12,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
+import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 
 public class SettingActivity extends AppCompatActivity
@@ -83,10 +85,11 @@ public class SettingActivity extends AppCompatActivity
     public void showReplacementCycleDialog() {
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replacement_cycle))
+                .setContent(R.layout.dialog_replacementcycle)
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
-                    int cycleValue = 0;
-                    presenter.changeReplacementCycleValue(cycleValue);
+                    WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
+                    presenter.changeReplacementCycleValue(wheelRecyclerView.getSnapValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -95,12 +98,14 @@ public class SettingActivity extends AppCompatActivity
 
     @Override
     public void showReplaceLaterDialog() {
+
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replace_later))
+                .setContent(R.layout.dialog_replacelater)
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
-                    int cycleValue = 0;
-                    presenter.changeReplaceLaterValue(cycleValue);
+                    WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
+                    presenter.changeReplaceLaterValue(wheelRecyclerView.getSnapValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -133,12 +138,12 @@ public class SettingActivity extends AppCompatActivity
 
     @Override
     public void showReplacementCycleValue(int cycleValue) {
-        replacementCycleAlertLabel.setText(cycleValue + "");
+        replacementCycleAlertLabel.setText(cycleValue + "일");
     }
 
     @Override
     public void showReplaceLaterValue(int laterValue) {
-        replaceLaterLabel.setText(laterValue + "");
+        replaceLaterLabel.setText(laterValue + "일");
     }
 
     @Override
