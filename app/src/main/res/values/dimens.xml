@@ -17,6 +17,8 @@
     <dimen name="margin_mainlayout_top">56dp</dimen>
     <dimen name="height_main_imagebutton">23dp</dimen>
 
+    <dimen name="height_calendar_backbutton">17dp</dimen>
+
     <dimen name="padding_all_imagebutton">16dp</dimen>
 
 </resources>

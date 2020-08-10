@@ -11,4 +11,9 @@ public class MainPresenter implements MainContract.Presenter {
     public void clickSettingButton() {
         mainView.showSettingView();
     }
+
+    @Override
+    public void clickCalendarButton() {
+        mainView.showCalendarView();
+    }
 }
