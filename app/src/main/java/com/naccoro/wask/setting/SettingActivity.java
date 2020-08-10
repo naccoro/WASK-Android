@@ -140,4 +140,10 @@ public class SettingActivity extends AppCompatActivity
                 presenter.clickPushAlert();
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
 }

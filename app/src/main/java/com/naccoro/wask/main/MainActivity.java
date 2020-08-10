@@ -65,5 +65,6 @@ public class MainActivity extends AppCompatActivity
     public void showSettingView() {
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
     }
 }
