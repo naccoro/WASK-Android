@@ -3,11 +3,12 @@ package com.naccoro.wask.replacement.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.naccoro.wask.utils.DateUtils;
 
-@Entity(tableName = "replacement_histories")
+@Entity(tableName = "replacement_histories", indices = {@Index(value = {"replace_date"}, unique = true)})
 public class ReplacementHistory {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="replacement_histories_id")

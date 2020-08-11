@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.naccoro.wask.replacement.WaskDatabaseManager;
 import com.naccoro.wask.replacement.model.ReplacementHistory;
+import com.naccoro.wask.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,7 @@ public class ReplacementHistoryRepository {
     }
 
     public void getAll(int month, LoadHistoriesCallback callback) {
-        if (cachedReplacementHistory == null || cacheIsDirty) {
-            updateCachedHistories();
-        }
+        checkCache();
         List<ReplacementHistory> result = getAllFromCached(month);
         Log.d(TAG, "getAll: " + result.toString());
 
@@ -42,10 +41,7 @@ public class ReplacementHistoryRepository {
     }
 
     public void get(String date, GetHistoriesCallback callback) {
-        if (cachedReplacementHistory == null || cacheIsDirty) {
-            updateCachedHistories();
-        }
-
+        checkCache();
         ReplacementHistory result = getAllFromCached(date);
 
         if (result != null) {
@@ -57,15 +53,40 @@ public class ReplacementHistoryRepository {
         }
     }
     
-    public void insert(ReplacementHistory newReplacementHistory) {
+    public void insert(ReplacementHistory newReplacementHistory, InsertHistoryCallback callback) {
         Log.d(TAG, "insert: " + newReplacementHistory.toString());
+
+        if (checkReduplication(newReplacementHistory) && callback != null) {
+            callback.onDuplicated();
+            return;
+        }
+
         dao.insert(newReplacementHistory);
+
+        if (callback != null) {
+            callback.onSuccess();
+        }
         updateHistories();
     }
-    
-    public void insert(String date) {
+
+    private boolean checkReduplication(ReplacementHistory newReplacementHistory) {
+        checkCache();
+        return cachedReplacementHistory.contains(newReplacementHistory);
+    }
+
+    private void checkCache() {
+        if (cachedReplacementHistory == null || cacheIsDirty) {
+            updateCachedHistories();
+        }
+    }
+
+    public void insert(String date, InsertHistoryCallback callback) {
         ReplacementHistory newReplacementHistory = new ReplacementHistory(date);
-        insert(newReplacementHistory);
+        insert(newReplacementHistory, callback);
+    }
+
+    public void insertToday(InsertHistoryCallback callback) {
+        insert(DateUtils.getToday(), callback);
     }
 
     public void delete(ReplacementHistory deleteReplacementHistory) {
@@ -138,4 +159,10 @@ public class ReplacementHistoryRepository {
 
         void onDataNotAvailable();
     }
-}
+
+    public interface InsertHistoryCallback {
+        void onSuccess();
+
+        void onDuplicated();
+    }
+ }

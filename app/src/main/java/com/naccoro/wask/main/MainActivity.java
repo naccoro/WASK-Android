@@ -1,6 +1,7 @@
 package com.naccoro.wask.main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.calendar.CalendarActivity;
+import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.setting.SettingActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter = new MainPresenter(this);
+        presenter = new MainPresenter(this, Injection.replacementHistoryRepository(getApplicationContext()));
         initView();
     }
 
@@ -58,9 +60,21 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.button_change:
                 // '교체하기' 버튼을 눌렀을 때 (버튼 동작을 확인하기위해 toast메시지를 띄워놓았습니다.)
-                Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+                presenter.clickReplaceButton();
                 break;
         }
+    }
+
+    @Override
+    public void showReplaceToast() {
+        Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void disableReplaceButton() {
+        changeButton.setClickable(false);
+        changeButton.setText("교체 완료");
+        changeButton.setBackgroundTintList(getResources().getColorStateList(R.color.dividerGray, null));
     }
 
     @Override

@@ -24,4 +24,9 @@ public class DateUtilsTest {
         assertThat(DateUtils.replaceMonthOfDateFormat("2020-02-22", 12), is("2020-12-22"));
         assertThat(DateUtils.replaceMonthOfDateFormat("2020-11-02", 12), is("2020-12-02"));
     }
+
+    @Test
+    public void getTodayString_isCorrect() {
+        assertThat(DateUtils.getToday(), is("2020-08-11"));
+    }
 }

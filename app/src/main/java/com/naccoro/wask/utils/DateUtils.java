@@ -1,5 +1,7 @@
 package com.naccoro.wask.utils;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 /**
@@ -8,6 +10,18 @@ import java.util.regex.Pattern;
  * @since 2020.08.08
  */
 public class DateUtils {
+
+    public static String getToday() {
+        GregorianCalendar calendar = new GregorianCalendar();
+        return getDateFromGregorianCalendar(calendar);
+    }
+
+    public static String getDateFromGregorianCalendar(GregorianCalendar calendar) {
+        return calendar.get(Calendar.YEAR) + "-" +
+                convertMonthIntToString(calendar.get(Calendar.MONTH) + 1) + "-" +
+                calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
     /**
      * YYYY-MM-DD 포멧에서 "월"에 해당하는 정보를 리턴
      * @param date "월" 정보를 조회할 YYYY-MM-DD 문자열
