@@ -11,15 +11,38 @@ import java.util.regex.Pattern;
  */
 public class DateUtils {
 
+    /**
+     * 오늘 날짜를 YYYY-MM-DD 형식으로 가져오기
+     * @return YYYY-MM-DD 형식의 오늘 날짜
+     */
     public static String getToday() {
         GregorianCalendar calendar = new GregorianCalendar();
         return getDateFromGregorianCalendar(calendar);
     }
 
+    /**
+     * 오늘 날짜를 YYYYMMDD 정수형으로 가져오기
+     * @return YYYYMMDD 정수형의 오늘 날짜
+     */
     public static int getTodayToInt() {
         return getDateToInt(getToday());
     }
 
+    /**
+     * 입력받은 YYYY-MM-DD 형태의 날짜를 정수형으로 전환
+     * @param date 정수형으로 바꿀 YYYY-MM-DD 문자열
+     * @return 정수형의 YYYY-MM-DD 문자열
+     */
+    public static int getDateToInt(String date) {
+        checkDateFormat(date);
+        return Integer.parseInt(date.replaceAll("-", ""));
+    }
+
+    /**
+     * GregorianCalendar를 이용하여 YYYY-MM-DD 형태의 날짜 구하기
+     * @param calendar 날짜를 계산할 GregorianCalendar
+     * @return YYYY-MM-DD 형태의 GregorianCalendar가 가진 날짜
+     */
     public static String getDateFromGregorianCalendar(GregorianCalendar calendar) {
         return calendar.get(Calendar.YEAR) + "-" +
                 convertMonthIntToString(calendar.get(Calendar.MONTH) + 1) + "-" +
@@ -112,9 +135,5 @@ public class DateUtils {
      */
     private static boolean isLegalDate(String date) {
         return Pattern.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$", date);
-    }
-
-    public static int getDateToInt(String date) {
-        return Integer.parseInt(date.replaceAll("-", ""));
     }
 }

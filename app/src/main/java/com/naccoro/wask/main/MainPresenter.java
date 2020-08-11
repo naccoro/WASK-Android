@@ -40,6 +40,9 @@ public class MainPresenter implements MainContract.Presenter {
         setIsChanged();
     }
 
+    /**
+     * 오늘 마스크를 교체하였는지 확인 후 버튼 상태를 변경
+     */
     private void setIsChanged() {
         replacementHistoryRepository.get(DateUtils.getToday(), new ReplacementHistoryRepository.GetHistoriesCallback() {
             @Override
@@ -54,20 +57,6 @@ public class MainPresenter implements MainContract.Presenter {
                 mainView.enableReplaceButton();
             }
         });
-    }
-
-    /**
-     * WaskDatabase에서 현재 마스크 교체 상태를 가져오는 함수
-     *
-     * @return [오늘 날짜 - 마지막 교체 일자 + 1]
-     */
-    private int getMaskPeriod() {
-        String lastReplacement = replacementHistoryRepository.getLastReplacement();
-        if (lastReplacement == null) {
-            //교체 기록이 없을 경우
-            return 0;
-        }
-        return DateUtils.getTodayToInt() - DateUtils.getDateToInt(replacementHistoryRepository.getLastReplacement()) + 1;
     }
 
     @Override
@@ -103,9 +92,26 @@ public class MainPresenter implements MainContract.Presenter {
         }
     }
 
+    /**
+     * 교체 취소 다이얼로그에서 확인을 눌렀을 때 호출되는 함수
+     */
     @Override
     public void cancelChanging() {
         replacementHistoryRepository.deleteToday();
         start();
+    }
+
+    /**
+     * WaskDatabase에서 현재 마스크 교체 상태를 가져오는 함수
+     *
+     * @return [오늘 날짜 - 마지막 교체 일자 + 1]
+     */
+    private int getMaskPeriod() {
+        String lastReplacement = replacementHistoryRepository.getLastReplacement();
+        if (lastReplacement == null) {
+            //교체 기록이 없을 경우
+            return 0;
+        }
+        return DateUtils.getTodayToInt() - DateUtils.getDateToInt(replacementHistoryRepository.getLastReplacement()) + 1;
     }
 }

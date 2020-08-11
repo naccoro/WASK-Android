@@ -9,7 +9,6 @@ import com.naccoro.wask.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ReplacementHistoryRepository {
@@ -53,6 +52,23 @@ public class ReplacementHistoryRepository {
             Log.d(TAG, "get: " + null);
             callback.onDataNotAvailable();
         }
+    }
+
+    public String getLastReplacement() {
+        checkCache();
+
+        if (cachedReplacementHistory.size() == 0) {
+            return null;
+        }
+
+        Collections.sort(cachedReplacementHistory, (firstHistory, secondHistory) -> {
+            int firstDate = DateUtils.getDateToInt(firstHistory.getReplacedDate());
+            int secondDate = DateUtils.getDateToInt(secondHistory.getReplacedDate());
+
+            return Integer.compare(firstDate, secondDate);
+        });
+
+        return cachedReplacementHistory.get(cachedReplacementHistory.size() - 1).getReplacedDate();
     }
     
     public void insert(ReplacementHistory newReplacementHistory, InsertHistoryCallback callback) {
@@ -152,23 +168,6 @@ public class ReplacementHistoryRepository {
         return null;
     }
 
-    public String getLastReplacement() {
-        checkCache();
-
-        if (cachedReplacementHistory.size() == 0) {
-            return null;
-        }
-
-        Collections.sort(cachedReplacementHistory, (firstHistory, secondHistory) -> {
-            int firstDate = DateUtils.getDateToInt(firstHistory.getReplacedDate());
-            int secondDate = DateUtils.getDateToInt(secondHistory.getReplacedDate());
-
-            return Integer.compare(firstDate, secondDate);
-        });
-
-        return cachedReplacementHistory.get(cachedReplacementHistory.size() - 1).getReplacedDate();
-    }
-
     public interface LoadHistoriesCallback {
 
         void onHistoriesLoaded(List<ReplacementHistory> histories);
@@ -184,6 +183,7 @@ public class ReplacementHistoryRepository {
     }
 
     public interface InsertHistoryCallback {
+
         void onSuccess();
 
         void onDuplicated();
