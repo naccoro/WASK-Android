@@ -141,12 +141,7 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
 
         WheelRecyclerView wheelRecyclerView = (WheelRecyclerView) recyclerView;
 
-        wheelRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                wheelRecyclerView.adapter.setCenterPosition(position);
-            }
-        });
+        wheelRecyclerView.setCenterPosition(position);
 
         switch (wheelRecyclerView.recyclerViewType) {
             case YEAR:
@@ -170,7 +165,7 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         if (dayRecyclerView.endDateValue != endValue) {
             dayRecyclerView.setRecyclerViewRange(1, endValue);
 
-            int centerPosition = dayRecyclerView.adapter.centerPosition;
+            int centerPosition = dayRecyclerView.getCenterPosition();
             if (centerPosition > endValue) {
 
                 int dayInitPosition = 0;
@@ -180,23 +175,23 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
     }
 
     public int getYear() {
-        return yearRecyclerView.adapter.getDate();
+        return yearRecyclerView.getWheelValue();
     }
 
     public int getMonth() {
-        return monthRecyclerView.adapter.getDate() - 1;
+        return monthRecyclerView.getWheelValue() - 1;
     }
 
     public int getDay() {
-        return dayRecyclerView.adapter.getDate();
+        return dayRecyclerView.getWheelValue();
     }
 
     /**
      * DatePicker의 달력 초기 값을 설정하는 함수
      *
-     * @param year : 년도
+     * @param year  : 년도
      * @param month : 월  Calendar 객체 특성상 month 0은 1월을 의미
-     * @param day : 일자
+     * @param day   : 일자
      */
     public void setDate(int year, int month, int day) {
 
