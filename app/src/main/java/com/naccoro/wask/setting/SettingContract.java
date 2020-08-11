@@ -15,6 +15,8 @@ public interface SettingContract {
         void showPushAlertValue(String pushAlertValue);
 
         void setAlertVisibleSwitchValue(boolean isChecked);
+
+        void finishSettingView();
     }
 
     interface Presenter {

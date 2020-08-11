@@ -1,3 +1,4 @@
+
 package com.naccoro.wask.setting;
 
 import androidx.annotation.NonNull;
@@ -157,6 +158,12 @@ public class SettingActivity extends AppCompatActivity
     }
 
     @Override
+    public void finishSettingView() {
+        finish();
+        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.constraintlayout_replacementcyclealert:
@@ -172,3 +179,4 @@ public class SettingActivity extends AppCompatActivity
         }
     }
 }
+

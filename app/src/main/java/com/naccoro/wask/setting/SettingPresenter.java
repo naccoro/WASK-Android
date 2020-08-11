@@ -28,7 +28,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     @Override
     public void clickHomeButton() {
-        settingView.finish();
+        settingView.finishSettingView();
     }
 
     @Override
