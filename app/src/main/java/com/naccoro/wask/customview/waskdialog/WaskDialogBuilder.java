@@ -16,6 +16,7 @@ public class WaskDialogBuilder {
     private String title;
     private String message;
     private int contentRes = -1;
+    private WaskDialog.ContentViewCallback contentCallback;
     private List<WaskDialogButton> verticalButtons;
     private List<WaskDialogButton> horizontalButtons;
 
@@ -24,7 +25,7 @@ public class WaskDialogBuilder {
      * @return 옵션이 적용된 WaskDialog 객체
      */
     public WaskDialog build() {
-        return new WaskDialog(title, message, contentRes, verticalButtons, horizontalButtons);
+        return new WaskDialog(title, message, contentRes, contentCallback, verticalButtons, horizontalButtons);
     }
 
     /**
@@ -57,6 +58,16 @@ public class WaskDialogBuilder {
      */
     public WaskDialogBuilder setContent(@LayoutRes int contentRes) {
         this.contentRes = contentRes;
+        return this;
+    }
+
+    /**
+     * 다이얼로그에 적용된 컨텐츠를 조작하기 위한 콜백 설정
+     * @param callback 컨텐츠가 다이얼로그에 연결되면서 실행될 콜백
+     * @return 메서드 체이닝을 위한 자기 자신을 리턴
+     */
+    public WaskDialogBuilder setContentCallback(WaskDialog.ContentViewCallback callback) {
+        this.contentCallback = callback;
         return this;
     }
 
