@@ -27,6 +27,12 @@ public class MainActivity extends AppCompatActivity
     TextView changeButton;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.start();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -59,8 +65,7 @@ public class MainActivity extends AppCompatActivity
                 presenter.clickCalendarButton();
                 break;
             case R.id.button_change:
-                // '교체하기' 버튼을 눌렀을 때 (버튼 동작을 확인하기위해 toast메시지를 띄워놓았습니다.)
-                presenter.clickReplaceButton();
+                presenter.changeMask();
                 break;
         }
     }
@@ -89,5 +94,41 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
+
+
+    /**
+     * 1일 1개 마스크를 사용하고 있다고 칭찬의 화면을 보여준다.
+     */
+    @Override
+    public void showGoodMainView() {
+        emotionImageView.setImageResource(R.drawable.ic_good);
+
+        int textColor = getColor(R.color.waskBlue);
+        String message = getString(R.string.main_card_good);
+        cardMessageTextView.setTextColor(textColor);
+        cardMessageTextView.setText(message);
+
+        usePeriodTextView.setTextColor(textColor);
+    }
+
+    /**
+     * 1일이 지나도록 마스크를 교체하지 않은 사용자에게 경고하는 화면을 보여준다.
+     */
+    @Override
+    public void showBadMainView() {
+        emotionImageView.setImageResource(R.drawable.ic_bad);
+
+        int textColor = getColor(R.color.waskRed);
+        String message = getString(R.string.main_card_bad);
+        cardMessageTextView.setTextColor(textColor);
+        cardMessageTextView.setText(message);
+
+        usePeriodTextView.setTextColor(textColor);
+    }
+
+    @Override
+    public void setPeriodTextValue(int period) {
+        usePeriodTextView.setText(period + "");
     }
 }

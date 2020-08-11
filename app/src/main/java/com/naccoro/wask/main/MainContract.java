@@ -4,15 +4,29 @@ public interface MainContract {
 
     interface View {
         void showSettingView();
+
         void showCalendarView();
+
         void showReplaceToast();
+
         void disableReplaceButton();
+
+        void showGoodMainView();
+
+        void showBadMainView();
+
+        void setPeriodTextValue(int period);
     }
 
     interface Presenter {
+
+        void start();
+
         void clickSettingButton();
+
         void clickCalendarButton();
-        void clickReplaceButton();
+
+        void changeMask();
     }
 
 }
