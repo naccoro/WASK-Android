@@ -1,9 +1,9 @@
 package com.naccoro.wask.main;
 
 public class MainPresenter implements MainContract.Presenter {
-    MainActivity mainView;
+    MainContract.View mainView;
 
-    MainPresenter(MainActivity mainView) {
+    MainPresenter(MainContract.View mainView) {
         this.mainView = mainView;
     }
 
