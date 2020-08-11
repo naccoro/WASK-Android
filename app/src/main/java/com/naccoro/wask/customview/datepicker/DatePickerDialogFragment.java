@@ -112,7 +112,7 @@ public class DatePickerDialogFragment extends BottomSheetDialogFragment implemen
         return this;
     }
 
-    private void clickDatePickerXButton(){
+    private void clickDatePickerXButton() {
         datePickerDismiss();
     }
 

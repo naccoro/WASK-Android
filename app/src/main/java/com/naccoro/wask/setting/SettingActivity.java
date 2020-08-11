@@ -1,3 +1,4 @@
+
 package com.naccoro.wask.setting;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
+import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 
 public class SettingActivity extends AppCompatActivity
@@ -23,8 +26,11 @@ public class SettingActivity extends AppCompatActivity
     private TextView replaceLaterLabel;
     //푸시 알람
     private TextView pushAlertLabel;
+    //포그라운드 서비스 알람
+    private Switch alertVisibleSwitch;
 
     private SettingPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,10 @@ public class SettingActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-       init();
+        init();
+
+        //start()함수를 호출하여 초기 설정값을 불러옴
+        presenter.start();
     }
 
     private void init() {
@@ -53,12 +62,12 @@ public class SettingActivity extends AppCompatActivity
 
         findViewById(R.id.constraintlayout_pushalert).setOnClickListener(this);
 
-        Switch alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
+        alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean newValue) {
-                presenter.changeAlertVisibleSwitch(newValue);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                presenter.changeAlertVisibleSwitch(isChecked);
             }
         });
     }
@@ -77,10 +86,11 @@ public class SettingActivity extends AppCompatActivity
     public void showReplacementCycleDialog() {
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replacement_cycle))
+                .setContent(R.layout.dialog_replacementcycle)
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
-                    int cycleValue = 0;
-                    presenter.changeReplacementCycleValue(cycleValue);
+                    WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
+                    presenter.changeReplacementCycleValue(wheelRecyclerView.getSnapValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -89,12 +99,14 @@ public class SettingActivity extends AppCompatActivity
 
     @Override
     public void showReplaceLaterDialog() {
+
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replace_later))
+                .setContent(R.layout.dialog_replacelater)
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
-                    int cycleValue = 0;
-                    presenter.changeReplaceLaterValue(cycleValue);
+                    WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
+                    presenter.changeReplaceLaterValue(wheelRecyclerView.getSnapValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -126,6 +138,32 @@ public class SettingActivity extends AppCompatActivity
     }
 
     @Override
+    public void showReplacementCycleValue(int cycleValue) {
+        replacementCycleAlertLabel.setText(cycleValue + "일");
+    }
+
+    @Override
+    public void showReplaceLaterValue(int laterValue) {
+        replaceLaterLabel.setText(laterValue + "일");
+    }
+
+    @Override
+    public void showPushAlertValue(String pushAlertValue) {
+        pushAlertLabel.setText(pushAlertValue);
+    }
+
+    @Override
+    public void setAlertVisibleSwitchValue(boolean isChecked) {
+        alertVisibleSwitch.setChecked(isChecked);
+    }
+
+    @Override
+    public void finishSettingView() {
+        finish();
+        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.constraintlayout_replacementcyclealert:
@@ -140,10 +178,5 @@ public class SettingActivity extends AppCompatActivity
                 presenter.clickPushAlert();
         }
     }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
-    }
 }
+

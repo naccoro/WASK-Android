@@ -2,15 +2,19 @@ package com.naccoro.wask.customview.datepicker.wheel;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
@@ -24,7 +28,7 @@ import com.naccoro.wask.utils.MetricsUtil;
  * @author jaeryo
  * @since 2020-08-06
  */
-public class WheelRecyclerView extends RecyclerView {
+public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollListener.OnSnapPositionChangeListener {
 
     private final int SECOND_LABEL_POSITION = 1;
 
@@ -45,19 +49,21 @@ public class WheelRecyclerView extends RecyclerView {
     //picker에 표시되는 일의 범위를 1(고정)~31일로 설정 (이후 로직에서 변경)
     public static final int END_DAY_OF_MONTH_VALUE = 31;
 
+    public static final int END_DEFAULT_VALUE = 7;
+
     private final WheelRecyclerViewType DEFAULT_TYPE = WheelRecyclerViewType.NONE;
 
     private int selectedLabelColor = 0;
     private int nonSelectedLabelColor = 0;
 
-    Context context;
+    private WheelSnapScrollListener wheelSnapScrollListener;
+    private Context context;
     WheelRecyclerAdapter adapter;
     WheelRecyclerViewType recyclerViewType = DEFAULT_TYPE;
-    WheelSnapScrollListener wheelSnapScrollListener;
 
     //이 RecyclerView가 보여주는 범위를 저장한다.
     int startDateValue = 1;
-    int endDateValue = 1;
+    int endDateValue = END_DEFAULT_VALUE;
 
 
     public WheelRecyclerView(@NonNull Context context) {
@@ -78,6 +84,7 @@ public class WheelRecyclerView extends RecyclerView {
     private void init(Context context) {
         this.context = context;
         this.setItemAnimator(null);
+
         LinearLayoutManager manager = new LinearLayoutManager(context);
         this.setLayoutManager(manager);
 
@@ -86,10 +93,14 @@ public class WheelRecyclerView extends RecyclerView {
 
         selectedLabelColor = context.getColor(R.color.colorDatePickerSelectedLabel);
         nonSelectedLabelColor = context.getColor(R.color.colorDatePickerNoSelectedLabel);
+
+        attachSnapHelperWithListener(new LinearSnapHelper(),
+                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
     }
 
+
     /**
-     * //스크롤시 중앙에 아이탬을 고정하도록 도와주는 snapHelper 적용
+     * //스크롤시 중앙에 아이템을 고정하도록 도와주는 snapHelper 적용
      *
      * @param helper
      * @param behavior : listener가 호출 되는 시점 Idle or Scroll
@@ -98,8 +109,12 @@ public class WheelRecyclerView extends RecyclerView {
     public void attachSnapHelperWithListener(SnapHelper helper,
                                              WheelSnapScrollListener.Behavior behavior,
                                              WheelSnapScrollListener.OnSnapPositionChangeListener listener) {
-        helper.attachToRecyclerView(this);
+        //이전에 Snap을 등록했다면 해제 시켜주어야 함
+        if (wheelSnapScrollListener != null) {
+            wheelSnapScrollListener.helper.attachToRecyclerView(null);
+        }
 
+        helper.attachToRecyclerView(this);
         wheelSnapScrollListener = new WheelSnapScrollListener(
                 helper, behavior, listener);
         this.addOnScrollListener(wheelSnapScrollListener);
@@ -133,6 +148,7 @@ public class WheelRecyclerView extends RecyclerView {
         adapter.setRange(startDateValue, endDateValue);
     }
 
+
     /**
      * WheelRecyclerView는 5개의 Item을 보여준다.
      * ThirdLabel
@@ -155,6 +171,29 @@ public class WheelRecyclerView extends RecyclerView {
 
 
         return allItemHeight;
+    }
+
+    /**
+     * 교체 주기, 나중에 교체하기 주기 다이얼로그에서 일자를 선택할 때 3개의 item만 보여주기 위한 높이
+     *
+     * @return 3개의 item 높이
+     */
+    public float getNoneHeight() {
+        float allItemHeight = 0;
+        allItemHeight += getSelectedLabelHeight();
+
+        allItemHeight += getSecondLabelHeight() * 2;
+
+        return allItemHeight;
+    }
+
+    /**
+     * 현재 사용자의 스크롤에 의해서 가운데에 보이는 값을 가져옴
+     *
+     * @return 가운데에 있는 값
+     */
+    public int getSnapValue() {
+        return adapter.getDate();
     }
 
     public float getSelectedLabelHeight() {
@@ -200,21 +239,42 @@ public class WheelRecyclerView extends RecyclerView {
     }
 
     /**
+     * 커스텀 뷰의 높이를 측정하는 오버라이드 함수
+     * setMeasuredDimension 함수를 통해 매개변수의 넓이, 가로를 강제 설정
+     *
+     * @param widthSpec  : 넓이
+     * @param heightSpec : 높이
+     */
+    @Override
+    protected void onMeasure(int widthSpec, int heightSpec) {
+        int height = (int) getMaxHeight();
+        if (recyclerViewType == WheelRecyclerViewType.NONE) {
+            height = (int) getNoneHeight();
+        }
+        setMeasuredDimension(widthSpec, height);
+    }
+
+    @Override
+    public void onSnapPositionChange(RecyclerView recyclerView, int position) {
+        this.adapter.setCenterPosition(position);
+    }
+
+    /**
      * WheelRecyclerView는 범위 이외에도 양 끝에 2개의 빈공간을 가지고 있습니다. (second + third)
      * 범위가 1 ~ 12라고 하고 5개의 Item을 보여준다고 했을 때 snapPosition으로 1이 가르키려고 하면 1위에 2개의 공간이 있어야 합니다.
      * 이를 위해 String이 비어있는 2개의 공간을 양 끝에 넣어줍니다.
      */
     class WheelRecyclerAdapter extends RecyclerView.Adapter<WheelRecyclerAdapter.WheelViewHolder> {
         //빈공간의 수를 상수로 지정
-        private final int emptySpace = 2;
-        //빈공간을 계산하여 기본 centerPosition을 설정
-        private final int defaultPosition = emptySpace;
+        private final int defaultPosition = 1;
+
+        private int emptySpace = defaultPosition;
 
         private WheelRecyclerViewType type;
 
         int centerPosition = defaultPosition;
         int startDateValue = 1;
-        int endDateValue = 1;
+        int endDateValue = END_DEFAULT_VALUE;
 
         WheelRecyclerAdapter(WheelRecyclerViewType type) {
             this.type = type;
@@ -224,8 +284,16 @@ public class WheelRecyclerView extends RecyclerView {
             return emptySpace;
         }
 
+        /**
+         *  type이 None이 아닐 경우 emptySpace를 2로 설정한다. 보여주어야 하는 Item이 5개 이기 때문.
+         * @param type : year, month, day, none
+         */
         public void setRecyclerType(WheelRecyclerViewType type) {
             this.type = type;
+            if (type != WheelRecyclerViewType.NONE) {
+                this.emptySpace = 2;
+                this.centerPosition = 2;
+            }
             this.notifyDataSetChanged();
         }
 
@@ -241,12 +309,13 @@ public class WheelRecyclerView extends RecyclerView {
         }
 
         /**
-         * centerPosition과 그 양 옆 2개의 Item만 변경해준다.
+         * centerPosition과 그 양 옆 emptySpace개의 Item만 변경해준다.
+         *
          * @param centerPosition : Selected position
          */
         void setCenterPosition(int centerPosition) {
             this.centerPosition = centerPosition;
-            this.notifyItemRangeChanged(centerPosition - 2, centerPosition + 2);
+            this.notifyItemRangeChanged(centerPosition - emptySpace, centerPosition + emptySpace);
         }
 
         @NonNull
