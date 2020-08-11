@@ -44,13 +44,15 @@ public class WaskDialog extends DialogFragment {
     private LinearLayout linearLayoutDialogButtons;
 
     private View contentView;
+    private ContentViewCallback contentCallback;
 
-    public WaskDialog(String title, String message, @LayoutRes int contentRes, List<WaskDialogButton> verticalButtons,
+    public WaskDialog(String title, String message, @LayoutRes int contentRes, ContentViewCallback contentCallback, List<WaskDialogButton> verticalButtons,
                       List<WaskDialogButton> horizontalButtons) {
         super();
         this.title = title;
         this.message = message;
         this.contentRes = contentRes;
+        this.contentCallback = contentCallback;
         this.verticalButtons = verticalButtons;
         this.horizontalButtons = horizontalButtons;
     }
@@ -95,6 +97,11 @@ public class WaskDialog extends DialogFragment {
         //컨텐츠 적용
         if (contentRes != -1) {
             contentView = inflater.inflate(contentRes, linearLayoutDialogContent);
+
+            //컨텐츠에 대한 콜백이 있다면 실행
+            if (contentCallback != null) {
+                contentCallback.onContentViewAttached(contentView);
+            }
         } else { //컨텐츠가 없다면 약간의 마진을 줌
             ((ConstraintLayout.LayoutParams) linearLayoutDialogContent.getLayoutParams())
                     .setMargins(0, (int) MetricsUtil.convertDpToPixel(19, getContext()), 0, 0);
@@ -179,5 +186,13 @@ public class WaskDialog extends DialogFragment {
 
     public interface OnClickListener {
         void onClick(WaskDialog dialog, View view);
+    }
+
+    /**
+     * 컨텐츠가 다이얼로그에 연결되고 실행되는 콜백을 정의하는 인터페이스
+     * 연결된 컨텐츠를 inflate한 View를 파라미터로 가짐.
+     */
+    public interface ContentViewCallback {
+        void onContentViewAttached(View view);
     }
 }

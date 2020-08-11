@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.calendar.CalendarActivity;
 import com.naccoro.wask.setting.SettingActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -21,7 +22,13 @@ public class MainActivity extends AppCompatActivity
     ImageView emotionImageView;
     TextView cardMessageTextView;
     TextView usePeriodTextView;
-    Button changeButton;
+    TextView changeButton;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +60,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.imageview_calendar:
                 // 캘린더 액티비티로 이동
+                presenter.clickCalendarButton();
                 break;
             case R.id.button_change:
-                // '교체하기' 버튼을 눌렀을 때
+                // '교체하기' 버튼을 눌렀을 때 (버튼 동작을 확인하기위해 toast메시지를 띄워놓았습니다.)
+                Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+                presenter.changeMask();
                 break;
         }
     }
@@ -64,5 +74,49 @@ public class MainActivity extends AppCompatActivity
     public void showSettingView() {
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
+
+    @Override
+    public void showCalendarView() {
+        Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
+
+
+    /**
+     * 1일 1개 마스크를 사용하고 있다고 칭찬의 화면을 보여준다.
+     */
+    @Override
+    public void showGoodMainView() {
+        emotionImageView.setImageResource(R.drawable.ic_good);
+
+        int textColor = getColor(R.color.waskBlue);
+        String message = getString(R.string.main_card_good);
+        cardMessageTextView.setTextColor(textColor);
+        cardMessageTextView.setText(message);
+
+        usePeriodTextView.setTextColor(textColor);
+    }
+
+    /**
+     * 1일이 지나도록 마스크를 교체하지 않은 사용자에게 경고하는 화면을 보여준다.
+     */
+    @Override
+    public void showBadMainView() {
+        emotionImageView.setImageResource(R.drawable.ic_bad);
+
+        int textColor = getColor(R.color.waskRed);
+        String message = getString(R.string.main_card_bad);
+        cardMessageTextView.setTextColor(textColor);
+        cardMessageTextView.setText(message);
+
+        usePeriodTextView.setTextColor(textColor);
+    }
+
+    @Override
+    public void setPeriodTextValue(int period) {
+        usePeriodTextView.setText(period + "");
     }
 }

@@ -8,6 +8,19 @@
     tools:context=".main.MainActivity">
 
     <ImageView
+        android:id="@+id/imageview_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_main_imagebutton"
+        android:adjustViewBounds="true"
+        android:paddingHorizontal="@dimen/padding_all_imagebutton"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_main_logo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageview_main_logo"
+        app:srcCompat="@drawable/ic_setting" />
+
+    <ImageView
         android:id="@+id/imageview_main_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,22 +31,11 @@
         app:srcCompat="@drawable/ic_main_logo" />
 
     <ImageView
-        android:id="@+id/imageview_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_button_horizontal_margin_size"
-        app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
-        app:layout_constraintEnd_toStartOf="@+id/imageview_main_logo"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageview_main_logo"
-        app:srcCompat="@drawable/ic_setting" />
-
-    <ImageView
         android:id="@+id/imageview_calendar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/top_button_horizontal_margin_size"
+        android:layout_height="@dimen/height_main_imagebutton"
+        android:adjustViewBounds="true"
+        android:paddingHorizontal="@dimen/padding_all_imagebutton"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_main_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -45,7 +47,7 @@
         android:id="@+id/constraintlayout_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/layout_top_margin_size"
+        android:layout_marginTop="@dimen/margin_mainlayout_top"
         android:background="@drawable/bg_layout_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,10 +84,9 @@
                 android:id="@+id/textview_card_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:letterSpacing="-0.02"
                 android:text="@string/main_card_good"
                 android:textColor="@color/waskBlue"
-                android:textSize="@dimen/main_card_font_size"
+                android:textSize="@dimen/textsize_maincard"
                 app:layout_constraintBottom_toTopOf="@+id/imageview_people"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:textColor="@color/waskBlue"
-                android:textSize="@dimen/main_use_period_font_size"
+                android:textSize="@dimen/textsize_mainuseperiod_number"
                 android:textStyle="bold" />
 
             <TextView
@@ -137,27 +138,27 @@
                 android:layout_height="wrap_content"
                 android:text="@string/main_use_period_message"
                 android:textColor="@color/waskGrayFont"
-                android:textSize="@dimen/main_use_period_message_font_size"
+                android:textSize="@dimen/textsize_mainuseperiod_text"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <Button
+        <TextView
             android:id="@+id/button_change"
             android:layout_width="0dp"
-            android:layout_height="51dp"
+            android:layout_height="0dp"
             android:background="@drawable/bg_button_change"
-            android:elevation="10dp"
-            android:letterSpacing="-0.02"
+            android:elevation="8dp"
             android:text="@string/main_change_button"
             android:textColor="@android:color/white"
             android:textSize="17sp"
             android:textStyle="bold"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintlayout_card"
-            app:layout_constraintWidth_percent="0.44"
-            app:layout_constraintDimensionRatio="3.13"/>
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintDimensionRatio="3.07" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

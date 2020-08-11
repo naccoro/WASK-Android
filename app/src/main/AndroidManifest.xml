@@ -15,7 +15,10 @@
         <activity
             android:name=".setting.SettingActivity"
             android:theme="@style/SettingTheme" />
-        <activity android:name=".main.MainActivity" />
+
+        <activity android:name=".calendar.CalendarActivity" />
+
+        <activity android:name=".main.MainActivity"/>
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/SplashTheme">

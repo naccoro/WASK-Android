@@ -17,4 +17,6 @@
     <string name="main_use_period_message">일 째 사용중</string>
     <string name="main_change_button">교체하기</string>
 
+    <string name="dialog_replacementcycle">일</string>
+    <string name="dialog_replacelater">일 뒤 교체</string>
 </resources>
