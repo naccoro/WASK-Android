@@ -141,7 +141,12 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
 
         WheelRecyclerView wheelRecyclerView = (WheelRecyclerView) recyclerView;
 
-        wheelRecyclerView.adapter.setCenterPosition(position);
+        wheelRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                wheelRecyclerView.adapter.setCenterPosition(position);
+            }
+        });
 
         switch (wheelRecyclerView.recyclerViewType) {
             case YEAR:

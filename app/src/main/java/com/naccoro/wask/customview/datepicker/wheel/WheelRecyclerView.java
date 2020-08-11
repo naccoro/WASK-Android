@@ -268,7 +268,12 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     @Override
     public void onSnapPositionChange(RecyclerView recyclerView, int position) {
-        this.adapter.setCenterPosition(position);
+        WheelRecyclerView.this.post(new Runnable() {
+            @Override
+            public void run() {
+                WheelRecyclerView.this.adapter.setCenterPosition(position);
+            }
+        });
     }
 
     /**
