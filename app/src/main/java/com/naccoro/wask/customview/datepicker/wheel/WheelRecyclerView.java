@@ -1,6 +1,7 @@
 package com.naccoro.wask.customview.datepicker.wheel;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -84,6 +85,8 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     private void init(Context context) {
         this.context = context;
         this.setItemAnimator(null);
+        //사용자가 RecyclerView의 뷰 끝에서 스크롤을 시도할 시 번지는 효과 제거
+        this.setOverScrollMode(OVER_SCROLL_NEVER);
 
         LinearLayoutManager manager = new LinearLayoutManager(context);
         this.setLayoutManager(manager);
@@ -120,11 +123,6 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         this.addOnScrollListener(wheelSnapScrollListener);
     }
 
-    public void setSnapBehaviorType(WheelSnapScrollListener.Behavior behaviorType) {
-        if (wheelSnapScrollListener != null) {
-            wheelSnapScrollListener.behavior = behaviorType;
-        }
-    }
 
     public void setRecyclerViewType(WheelRecyclerViewType type) {
         recyclerViewType = type;
@@ -185,6 +183,20 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         allItemHeight += getSecondLabelHeight() * 2;
 
         return allItemHeight;
+    }
+
+    /**
+     * 초기 Position 설정
+     * @param position init position
+     */
+    public void setInitPosition(int position) {
+
+        int initPosition = position - startDateValue;
+        LinearLayoutManager manager = (LinearLayoutManager)WheelRecyclerView.this.getLayoutManager();
+        if (manager != null) {
+            WheelRecyclerView.this.adapter.setCenterPosition(initPosition + WheelRecyclerView.this.adapter.getEmptySpace());
+            manager.scrollToPositionWithOffset(initPosition, 0);
+        }
     }
 
     /**
