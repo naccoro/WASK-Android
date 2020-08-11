@@ -49,7 +49,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     //picker에 표시되는 일의 범위를 1(고정)~31일로 설정 (이후 로직에서 변경)
     public static final int END_DAY_OF_MONTH_VALUE = 31;
 
-    public static final int END_DEFAULT_VALUE = 10;
+    public static final int END_DEFAULT_VALUE = 7;
 
     private final WheelRecyclerViewType DEFAULT_TYPE = WheelRecyclerViewType.NONE;
 
@@ -100,7 +100,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
 
     /**
-     * //스크롤시 중앙에 아이탬을 고정하도록 도와주는 snapHelper 적용
+     * //스크롤시 중앙에 아이템을 고정하도록 도와주는 snapHelper 적용
      *
      * @param helper
      * @param behavior : listener가 호출 되는 시점 Idle or Scroll
