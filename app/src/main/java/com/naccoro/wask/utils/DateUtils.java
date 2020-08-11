@@ -16,6 +16,10 @@ public class DateUtils {
         return getDateFromGregorianCalendar(calendar);
     }
 
+    public static int getTodayToInt() {
+        return getDateToInt(getToday());
+    }
+
     public static String getDateFromGregorianCalendar(GregorianCalendar calendar) {
         return calendar.get(Calendar.YEAR) + "-" +
                 convertMonthIntToString(calendar.get(Calendar.MONTH) + 1) + "-" +
@@ -108,5 +112,9 @@ public class DateUtils {
      */
     private static boolean isLegalDate(String date) {
         return Pattern.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$", date);
+    }
+
+    public static int getDateToInt(String date) {
+        return Integer.parseInt(date.replaceAll("-", ""));
     }
 }

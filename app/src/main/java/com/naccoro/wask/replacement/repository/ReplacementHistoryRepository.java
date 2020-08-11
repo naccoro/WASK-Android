@@ -8,6 +8,8 @@ import com.naccoro.wask.replacement.model.ReplacementHistory;
 import com.naccoro.wask.utils.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ReplacementHistoryRepository {
@@ -148,6 +150,23 @@ public class ReplacementHistoryRepository {
             }
         }
         return null;
+    }
+
+    public String getLastReplacement() {
+        checkCache();
+
+        if (cachedReplacementHistory.size() == 0) {
+            return null;
+        }
+
+        Collections.sort(cachedReplacementHistory, (firstHistory, secondHistory) -> {
+            int firstDate = DateUtils.getDateToInt(firstHistory.getReplacedDate());
+            int secondDate = DateUtils.getDateToInt(secondHistory.getReplacedDate());
+
+            return Integer.compare(firstDate, secondDate);
+        });
+
+        return cachedReplacementHistory.get(cachedReplacementHistory.size() - 1).getReplacedDate();
     }
 
     public interface LoadHistoriesCallback {

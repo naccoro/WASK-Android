@@ -28,7 +28,10 @@ public class MainPresenter implements MainContract.Presenter {
         int period = getMaskPeriod();
         mainView.setPeriodTextValue(period);
 
-        if (period > 1) {
+        if (period == 0) {
+            //Todo: 교체 기록이 없을 경우 로직 고안
+            Log.d(TAG, "start: No replacement data");
+        } else if (period > 1) {
             mainView.showBadMainView();
         } else {
             mainView.showGoodMainView();
@@ -56,11 +59,15 @@ public class MainPresenter implements MainContract.Presenter {
     /**
      * WaskDatabase에서 현재 마스크 교체 상태를 가져오는 함수
      *
-     * @return [오늘 날짜 - 마지막 교체 일자]
+     * @return [오늘 날짜 - 마지막 교체 일자 + 1]
      */
     private int getMaskPeriod() {
-        //TODO: WaskDatabase에서 교체일자를 비교하여 현재 상태를 가져온다.
-        return 3;
+        String lastReplacement = replacementHistoryRepository.getLastReplacement();
+        if (lastReplacement == null) {
+            //교체 기록이 없을 경우
+            return 0;
+        }
+        return DateUtils.getTodayToInt() - DateUtils.getDateToInt(replacementHistoryRepository.getLastReplacement()) + 1;
     }
 
     @Override
@@ -98,8 +105,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void cancelChanging() {
-        isChanged = false;
         replacementHistoryRepository.deleteToday();
-        mainView.enableReplaceButton();
+        start();
     }
 }

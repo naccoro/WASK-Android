@@ -29,4 +29,11 @@ public class DateUtilsTest {
     public void getTodayString_isCorrect() {
         assertThat(DateUtils.getToday(), is("2020-08-11"));
     }
+
+    @Test
+    public void getDateToInt_isCorrect() {
+        assertThat(DateUtils.getDateToInt("2020-08-12"), is(20200812));
+        assertThat(DateUtils.getDateToInt("2022-10-10"), is(20221010));
+        assertThat(DateUtils.getDateToInt("2010-12-31"), is(20101231));
+    }
 }
