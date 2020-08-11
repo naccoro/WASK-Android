@@ -1,4 +1,3 @@
-
 package com.naccoro.wask.setting;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
-import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
