@@ -2,9 +2,9 @@ package com.naccoro.wask.calendar;
 
 public class CalendarPresenter implements CalendarContract.Presenter {
 
-    CalendarActivity calendarView;
+    CalendarContract.View calendarView;
 
-    CalendarPresenter(CalendarActivity calendarView) {
+    CalendarPresenter(CalendarContract.View calendarView) {
         this.calendarView = calendarView;
     }
 
