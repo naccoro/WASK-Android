@@ -1,6 +1,7 @@
 package com.naccoro.wask.replacement.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -56,5 +57,14 @@ public class ReplacementHistory {
     @Override
     public String toString() {
         return "[id : " + getId() + " date : " + getReplacedDate() + "]";
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof ReplacementHistory) {
+            return this.replacedDate.equals(((ReplacementHistory) obj).replacedDate);
+        } else {
+            return false;
+        }
     }
 }

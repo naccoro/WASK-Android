@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.calendar.CalendarActivity;
+import com.naccoro.wask.customview.waskdialog.WaskDialog;
+import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.setting.SettingActivity;
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity
                 presenter.clickCalendarButton();
                 break;
             case R.id.button_change:
+                // 교체 로직 실행
                 presenter.changeMask();
                 break;
         }
@@ -76,9 +79,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void enableReplaceButton() {
+        changeButton.setText("교체하기");
+        changeButton.setBackgroundTintList(null);
+    }
+
+    @Override
     public void disableReplaceButton() {
-        changeButton.setClickable(false);
-        changeButton.setText("교체 완료");
+        changeButton.setText("교체 취소");
         changeButton.setBackgroundTintList(getResources().getColorStateList(R.color.dividerGray, null));
     }
 
@@ -130,5 +138,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void setPeriodTextValue(int period) {
         usePeriodTextView.setText(period + "");
+    }
+
+    @Override
+    public void showCancelDialog() {
+        new WaskDialogBuilder()
+                .setTitle("교체 취소")
+                .setMessage("정말 교체하기를 취소하겠습니까?")
+                .addHorizontalButton("취소", (dialog, view) -> dialog.dismiss())
+                .addHorizontalButton("확인", ((dialog, view) -> {
+                    presenter.cancelChanging();
+                    dialog.dismiss();
+                }))
+                .build()
+                .show(getSupportFragmentManager(), "cancel");
     }
 }

@@ -54,14 +54,13 @@ public class ReplacementHistoryRepository {
     }
     
     public void insert(ReplacementHistory newReplacementHistory, InsertHistoryCallback callback) {
-        Log.d(TAG, "insert: " + newReplacementHistory.toString());
-
         if (checkReduplication(newReplacementHistory) && callback != null) {
             callback.onDuplicated();
             return;
         }
 
         dao.insert(newReplacementHistory);
+        Log.d(TAG, "insert: " + newReplacementHistory.toString());
 
         if (callback != null) {
             callback.onSuccess();
@@ -71,7 +70,8 @@ public class ReplacementHistoryRepository {
 
     private boolean checkReduplication(ReplacementHistory newReplacementHistory) {
         checkCache();
-        return cachedReplacementHistory.contains(newReplacementHistory);
+        boolean test = cachedReplacementHistory.contains(newReplacementHistory);
+        return test;
     }
 
     private void checkCache() {
@@ -105,6 +105,10 @@ public class ReplacementHistoryRepository {
         Log.d(TAG, "deleteAll: delete all of record");
         dao.deleteAll();
         updateHistories();
+    }
+
+    public void deleteToday() {
+        delete(DateUtils.getToday());
     }
 
     public void update(ReplacementHistory updatedReplacementHistory) {

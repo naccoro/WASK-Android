@@ -16,6 +16,10 @@ public interface MainContract {
         void showBadMainView();
 
         void setPeriodTextValue(int period);
+
+        void enableReplaceButton();
+
+        void showCancelDialog();
     }
 
     interface Presenter {
@@ -27,6 +31,8 @@ public interface MainContract {
         void clickCalendarButton();
 
         void changeMask();
+
+        void cancelChanging();
     }
 
 }

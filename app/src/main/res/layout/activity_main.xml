@@ -146,6 +146,7 @@
             android:id="@+id/button_change"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:foreground="?android:selectableItemBackground"
             android:background="@drawable/bg_button_change"
             android:elevation="8dp"
             android:text="@string/main_change_button"
