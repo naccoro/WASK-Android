@@ -160,6 +160,11 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void finishSettingView() {
         finish();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
     }
 
