@@ -23,6 +23,10 @@ public class WaskApplication extends Application {
         SharedPreferenceManager.getInstance().initInstance(getApplicationContext());
     }
 
+    /**
+     * OREO API 26 이상에서는 채널이 필수
+     * notification 설정 값
+     * */
     private void createNotificationChannel() {
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             NotificationChannel serviceChannel=new NotificationChannel(
