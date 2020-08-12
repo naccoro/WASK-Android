@@ -39,7 +39,7 @@ public class DateUtils {
      */
     public static int getMonth(int date) {
         String dateString = checkDateFormat(date);
-        return Integer.parseInt(dateString.substring(5, 7));
+        return Integer.parseInt(dateString.substring(4, 6));
     }
 
     /**
@@ -63,7 +63,7 @@ public class DateUtils {
 
         String dataString = String.valueOf(date);
 
-        String[] dateSplitArray = {dataString.substring(0, 3), dataString.substring(3, 5), dataString.substring(5, 7)};
+        String[] dateSplitArray = {dataString.substring(0, 4), dataString.substring(4, 6), dataString.substring(6)};
 
         StringBuilder newReplaceDate = new StringBuilder()
                 .append(dateSplitArray[0])
