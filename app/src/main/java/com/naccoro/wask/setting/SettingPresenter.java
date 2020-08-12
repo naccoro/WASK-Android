@@ -1,5 +1,9 @@
 package com.naccoro.wask.setting;
 
+import android.content.Intent;
+
+import com.naccoro.wask.WaskApplication;
+import com.naccoro.wask.notification.WaskService;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 
 public class SettingPresenter implements SettingContract.Presenter {
@@ -24,6 +28,9 @@ public class SettingPresenter implements SettingContract.Presenter {
 
         boolean isShowNotificationBar = SettingPreferenceManager.getIsShowNotificationBar();
         settingView.setAlertVisibleSwitchValue(isShowNotificationBar);
+
+        int maskPeriod = getMaskPeriod();
+        settingView.showForegroundAlert(maskPeriod);
     }
 
     @Override
@@ -46,6 +53,12 @@ public class SettingPresenter implements SettingContract.Presenter {
         settingView.showPushAlertDialog();
     }
 
+    private int getMaskPeriod() {
+        // TODO : DB에서 값 가져오기
+
+        return 15;
+    }
+
     /**
      * 사용자가 Foregorund Alert Visible Switch의 값을 변경했을 때
      * @param isChecked : 변경된 값
@@ -53,8 +66,8 @@ public class SettingPresenter implements SettingContract.Presenter {
     @Override
     public void changeAlertVisibleSwitch(boolean isChecked) {
         SettingPreferenceManager.setIsShowNotificationBar(isChecked);
-    }
 
+    }
 
     /**
      * pushAlert 설정 값을 변경하는 함수

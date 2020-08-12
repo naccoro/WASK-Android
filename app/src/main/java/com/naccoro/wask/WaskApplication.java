@@ -28,14 +28,14 @@ public class WaskApplication extends Application {
      * notification 설정 값
      * */
     private void createNotificationChannel() {
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            NotificationChannel serviceChannel=new NotificationChannel(
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel (
                     CHANNEL_ID,
                     "Wask Service",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
 
-            NotificationManager manager= getSystemService(NotificationManager.class);
+            NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
         }
     }

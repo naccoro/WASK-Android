@@ -11,12 +11,10 @@ import androidx.core.app.NotificationCompat;
 import com.naccoro.wask.R;
 import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.main.MainActivity;
-import com.naccoro.wask.main.MainPresenter;
 
 public class WaskService extends Service {
     private final String CHANNEL_ID = WaskApplication.CHANNEL_ID;
-    private MainPresenter mainPresenter;
-    private int maskPeriod = mainPresenter.getMaskPeriod();
+    private int maskPeriod;
 
     @Nullable
     @Override
@@ -30,6 +28,7 @@ public class WaskService extends Service {
      * */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        maskPeriod = intent.getIntExtra("maskPeriod", 1);
         startForegroundService();
 
         return START_NOT_STICKY;
@@ -47,7 +46,7 @@ public class WaskService extends Service {
 
         // 노티피케이션 관련 변수
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_main_logo) // OREO 이상에서 mipmap 사용시 시스템 UI 에러납니다.
+                .setSmallIcon(R.drawable.ic_notification_logo) // OREO 이상에서 mipmap 사용시 시스템 UI 에러납니다.
                 .setContentTitle(String.format("마스크를 %d일 째 사용중입니다.", maskPeriod))
                 .setContentText("WASK 열기")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

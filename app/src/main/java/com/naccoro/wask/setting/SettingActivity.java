@@ -33,6 +33,8 @@ public class SettingActivity extends AppCompatActivity
     private Switch alertVisibleSwitch;
 
     private SettingPresenter presenter;
+    //마스크 착용일
+    private int setMaskPeriod;
 
 
     @Override
@@ -71,10 +73,11 @@ public class SettingActivity extends AppCompatActivity
 
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                presenter.changeAlertVisibleSwitch(isChecked); //
+                presenter.changeAlertVisibleSwitch(isChecked);
 
                 if (isChecked) {
                     Intent service = new Intent(SettingActivity.this, WaskService.class);
+                    service.putExtra("maskPeriod", setMaskPeriod);
                     ContextCompat.startForegroundService(SettingActivity.this, service);
                 }
                 else {
@@ -163,6 +166,11 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void showPushAlertValue(String pushAlertValue) {
         pushAlertLabel.setText(pushAlertValue);
+    }
+
+    @Override
+    public void showForegroundAlert(int maskPeriod) {
+        setMaskPeriod = maskPeriod;
     }
 
     @Override
