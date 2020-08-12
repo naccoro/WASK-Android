@@ -2,7 +2,6 @@ package com.naccoro.wask.main;
 
 import android.util.Log;
 
-import com.naccoro.wask.replacement.model.ReplacementHistory;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.DateUtils;
 
@@ -10,6 +9,8 @@ public class MainPresenter implements MainContract.Presenter {
     private static final String TAG = "MainPresenter";
 
     private ReplacementHistoryRepository replacementHistoryRepository;
+
+    private boolean isNoData = true;
 
     private boolean isChanged = false;
 
@@ -25,38 +26,40 @@ public class MainPresenter implements MainContract.Presenter {
      */
     @Override
     public void start() {
-        int period = getMaskPeriod();
+        int period;
+
+        if (isChanged) {
+            //오늘 교체했다면 1일 째 사용 중
+            period = 1;
+        } else {
+            //오늘 교체하지 않았다면 연속 사용 일자 계산
+            period = getMaskPeriod();
+        }
         mainView.setPeriodTextValue(period);
 
         if (period == 0) {
-            //Todo: 교체 기록이 없을 경우 로직 고안
-            Log.d(TAG, "start: No replacement data");
+            //교체 기록이 없음
+            mainView.showNoReplaceData();
+            mainView.enableReplaceButton();
         } else if (period > 1) {
+            //교체한지 하루 이상 지남
             mainView.showBadMainView();
         } else {
+            //교체한 당일
+            isChanged = true;
             mainView.showGoodMainView();
+            mainView.disableReplaceButton();
         }
-
-        setIsChanged();
     }
 
     /**
-     * 오늘 마스크를 교체하였는지 확인 후 버튼 상태를 변경
+     * 첫 번째 교체인지 확인 후 멘트 변경
      */
-    private void setIsChanged() {
-        replacementHistoryRepository.get(DateUtils.getToday(), new ReplacementHistoryRepository.GetHistoriesCallback() {
-            @Override
-            public void onTaskLoaded(ReplacementHistory history) {
-                isChanged = true;
-                mainView.disableReplaceButton();
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                isChanged = false;
-                mainView.enableReplaceButton();
-            }
-        });
+    private void checkIsFirstReplacement() {
+        if (isNoData) {
+            mainView.changeUsePeriodMessage();
+            isNoData = false;
+        }
     }
 
     @Override
@@ -75,10 +78,14 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void changeMask() {
         if (!isChanged) {
+            checkIsFirstReplacement();
+
             replacementHistoryRepository.insertToday(new ReplacementHistoryRepository.InsertHistoryCallback() {
                 @Override
                 public void onSuccess() {
                     mainView.showReplaceToast();
+                    mainView.enableReplaceButton();
+                    isChanged = true;
                 }
 
                 @Override
@@ -98,6 +105,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void cancelChanging() {
         replacementHistoryRepository.deleteToday();
+        isChanged = false;
         start();
     }
 
@@ -110,8 +118,9 @@ public class MainPresenter implements MainContract.Presenter {
         String lastReplacement = replacementHistoryRepository.getLastReplacement();
         if (lastReplacement == null) {
             //교체 기록이 없을 경우
+            isNoData = true;
             return 0;
         }
-        return DateUtils.getTodayToInt() - DateUtils.getDateToInt(replacementHistoryRepository.getLastReplacement()) + 1;
+        return DateUtils.getTodayToInt() - DateUtils.getDateToInt(lastReplacement) + 1;
     }
 }

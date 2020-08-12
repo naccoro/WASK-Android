@@ -1,7 +1,6 @@
 package com.naccoro.wask.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.calendar.CalendarActivity;
-import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.setting.SettingActivity;
@@ -26,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     ImageView emotionImageView;
     TextView cardMessageTextView;
     TextView usePeriodTextView;
+    TextView usePeriodMessageTextView;
     TextView changeButton;
 
     @Override
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         emotionImageView = findViewById(R.id.imageview_emotion);
         cardMessageTextView = findViewById(R.id.textview_card_message);
         usePeriodTextView = findViewById(R.id.textview_use_period);
+        usePeriodMessageTextView = findViewById(R.id.textview_use_period_message);
         changeButton = findViewById(R.id.button_change);
 
         settingButton.setOnClickListener(this);
@@ -143,8 +143,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showCancelDialog() {
         new WaskDialogBuilder()
-                .setTitle("교체 취소")
-                .setMessage("정말 교체하기를 취소하겠습니까?")
+                .setMessage(getString(R.string.dialog_cancelreplacement))
                 .addHorizontalButton("취소", (dialog, view) -> dialog.dismiss())
                 .addHorizontalButton("확인", ((dialog, view) -> {
                     presenter.cancelChanging();
@@ -152,5 +151,17 @@ public class MainActivity extends AppCompatActivity
                 }))
                 .build()
                 .show(getSupportFragmentManager(), "cancel");
+    }
+
+    @Override
+    public void showNoReplaceData() {
+        usePeriodTextView.setVisibility(View.GONE);
+        usePeriodMessageTextView.setText(R.string.main_use_period_message_no_replacement);
+    }
+
+    @Override
+    public void changeUsePeriodMessage() {
+        usePeriodTextView.setVisibility(View.VISIBLE);
+        usePeriodMessageTextView.setText(R.string.main_use_period_message);
     }
 }

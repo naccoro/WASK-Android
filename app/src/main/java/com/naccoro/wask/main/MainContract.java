@@ -20,6 +20,10 @@ public interface MainContract {
         void enableReplaceButton();
 
         void showCancelDialog();
+
+        void showNoReplaceData();
+
+        void changeUsePeriodMessage();
     }
 
     interface Presenter {
