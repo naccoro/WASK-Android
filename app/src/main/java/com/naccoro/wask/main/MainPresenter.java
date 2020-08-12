@@ -115,12 +115,12 @@ public class MainPresenter implements MainContract.Presenter {
      * @return [오늘 날짜 - 마지막 교체 일자 + 1]
      */
     private int getMaskPeriod() {
-        String lastReplacement = replacementHistoryRepository.getLastReplacement();
-        if (lastReplacement == null) {
+        int lastReplacement = replacementHistoryRepository.getLastReplacement();
+        if (lastReplacement == -1) {
             //교체 기록이 없을 경우
             isNoData = true;
             return 0;
         }
-        return DateUtils.getTodayToInt() - DateUtils.getDateToInt(lastReplacement) + 1;
+        return DateUtils.getToday() - lastReplacement + 1;
     }
 }

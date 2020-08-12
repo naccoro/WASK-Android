@@ -16,13 +16,13 @@ public class ReplacementHistory {
     private int id;
 
     @ColumnInfo(name = "replace_date")
-    //YYYY-MM-DD 형태의 문자열로 저장
-    private String replacedDate;
+    //YYYYMMDD 형태의 정수로 저장
+    private int replacedDate;
 
     @ColumnInfo(name = "replace_date_month")
     private int monthOfReplaceDate;
 
-    public ReplacementHistory(String replacedDate) {
+    public ReplacementHistory(int replacedDate) {
         this.replacedDate = replacedDate;
         this.monthOfReplaceDate = DateUtils.getMonth(replacedDate);
     }
@@ -31,7 +31,7 @@ public class ReplacementHistory {
         return id;
     }
 
-    public String getReplacedDate() {
+    public int getReplacedDate() {
         return replacedDate;
     }
 
@@ -43,7 +43,7 @@ public class ReplacementHistory {
         this.id = id;
     }
 
-    public void setReplacedDate(String replacedDate) {
+    public void setReplacedDate(int replacedDate) {
         this.replacedDate = replacedDate;
         this.monthOfReplaceDate = DateUtils.getMonth(replacedDate);
     }
@@ -62,7 +62,7 @@ public class ReplacementHistory {
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof ReplacementHistory) {
-            return this.replacedDate.equals(((ReplacementHistory) obj).replacedDate);
+            return this.replacedDate == ((ReplacementHistory) obj).replacedDate;
         } else {
             return false;
         }

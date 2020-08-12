@@ -17,11 +17,11 @@ public abstract class ReplacementHistoryDao implements BaseDao<ReplacementHistor
     abstract List<ReplacementHistory> getAll(int month);
 
     @Query("SELECT * FROM replacement_histories WHERE replace_date = :date")
-    abstract ReplacementHistory get(String date);
+    abstract ReplacementHistory get(int date);
 
     @Query("DELETE FROM replacement_histories")
     abstract void deleteAll();
 
     @Query("DELETE FROM replacement_histories WHERE replace_date = :date")
-    abstract void delete(String date);
+    abstract void delete(int date);
 }

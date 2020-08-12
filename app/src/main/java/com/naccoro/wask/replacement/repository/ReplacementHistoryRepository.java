@@ -31,7 +31,7 @@ public class ReplacementHistoryRepository {
 
     public void getAll(int month, LoadHistoriesCallback callback) {
         checkCache();
-        List<ReplacementHistory> result = getAllFromCached(month);
+        List<ReplacementHistory> result = getAllWithMonthFromCached(month);
         Log.d(TAG, "getAll: " + result.toString());
 
         if (result.isEmpty()) {
@@ -41,9 +41,9 @@ public class ReplacementHistoryRepository {
         }
     }
 
-    public void get(String date, GetHistoriesCallback callback) {
+    public void get(int date, GetHistoriesCallback callback) {
         checkCache();
-        ReplacementHistory result = getAllFromCached(date);
+        ReplacementHistory result = getAllWithDateFromCached(date);
 
         if (result != null) {
             Log.d(TAG, "get: " + result.toString());
@@ -54,16 +54,16 @@ public class ReplacementHistoryRepository {
         }
     }
 
-    public String getLastReplacement() {
+    public int getLastReplacement() {
         checkCache();
 
         if (cachedReplacementHistory.size() == 0) {
-            return null;
+            return -1;
         }
 
         Collections.sort(cachedReplacementHistory, (firstHistory, secondHistory) -> {
-            int firstDate = DateUtils.getDateToInt(firstHistory.getReplacedDate());
-            int secondDate = DateUtils.getDateToInt(secondHistory.getReplacedDate());
+            int firstDate = firstHistory.getReplacedDate();
+            int secondDate = secondHistory.getReplacedDate();
 
             return Integer.compare(firstDate, secondDate);
         });
@@ -88,8 +88,7 @@ public class ReplacementHistoryRepository {
 
     private boolean checkReduplication(ReplacementHistory newReplacementHistory) {
         checkCache();
-        boolean test = cachedReplacementHistory.contains(newReplacementHistory);
-        return test;
+        return cachedReplacementHistory.contains(newReplacementHistory);
     }
 
     private void checkCache() {
@@ -98,7 +97,7 @@ public class ReplacementHistoryRepository {
         }
     }
 
-    public void insert(String date, InsertHistoryCallback callback) {
+    public void insert(int date, InsertHistoryCallback callback) {
         ReplacementHistory newReplacementHistory = new ReplacementHistory(date);
         insert(newReplacementHistory, callback);
     }
@@ -113,7 +112,7 @@ public class ReplacementHistoryRepository {
         cachedReplacementHistory = null;
     }
 
-    public void delete(String date) {
+    public void delete(int date) {
         Log.d(TAG, "delete: " + date);
         dao.delete(date);
         updateHistories();
@@ -145,7 +144,7 @@ public class ReplacementHistoryRepository {
         cacheIsDirty = false;
     }
 
-    private List<ReplacementHistory> getAllFromCached(int month) {
+    private List<ReplacementHistory> getAllWithMonthFromCached(int month) {
         if (month != -1) {
             List<ReplacementHistory> result = new ArrayList<>();
             for (ReplacementHistory history : cachedReplacementHistory) {
@@ -159,9 +158,9 @@ public class ReplacementHistoryRepository {
         }
     }
 
-    private ReplacementHistory getAllFromCached(String date) {
+    private ReplacementHistory getAllWithDateFromCached(int date) {
         for (ReplacementHistory history : cachedReplacementHistory) {
-            if (history.getReplacedDate().equals(date)) {
+            if (history.getReplacedDate() == date) {
                 return history;
             }
         }
