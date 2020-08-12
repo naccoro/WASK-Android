@@ -1,6 +1,7 @@
 package com.naccoro.wask.customview.datepicker.wheel;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -58,7 +59,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     private WheelSnapScrollListener wheelSnapScrollListener;
     private Context context;
-    WheelRecyclerAdapter adapter;
+    private WheelRecyclerAdapter adapter;
     WheelRecyclerViewType recyclerViewType = DEFAULT_TYPE;
 
     //이 RecyclerView가 보여주는 범위를 저장한다.
@@ -84,6 +85,8 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     private void init(Context context) {
         this.context = context;
         this.setItemAnimator(null);
+        //사용자가 RecyclerView의 뷰 끝에서 스크롤을 시도할 시 번지는 효과 제거
+        this.setOverScrollMode(OVER_SCROLL_NEVER);
 
         LinearLayoutManager manager = new LinearLayoutManager(context);
         this.setLayoutManager(manager);
@@ -120,11 +123,6 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         this.addOnScrollListener(wheelSnapScrollListener);
     }
 
-    public void setSnapBehaviorType(WheelSnapScrollListener.Behavior behaviorType) {
-        if (wheelSnapScrollListener != null) {
-            wheelSnapScrollListener.behavior = behaviorType;
-        }
-    }
 
     public void setRecyclerViewType(WheelRecyclerViewType type) {
         recyclerViewType = type;
@@ -188,12 +186,41 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     }
 
     /**
-     * 현재 사용자의 스크롤에 의해서 가운데에 보이는 값을 가져옴
+     * 초기 RecyclerView Position 설정
      *
-     * @return 가운데에 있는 값
+     * @param position init position
      */
-    public int getSnapValue() {
-        return adapter.getDate();
+    public void setInitPosition(int position) {
+
+        int initPosition = position - startDateValue;
+        LinearLayoutManager manager = (LinearLayoutManager) WheelRecyclerView.this.getLayoutManager();
+        if (manager != null) {
+            WheelRecyclerView.this.setCenterPosition(initPosition + WheelRecyclerView.this.adapter.getEmptySpace());
+            manager.scrollToPositionWithOffset(initPosition, 0);
+        }
+    }
+
+    public void setCenterPosition(int position) {
+        WheelRecyclerView.this.post(new Runnable() {
+            @Override
+            public void run() {
+                WheelRecyclerView.this.adapter.setCenterPosition(position);
+            }
+        });
+    }
+
+    public int getCenterPosition() {
+        return WheelRecyclerView.this.adapter.centerPosition;
+    }
+
+
+    /**
+     * 범위와 centerPosition, 빈공간을 고려하여 의미하고 있는 Data 값을 반환한다.
+     *
+     * @return 빈공간을 계산하여 구한 날짜 값
+     */
+    public int getWheelValue() {
+        return startDateValue + (adapter.centerPosition - adapter.emptySpace);
     }
 
     public float getSelectedLabelHeight() {
@@ -256,7 +283,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
     @Override
     public void onSnapPositionChange(RecyclerView recyclerView, int position) {
-        this.adapter.setCenterPosition(position);
+        WheelRecyclerView.this.setCenterPosition(position);
     }
 
     /**
@@ -285,7 +312,8 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         }
 
         /**
-         *  type이 None이 아닐 경우 emptySpace를 2로 설정한다. 보여주어야 하는 Item이 5개 이기 때문.
+         * type이 None이 아닐 경우 emptySpace를 2로 설정한다. 보여주어야 하는 Item이 5개 이기 때문.
+         *
          * @param type : year, month, day, none
          */
         public void setRecyclerType(WheelRecyclerViewType type) {
@@ -366,15 +394,6 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         @Override
         public int getItemCount() {
             return (endDateValue - startDateValue + 1) + emptySpace * 2;
-        }
-
-        /**
-         * 범위로 centerPosition 그 자체가 날짜 데이터가 될 수 있다.
-         *
-         * @return 빈공간을 계산하여 구한 날짜 값
-         */
-        public int getDate() {
-            return startDateValue + (centerPosition - emptySpace);
         }
 
         private String getDateString(int position) {
