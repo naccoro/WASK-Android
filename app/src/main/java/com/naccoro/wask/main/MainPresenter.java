@@ -27,7 +27,7 @@ public class MainPresenter implements MainContract.Presenter {
      *
      * @return [오늘 날짜 - 마지막 교체 일자]
      */
-    private int getMaskPeriod() {
+    public static int getMaskPeriod() {
         //TODO: WaskDatabase에서 교체일자를 비교하여 현재 상태를 가져온다.
         return 3;
     }
