@@ -3,25 +3,25 @@ package com.naccoro.wask.calendar;
 import java.util.GregorianCalendar;
 
 public class CalendarItem {
-    private boolean isToday; // 오늘인지
+    private boolean isSelect; // 오늘인지
     private boolean isChangeMask; // 마스크 교체했는지
     private boolean isCurrentMonth; // 이번달인지
 
     private GregorianCalendar date; // 날짜 데이터
 
-    public CalendarItem(boolean isToday, boolean isCurrentMonth, GregorianCalendar date) {
-        this.isToday = isToday;
+    public CalendarItem(boolean isSelect, boolean isCurrentMonth, GregorianCalendar date) {
+        this.isSelect = isSelect;
         this.isChangeMask = false;
         this.isCurrentMonth = isCurrentMonth;
         this.date = date;
     }
 
-    public boolean isToday() {
-        return isToday;
+    public boolean isSelect() {
+        return isSelect;
     }
 
     public void setToday(boolean today) {
-        isToday = today;
+        isSelect = today;
     }
 
     public boolean isChangeMask() {

@@ -23,6 +23,8 @@
 
     <dimen name="margin_calendar_textview_left">16dp</dimen>
     <dimen name="margin_calendar_textview_vertical">22dp</dimen>
+    <dimen name="margin_calendar_textviewmodify_right">10dp</dimen>
+    <dimen name="padding_calendar_changebutton">11dp</dimen>
     <dimen name="textsize_calendar_content">12sp</dimen>
 
     <dimen name="textsize_dialogreplacementcycle_body">15sp</dimen>

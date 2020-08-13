@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView_calendar_title"
+            android:id="@+id/textview_calendar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_calendar_textview_left"
@@ -51,39 +51,79 @@
             android:textColor="@color/waskGrayFont"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView_calendar_date"
+            app:layout_constraintBottom_toTopOf="@+id/constraintlayout_changedate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/constraintlayout_content" />
 
+        <TextView
+            android:id="@+id/textview_calendar_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_calendar_textviewmodify_right"
+            android:text="수정모드"
+            android:textColor="@color/colorDatePickerNoSelectedLabel"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/switch_calendar_modify"
+            app:layout_constraintEnd_toStartOf="@id/switch_calendar_modify"
+            app:layout_constraintTop_toTopOf="@id/switch_calendar_modify" />
+
         <Switch
-            android:id="@+id/switch_modifymode"
+            android:id="@+id/switch_calendar_modify"
             style="@style/SwitchThumb"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:paddingRight="@dimen/padding_all_imagebutton"
             android:track="@drawable/selector_foregroundalert_switch"
-            app:layout_constraintBottom_toBottomOf="@id/textView_calendar_title"
+            app:layout_constraintBottom_toBottomOf="@id/textview_calendar_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.82"
-            app:layout_constraintStart_toEndOf="@id/textView_calendar_title"
-            app:layout_constraintTop_toTopOf="@id/textView_calendar_title" />
+            app:layout_constraintTop_toTopOf="@id/textview_calendar_title" />
 
-        <TextView
-            android:id="@+id/textView_calendar_date"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_changedate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:foreground="?android:selectableItemBackground"
+            android:layout_marginTop="@dimen/padding_calendar_changebutton"
             android:layout_marginLeft="@dimen/margin_calendar_textview_left"
-            android:layout_marginTop="@dimen/margin_calendar_textview_vertical"
-            android:text="0000년 0월"
-            android:textColor="@color/waskGrayFont"
-            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_calendar_title" />
+            app:layout_constraintTop_toBottomOf="@+id/textview_calendar_title" >
+
+            <TextView
+                android:id="@+id/textview_calendar_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0000년 0월"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/imagebutton_calendar_changedate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_calendar_changedate"
+                android:padding="@dimen/padding_calendar_changebutton"
+                app:layout_constraintStart_toEndOf="@id/textview_calendar_date"
+                app:layout_constraintTop_toTopOf="@id/textview_calendar_date"
+                app:layout_constraintBottom_toBottomOf="@id/textview_calendar_date" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/view_divider_week">
+            android:layout_marginBottom="6dp"
+            app:layout_constraintBottom_toTopOf="@id/view_divider_week"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/textview_sunday"

@@ -4,8 +4,12 @@ import android.icu.util.Calendar;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import com.naccoro.wask.calendar.CalendarActivity.Date;
+
 
 public class CalendarModel {
+
+    private Date selectDate;
 
     /**
      * 화면에 표시되는 달력 데이터 설정
@@ -13,12 +17,13 @@ public class CalendarModel {
      * @param selectDate    선택된 날짜 (default: today)
      * @return  갱신된 날짜가 저장된 리스트
      */
-    public ArrayList<CalendarItem> updateCalendarList(GregorianCalendar selectDate) {
+    public ArrayList<CalendarItem> updateCalendarList(Date selectDate) {
         ArrayList<CalendarItem> dateList = new ArrayList<CalendarItem>();
         dateList.clear();
+        this.selectDate = selectDate;
 
         try {
-            GregorianCalendar calendar = new GregorianCalendar(selectDate.get(Calendar.YEAR), selectDate.get(Calendar.MONTH), 1, 0, 0, 0);
+            GregorianCalendar calendar = new GregorianCalendar(selectDate.getYear(), selectDate.getMonth(), 1, 0, 0, 0);
 
             int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1; // 해당 월에 시작하는 요일
             int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 이번 달의 말일
@@ -58,11 +63,11 @@ public class CalendarModel {
      * @param lastDayOfMonth    이번달의 마지막 날짜
      */
     private void updateCurrentMonth(ArrayList<CalendarItem> dateList, GregorianCalendar calendar, int lastDayOfMonth) {
-//        calendar.add(Calendar.MONTH, + 1); // 이번달로 돌아옴
+        calendar.add(Calendar.MONTH, + 1);
         for (int j = 1; j <= lastDayOfMonth; j++) {
             GregorianCalendar item = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), j);
-            if (selectDate.get(Calendar.DATE) == j) {
-                // today
+            if (selectDate.getDay() == j) {
+                // 선택일자와 같으면 select 체크
                 dateList.add(new CalendarItem(true, true, item));
             } else {
                 dateList.add(new CalendarItem(false, true, item));
