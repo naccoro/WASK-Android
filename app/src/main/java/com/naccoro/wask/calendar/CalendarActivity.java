@@ -87,10 +87,7 @@ public class CalendarActivity extends AppCompatActivity
      */
     private void initSelectDate() {
         GregorianCalendar cal = new GregorianCalendar();
-        selectDate = new Date();
-        selectDate.setYear(cal.get(Calendar.YEAR));
-        selectDate.setMonth(cal.get(Calendar.MONTH));
-        selectDate.setDay(cal.get(Calendar.DATE));
+        selectDate = new Date(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
     }
 
     /**
@@ -117,6 +114,18 @@ public class CalendarActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * select date 갱신
+     *
+     * @param date  새로운 date
+     */
+    @Override
+    public void initSelectDate(Date date) {
+        selectDate.setYear(date.getYear());
+        selectDate.setMonth(date.getMonth());
+        selectDate.setDay(date.getDay());
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -126,10 +135,8 @@ public class CalendarActivity extends AppCompatActivity
             case R.id.constraintlayout_changedate: // (0000년 00월) 버튼 클릭 시
                 DatePickerDialogFragment.newInstance().
                         setOnDateChangedListener((year, month, day) -> {
-                            selectDate.setYear(year);
-                            selectDate.setMonth(month);
-                            selectDate.setDay(day);
-                            presenter.clickChangeDateButton(selectDate);
+                            Date date = new Date(year, month, day);
+                            presenter.clickChangeDateButton(date);
                             calendarAdapter.setCalendarList(dateList);
                         })
                         .setDate(selectDate.getYear(), selectDate.getMonth(), selectDate.getDay())
@@ -164,6 +171,12 @@ public class CalendarActivity extends AppCompatActivity
         private int year;
         private int month;
         private int day;
+
+        public Date(int year, int month, int day) {
+            this.year = year;
+            this.month = month;
+            this.day = day;
+        }
 
         public int getYear() {
             return year;

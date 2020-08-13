@@ -9,6 +9,7 @@ public interface CalendarContract {
         void showCalendarDateTextView(int month);
         void initCalendarList(ArrayList<CalendarItem> calendarItems);
         void showModifyModeTextView(boolean isChecked);
+        void initSelectDate(Date selectDate);
     }
 
     interface Presenter {

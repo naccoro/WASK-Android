@@ -28,6 +28,7 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      */
     @Override
     public void clickChangeDateButton(Date selectDate) {
+        calendarView.initSelectDate(selectDate);
         changeCalendarList(selectDate);
         changeCalendarDateTextView(selectDate);
     }
