@@ -70,13 +70,15 @@ public class SettingPresenter implements SettingContract.Presenter {
      */
     @Override
     public void changePushAlertValue(Context context, String value) {
+        int oldValue = SettingPreferenceManager.getPushAlert();
+
         SettingPreferenceManager.SettingPushAlertType pushAlertType = getPushAlertTypeWithValue(value);
         SettingPreferenceManager.setPushAlert(pushAlertType.getTypeIndex());
 
         MockDatabase.MockNotificationData pushAlertData = MockDatabase.getReplacementCycleData(context);
 
         //기존 Channel 삭제
-        NotificationUtil.deleteNotificationChannel(context, pushAlertData.getChannelId());
+        NotificationUtil.deleteNotificationChannel(context, getPushAlertTypeWithIndex(oldValue));
         //새롭게 변경된 설정 적용하여 channel 생성
         NotificationUtil.createNotificationChannel(context, pushAlertData);
 

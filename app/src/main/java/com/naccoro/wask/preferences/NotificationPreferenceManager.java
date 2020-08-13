@@ -6,8 +6,8 @@ package com.naccoro.wask.preferences;
  */
 public class NotificationPreferenceManager {
     // preference key
-    private static final String PREF_KEY_REPLACE_CYCLE = "replace_cycle"; // 교체주기 알람 등록 일자
-    private static final String PREF_KEY_DELAY_CYCLE = "delay_cycle"; // 미루기주기 알람 등록 일자
+    private static final String PREF_KEY_REPLACE_CYCLE = "replace_cycle_date"; // 교체주기 알람 등록 일자
+    private static final String PREF_KEY_DELAY_CYCLE = "delay_cycle_date"; // 미루기주기 알람 등록 일자
 
     // default Value
     private static final String DEFAULT_REPLACEMENT_CYCLE = null;

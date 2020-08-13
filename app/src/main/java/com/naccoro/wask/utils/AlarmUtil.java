@@ -5,9 +5,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.naccoro.wask.notification.PushNotificationService;
 import com.naccoro.wask.preferences.NotificationPreferenceManager;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.receivers.AlarmReceiver;
 
 import java.util.Calendar;
 
@@ -36,10 +36,11 @@ public class AlarmUtil {
         int periodDelay = period + DateUtils.getDelayDay(date);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
-        calendar.set(Calendar.HOUR_OF_DAY, REPLACEMENT_CYCLE_START_HOUR); //오전 6시 알람
+//        calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
+//        calendar.set(Calendar.HOUR_OF_DAY, REPLACEMENT_CYCLE_START_HOUR); //오전 6시 알람
+        calendar.add(Calendar.MINUTE, periodDelay);
 
-        Intent intent = new Intent(context, PushNotificationService.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALERT_TYPE, REPLACEMENT_CYCLE_VALUE);
 
         //처음에 Notification 이 작동 후 며칠 단위로 작동할지
@@ -53,7 +54,7 @@ public class AlarmUtil {
      */
     public static void setReplacementLaterAlarm(Context context) {
 
-        String date = NotificationPreferenceManager.getReplacementCycleDate();
+        String date = NotificationPreferenceManager.getReplaceLaterDate();
         if (date == null) {
             return;
         }
@@ -64,10 +65,11 @@ public class AlarmUtil {
         int periodDelay = period + DateUtils.getDelayDay(date);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
-        calendar.set(Calendar.HOUR_OF_DAY, REPLACE_LATER_START_HOUR); //오후 10시 알람
+//        calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
+//        calendar.set(Calendar.HOUR_OF_DAY, REPLACE_LATER_START_HOUR); //오후 10시 알람
+        calendar.add(Calendar.MINUTE, periodDelay);
 
-        Intent intent = new Intent(context, PushNotificationService.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALERT_TYPE, REPLACE_LATER_VALUE);
 
         //처음에 Notification 이 작동 후 며칠 단위로 작동할지
@@ -80,7 +82,7 @@ public class AlarmUtil {
     public static void cancelReplacementCycleAlarm(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        Intent intent = new Intent(context, PushNotificationService.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALERT_TYPE, REPLACEMENT_CYCLE_VALUE);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
@@ -94,7 +96,7 @@ public class AlarmUtil {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         ;
 
-        Intent intent = new Intent(context, PushNotificationService.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALERT_TYPE, REPLACE_LATER_VALUE);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
@@ -107,7 +109,7 @@ public class AlarmUtil {
     private static void setAlertManager(Context context, Calendar calendar, Intent intent, int period) {
 
         //분 초 0으로 셋팅
-        calendar.set(Calendar.MINUTE, 0);
+      //  calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
         AlarmManager alarmManager;

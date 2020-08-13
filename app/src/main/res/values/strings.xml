@@ -22,7 +22,10 @@
 
     <string name="notificationchannel_push_name">마스크 교체 알림</string>
     <string name="notificationchannel_push_description">마스크 교체주기가 되면 알림을 받습니다. 중요도를 변경할 경우 WASK에서 설정한 알림을 정상적으로 받아보지 못할 수 있습니다.</string>
-    <string name="notificationchannel_push_id">wask_replacementcycle</string>
+    <string name="notificationchannel_pushsound_id">wask_push_sound</string>
+    <string name="notificationchannel_pushvibration_id">wask_push_vibration</string>
+    <string name="notificationchannel_pushall_id">wask_push_all</string>
+    <string name="notificationchannel_pushnone_id">wask_push_none</string>
 
     <string name="notification_replacementcycle_text">마스크를 교체할 때가 되었어요!</string>
     <string name="notification_replacementcycle_ok">확인</string>

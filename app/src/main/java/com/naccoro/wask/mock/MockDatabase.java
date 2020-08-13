@@ -2,11 +2,13 @@ package com.naccoro.wask.mock;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.utils.NotificationUtil;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.ALL;
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.SOUND;
@@ -20,34 +22,20 @@ import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushA
 public class MockDatabase {
 
     public static ReplacementCycleAppData getReplacementCycleData(Context context) {
-        return ReplacementCycleAppData.getInstance(context);
+        return new ReplacementCycleAppData(context);
     }
 
     public static ReplaceLaterAppData getReplaceLaterData(Context context) {
-        return ReplaceLaterAppData.getInstance(context);
+        return new ReplaceLaterAppData(context);
     }
 
     static class ReplaceLaterAppData extends MockNotificationData{
-        private static ReplaceLaterAppData instance = null;
 
-        public static ReplaceLaterAppData getInstance(Context context) {
-            if (instance == null) {
-                synchronized(ReplaceLaterAppData.class) {
-                    if (instance == null) {
-                        instance = new ReplaceLaterAppData(context);
-                    }
-                }
-            }
-
-            return instance;
-        }
-
-        private ReplaceLaterAppData(Context context) {
+        public ReplaceLaterAppData(Context context) {
             contentText = context.getString(R.string.notification_replacelater_text);
-            priority = NotificationCompat.PRIORITY_DEFAULT;
+            priority = NotificationCompat.PRIORITY_LOW;
             notification_id = 300;
 
-            channelId = context.getString(R.string.notificationchannel_push_id);
             channelName = context.getString(R.string.notificationchannel_push_name);
             channelDescription = context.getString(R.string.notificationchannel_push_description);
             channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -57,6 +45,7 @@ public class MockDatabase {
             SettingPreferenceManager.SettingPushAlertType pushAlertType = getPushAlertTypeWithIndex(pushAlertIndex);
             channelEnableSound = getValueSoundWithType(pushAlertType);
             channelEnableVibrate = getValueVibrateWithType(pushAlertType);
+            channelId = NotificationUtil.getChannelIdByPushAlertType(context, pushAlertType);
         }
 
         private boolean getValueSoundWithType(SettingPreferenceManager.SettingPushAlertType type) {
@@ -72,27 +61,14 @@ public class MockDatabase {
      * 교체 주기 Notification 관련 Data
      */
     static class ReplacementCycleAppData extends MockNotificationData{
-        private static ReplacementCycleAppData instance = null;
 
-        public static ReplacementCycleAppData getInstance(Context context) {
-            if (instance == null) {
-                synchronized(ReplacementCycleAppData.class) {
-                    if (instance == null) {
-                        instance = new ReplacementCycleAppData(context);
-                    }
-                }
-            }
-
-            return instance;
-        }
-
-        private ReplacementCycleAppData(Context context) {
+        public ReplacementCycleAppData(Context context) {
             contentText = context.getString(R.string.notification_replacementcycle_text);
-            priority = NotificationCompat.PRIORITY_DEFAULT;
+            priority = NotificationCompat.PRIORITY_LOW;
             notification_id = 888;
             layoutId = R.layout.notification_replacementcycle;
 
-            channelId = context.getString(R.string.notificationchannel_push_id);
+
             channelName = context.getString(R.string.notificationchannel_push_name);
             channelDescription = context.getString(R.string.notificationchannel_push_description);
             channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -102,6 +78,8 @@ public class MockDatabase {
             SettingPreferenceManager.SettingPushAlertType pushAlertType = getPushAlertTypeWithIndex(pushAlertIndex);
             channelEnableSound = getValueSoundWithType(pushAlertType);
             channelEnableVibrate = getValueVibrateWithType(pushAlertType);
+
+            channelId = NotificationUtil.getChannelIdByPushAlertType(context, pushAlertType);
         }
 
         private boolean getValueSoundWithType(SettingPreferenceManager.SettingPushAlertType type) {

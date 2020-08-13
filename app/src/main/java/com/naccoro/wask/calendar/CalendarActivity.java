@@ -32,8 +32,6 @@ public class CalendarActivity extends AppCompatActivity
 
         backButton.setOnClickListener(this);
 
-        Intent service= new Intent(this, PushNotificationService.class);
-        startService(service);
     }
 
     @Override

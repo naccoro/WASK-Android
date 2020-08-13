@@ -23,11 +23,17 @@ public class DateUtils {
     /**
      * Calendar의 내용을 String 변환
      * @param calendar 변환하고자 하는 Calendar
-     * @return YY-MM-DD 문자열
+     * @return YYYY-MM-DD 문자열
      */
     public static String getStringOfCalendar(Calendar calendar) {
-        return calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1)
-                + calendar.get(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        String monthString = month < 10 ? "0" + month : "" + month;
+        String dayString = day < 10 ? "0" + day : "" + day;
+
+        return year + "-" + monthString + "-" + dayString;
     }
 
     /**

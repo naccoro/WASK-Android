@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.Nullable;
@@ -15,10 +16,17 @@ import com.naccoro.wask.R;
 import com.naccoro.wask.main.MainActivity;
 import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.preferences.NotificationPreferenceManager;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.receivers.ReplaceLaterReceiver;
 import com.naccoro.wask.receivers.ReplaceMaskReceiver;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.NotificationUtil;
+
+import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.ALL;
+import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.NONE;
+import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.SOUND;
+import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.VIBRATION;
+import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
 
 
 public class PushNotificationService extends Service {
@@ -35,6 +43,7 @@ public class PushNotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Log.d("notification", "작동");
         String type = intent.getStringExtra(AlarmUtil.ALERT_TYPE);
         MockDatabase.MockNotificationData data;
 
@@ -79,21 +88,30 @@ public class PushNotificationService extends Service {
                 , 0, notificationIntent, 0); //알람을 눌렀을 때 해당 엑티비티로
 
         //3. Notification을 생성한다. Android Orea 이전 버전에서는 channelId는 무시될 것 입니다.
-        Notification notification = new NotificationCompat.Builder(this, channelId)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setCustomContentView(contentView)
                 .setContentIntent(pendingIntent)
                 .setPriority(data.getPriority())
                 .setSmallIcon(R.drawable.ic_main_logo)
                 .setVisibility(data.getChannelLockscreenVisibility())
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setAutoCancel(true)// 사용자가 알람을 탭했을 때, 알람이 사라짐
-                .build();
+                .setAutoCancel(true);// 사용자가 알람을 탭했을 때, 알람이 사라짐
+
+        if (!data.isChannelEnableSound()) {
+
+            notificationBuilder.setSound(null);
+        }
+        if (!data.isChannelEnableVibrate()) {
+
+            notificationBuilder.setVibrate(null);
+        }
+
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
 
         //4. type 별로 Notification 을 독립적으로 등록해준다.
-        notificationManagerCompat.notify(data.getNotification_id(), notification);
+        notificationManagerCompat.notify(data.getNotification_id(), notificationBuilder.build());
 
+        // startForeground(data.getNotification_id() ,notificationBuilder.build());
         return START_NOT_STICKY;
     }
 }
