@@ -73,5 +73,47 @@ public class SettingPreferenceManager {
         public String getTypeValue() {
             return typeValue;
         }
+
+        /**
+         * enum class인 SettngPushAlertType을 index 매개변수로 구하는 함수
+         * @param index : 구하고자 하는 index
+         * @return : 구한 SettingPushAlertType 객체
+         */
+        public static SettingPreferenceManager.SettingPushAlertType getPushAlertTypeWithIndex(int index) {
+            switch (index) {
+                case 0:
+                    return SettingPreferenceManager.SettingPushAlertType.SOUND;
+
+                case 1:
+                    return SettingPreferenceManager.SettingPushAlertType.VIBRATION;
+
+                case 2:
+                    return SettingPreferenceManager.SettingPushAlertType.ALL;
+
+                default:
+                    return SettingPreferenceManager.SettingPushAlertType.NONE;
+            }
+        }
+
+        /**
+         * enum class인 SettngPushAlertType을 value 매개변수로 구하는 함수
+         * @param value : 구하고자 하는 value
+         * @return : 구한 SettingPushAlertType 객체
+         */
+        public static SettingPreferenceManager.SettingPushAlertType getPushAlertTypeWithValue(String value) {
+            switch (value) {
+                case "소리":
+                    return SettingPreferenceManager.SettingPushAlertType.SOUND;
+
+                case "진동":
+                    return SettingPreferenceManager.SettingPushAlertType.VIBRATION;
+
+                case "소리+진동":
+                    return SettingPreferenceManager.SettingPushAlertType.ALL;
+
+                default:
+                    return SettingPreferenceManager.SettingPushAlertType.NONE;
+            }
+        }
     }
 }

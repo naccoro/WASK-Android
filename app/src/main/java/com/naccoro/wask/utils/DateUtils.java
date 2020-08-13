@@ -1,5 +1,7 @@
 package com.naccoro.wask.utils;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 /**
@@ -16,6 +18,16 @@ public class DateUtils {
     public static int getMonth(String date) {
         checkDateFormat(date);
         return Integer.parseInt(date.substring(5, 7));
+    }
+
+    /**
+     * Calendar의 내용을 String 변환
+     * @param calendar 변환하고자 하는 Calendar
+     * @return YY-MM-DD 문자열
+     */
+    public static String getStringOfCalendar(Calendar calendar) {
+        return calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1)
+                + calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     /**
@@ -69,6 +81,33 @@ public class DateUtils {
     }
 
     /**
+     * 입력받은 date 가 오늘보다 얼마나 지났는지 계산 (일수)
+     * @param date 계산할 date YYYY-MM-DD
+     */
+    public static int getDelayDay(String date) {
+        checkDateFormat(date);
+
+        Calendar todayCalendar = Calendar.getInstance(); //현재
+        todayCalendar.set(Calendar.HOUR, 0);
+        todayCalendar.set(Calendar.MINUTE, 0);
+        todayCalendar.set(Calendar.SECOND, 0);
+
+        String[] dates = date.split("[-]");
+        int year = Integer.parseInt(dates[0]);
+        int month = Integer.parseInt(dates[1]) - 1;
+        int day = Integer.parseInt(dates[2]);
+
+        //고민할 점 - 마크스 교체 시간까지 계산할지
+        Calendar dateCalendar = new GregorianCalendar(year, month, day, 0, 0, 0);
+
+        long diff = todayCalendar.getTimeInMillis() - dateCalendar.getTimeInMillis();
+
+        long dayDiff = diff / (24 * 60 * 60 * 1000); //두 calendar가 며칠 차이 나는 지
+
+        return (int) dayDiff;
+    }
+
+    /**
      * 입력받은 '월" 정보의 유효성 검사하여 리턴
      * @param month 감사할 월
      * @return 유효한지 아닌지 boolean 형태로 리턴
@@ -95,4 +134,5 @@ public class DateUtils {
     private static boolean isLegalDate(String date) {
         return Pattern.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$", date);
     }
+
 }

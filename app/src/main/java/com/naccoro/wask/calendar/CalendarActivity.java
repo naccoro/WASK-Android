@@ -1,10 +1,12 @@
 package com.naccoro.wask.calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.notification.PushNotificationService;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +31,9 @@ public class CalendarActivity extends AppCompatActivity
         backButton = findViewById(R.id.imageview_back);
 
         backButton.setOnClickListener(this);
+
+        Intent service= new Intent(this, PushNotificationService.class);
+        startService(service);
     }
 
     @Override

@@ -1,6 +1,13 @@
 package com.naccoro.wask.setting;
 
+import android.content.Context;
+
+import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.utils.NotificationUtil;
+
+import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
+import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithValue;
 
 public class SettingPresenter implements SettingContract.Presenter {
 
@@ -61,9 +68,16 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param value: 사용자가 설정한 값  e.g 소리, 진동, 소리+진동, 없음
      */
     @Override
-    public void changePushAlertValue(String value) {
+    public void changePushAlertValue(Context context, String value) {
         SettingPreferenceManager.SettingPushAlertType pushAlertType = getPushAlertTypeWithValue(value);
         SettingPreferenceManager.setPushAlert(pushAlertType.getTypeIndex());
+
+        MockDatabase.MockNotificationData pushAlertData = MockDatabase.getReplacementCycleData(context);
+
+        //기존 Channel 삭제
+        NotificationUtil.deleteNotificationChannel(context, pushAlertData.getChannelId());
+        //새롭게 변경된 설정 적용하여 channel 생성
+        NotificationUtil.createNotificationChannel(context, pushAlertData);
 
         settingView.showPushAlertValue(value);
     }
@@ -88,47 +102,5 @@ public class SettingPresenter implements SettingContract.Presenter {
         SettingPreferenceManager.setDelayCycle(laterValue);
 
         settingView.showReplaceLaterValue(laterValue);
-    }
-
-    /**
-     * enum class인 SettngPushAlertType을 index 매개변수로 구하는 함수
-     * @param index : 구하고자 하는 index
-     * @return : 구한 SettingPushAlertType 객체
-     */
-    private SettingPreferenceManager.SettingPushAlertType getPushAlertTypeWithIndex(int index) {
-        switch (index) {
-            case 0:
-                return SettingPreferenceManager.SettingPushAlertType.SOUND;
-
-            case 1:
-                return SettingPreferenceManager.SettingPushAlertType.VIBRATION;
-
-            case 2:
-                return SettingPreferenceManager.SettingPushAlertType.ALL;
-
-            default:
-                return SettingPreferenceManager.SettingPushAlertType.NONE;
-        }
-    }
-
-    /**
-     * enum class인 SettngPushAlertType을 value 매개변수로 구하는 함수
-     * @param value : 구하고자 하는 value
-     * @return : 구한 SettingPushAlertType 객체
-     */
-    private SettingPreferenceManager.SettingPushAlertType getPushAlertTypeWithValue(String value) {
-        switch (value) {
-            case "소리":
-                return SettingPreferenceManager.SettingPushAlertType.SOUND;
-
-            case "진동":
-                return SettingPreferenceManager.SettingPushAlertType.VIBRATION;
-
-            case "소리+진동":
-                return SettingPreferenceManager.SettingPushAlertType.ALL;
-
-            default:
-                return SettingPreferenceManager.SettingPushAlertType.NONE;
-        }
     }
 }

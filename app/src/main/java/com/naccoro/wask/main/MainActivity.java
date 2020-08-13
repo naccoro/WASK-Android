@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.button_change:
                 // '교체하기' 버튼을 눌렀을 때 (버튼 동작을 확인하기위해 toast메시지를 띄워놓았습니다.)
                 Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
-                presenter.changeMask();
+                presenter.changeMask(this);
                 break;
         }
     }

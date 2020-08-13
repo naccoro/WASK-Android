@@ -134,19 +134,19 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_push_alert))
                 .addVerticalButton(getString(R.string.setting_push_alert_sound), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_sound));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_sound));
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_vibration), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_vibration));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_vibration));
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_all), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_all));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_all));
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_none), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_none));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_none));
                     dialog.dismiss();
                 })
                 .build()
