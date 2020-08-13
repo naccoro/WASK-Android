@@ -23,6 +23,7 @@
         android:layout_marginTop="@dimen/margin_notification_small"
         android:textSize="@dimen/textsize_notification_name"
         tools:text="WASK"
+       android:textFontWeight="700"
         android:id="@+id/textview_notification_name"/>
 
     <TextView
