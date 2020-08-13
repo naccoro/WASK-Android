@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.naccoro.wask.R;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.naccoro.wask.R.*;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
 
@@ -41,7 +41,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.calendar_item, parent, false) ;
+        View view = inflater.inflate(layout.calendar_item, parent, false) ;
         CalendarAdapter.CalendarViewHolder viewHolder = new CalendarAdapter.CalendarViewHolder(view) ;
 
         return viewHolder ;
@@ -55,8 +55,28 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      */
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder calendarViewHolder, int position) {
+
+        View itemView = calendarViewHolder.getItemView();
+
         CalendarItem item = calendarList.get(position);
         calendarViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH) + "");
+
+        // 일요일은 빨간날
+        if (position%7==0) {
+            calendarViewHolder.dateTextView.setTextColor(itemView.getResources().getColor(color.waskRed));
+        }
+        // 오늘이면 동그라미 표시
+        if (item.isToday()) {
+            calendarViewHolder.dateTextView.setTextColor(itemView.getResources().getColor(color.white));
+            calendarViewHolder.dateBackgroundImageView.setVisibility(itemView.getVisibility());
+        }
+
+        //지난 달과 다음 달의 날짜는 흐리게
+        if (!item.isCurrentMonth()) {
+            calendarViewHolder.dateTextView.setAlpha(0.4f);
+        } else {
+            calendarViewHolder.dateTextView.setAlpha(1.0f);
+        }
     }
 
     /**
@@ -80,18 +100,23 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         private TextView dateTextView;
         private ImageView dateBackgroundImageView;
         private ImageView changeImageView;
+        private View itemView;
 
         public CalendarViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.itemView = itemView;
 
             initView(itemView);
         }
 
         public void initView(View v) {
-            dateTextView = v.findViewById(R.id.textView_date);
-            dateBackgroundImageView = v.findViewById(R.id.imageView_date_background);
-            changeImageView = v.findViewById(R.id.imageView_change);
+            dateTextView = v.findViewById(id.textView_date);
+            dateBackgroundImageView = v.findViewById(id.imageView_date_background);
+            changeImageView = v.findViewById(id.imageView_change);
         }
 
+        public View getItemView() {
+            return itemView;
+        }
     }
 }

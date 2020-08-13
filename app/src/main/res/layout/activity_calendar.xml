@@ -102,7 +102,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="월"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
             <TextView
@@ -112,7 +112,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="화"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
             <TextView
@@ -122,7 +122,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="수"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
             <TextView
@@ -132,7 +132,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="목"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
             <TextView
@@ -142,7 +142,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="금"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
             <TextView
@@ -152,7 +152,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="토"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
         </LinearLayout>
@@ -160,7 +160,7 @@
         <View
             android:id="@+id/view_divider_week"
             android:layout_width="match_parent"
-            android:layout_height="0.7dp"
+            android:layout_height="0dp"
             android:background="@color/calendarDividerGray"
             app:layout_constraintBottom_toBottomOf="@id/guideline_week"
             app:layout_constraintTop_toTopOf="@+id/guideline_week" />
@@ -181,7 +181,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_week" />
+            app:layout_constraintTop_toBottomOf="@id/view_divider_week" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

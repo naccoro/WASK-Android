@@ -21,4 +21,7 @@
 
     <color name="waskAccentFont">@color/waskBlue</color>
 
+    <color name="black">#111111</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>

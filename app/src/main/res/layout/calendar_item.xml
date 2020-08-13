@@ -16,7 +16,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.6dp"
             android:background="@color/calendarDividerGray"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -25,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/textView_date"
             app:layout_constraintEnd_toEndOf="@+id/textView_date"
             app:layout_constraintStart_toStartOf="@+id/textView_date"
@@ -38,7 +39,8 @@
             android:layout_height="wrap_content"
             android:text="날짜"
             android:textSize="12sp"
-            android:textColor="@android:color/white"
+            android:textFontWeight="100"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

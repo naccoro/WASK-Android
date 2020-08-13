@@ -5,14 +5,14 @@ import java.util.GregorianCalendar;
 public class CalendarItem {
     private boolean isToday; // 오늘인지
     private boolean isChangeMask; // 마스크 교체했는지
-    private boolean isThisMonth; // 이번달인지
+    private boolean isCurrentMonth; // 이번달인지
 
     private GregorianCalendar date; // 날짜 데이터
 
-    public CalendarItem(boolean isToday, boolean isThisMonth, GregorianCalendar date) {
+    public CalendarItem(boolean isToday, boolean isCurrentMonth, GregorianCalendar date) {
         this.isToday = isToday;
         this.isChangeMask = false;
-        this.isThisMonth = isThisMonth;
+        this.isCurrentMonth = isCurrentMonth;
         this.date = date;
     }
 
@@ -32,12 +32,12 @@ public class CalendarItem {
         isChangeMask = changeMask;
     }
 
-    public boolean isThisMonth() {
-        return isThisMonth;
+    public boolean isCurrentMonth() {
+        return isCurrentMonth;
     }
 
-    public void setThisMonth(boolean thisMonth) {
-        isThisMonth = thisMonth;
+    public void setCurrentMonth(boolean currentMonth) {
+        isCurrentMonth = currentMonth;
     }
 
     public GregorianCalendar getDate() {

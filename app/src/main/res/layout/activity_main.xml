@@ -149,7 +149,7 @@
             android:background="@drawable/bg_button_change"
             android:elevation="8dp"
             android:text="@string/main_change_button"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold"
             android:gravity="center"
