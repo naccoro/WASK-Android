@@ -93,11 +93,16 @@ public class DateUtils {
      */
     private static int getDateFromGregorianCalendar(GregorianCalendar calendar) {
         String dateString = calendar.get(Calendar.YEAR) +
-                convertMonthIntToString(calendar.get(Calendar.MONTH) + 1) +
-                calendar.get(Calendar.DAY_OF_MONTH);
+                convertMonthToString(calendar.get(Calendar.MONTH) + 1) +
+                convertDayToString(calendar.get(Calendar.DAY_OF_MONTH));
         return Integer.parseInt(dateString);
     }
 
+    /**
+     * YYYYMMDD 포맷에서 연도에 해당하는 정보를 리턴
+     * @param date 연도 정보를 조회할 YYYYMMDD 정수
+     * @return int 타입의 연도
+     */
     private static int getYear(int date) {
         return getParsedDate(DateType.YEAR, date);
     }
@@ -111,18 +116,13 @@ public class DateUtils {
         return getParsedDate(DateType.MONTH, date);
     }
 
+    /**
+     * YYYYMMDD 포맷에서 "일"에 해당하는 정보를 리턴
+     * @param date "일" 정보를 조회할 YYYYMMDD 정수
+     * @return int 타입의 일
+     */
     private static int getDay(int date) {
         return getParsedDate(DateType.DAY, date);
-    }
-
-    /**
-     * 입력받은 '월" 정보의 유효성 검사
-     * @param month 검사할 월
-     */
-    public static void checkMonthFormat(int month) {
-        if (!isLegalMonth(month)) {
-            throw new IllegalArgumentException("month parameter should be 0 to 12");
-        }
     }
 
     /**
@@ -140,38 +140,47 @@ public class DateUtils {
 
         StringBuilder newReplaceDate = new StringBuilder()
                 .append(dateSplitArray[0])
-                .append(DateUtils.convertMonthIntToString(month))
+                .append(DateUtils.convertMonthToString(month))
                 .append(dateSplitArray[2]);
 
         return Integer.parseInt(newReplaceDate.toString());
     }
 
     /**
-     * int 타입의 월을 MM 형태의 문자열로 변환
-     * @param month 변환할 int 형태의 월
-     * @return MM 형태로 변환된 문자열
+     * 정수형의 월 값을 문자열로 변경
+     * @param month 변경할 월 값
+     * @return 월 문자열
      */
-    private static String convertMonthIntToString(int month) {
+    private static String convertMonthToString(int month) {
         checkMonthFormat(month);
-
-        StringBuilder newMonth = new StringBuilder();
-
-        if (month < 10) {
-            newMonth.append(0);
-        }
-
-        newMonth.append(month);
-
-        return newMonth.toString();
+        return convertDoubleDigitForm(month);
     }
 
     /**
-     * 입력받은 '월" 정보의 유효성 검사하여 리턴
-     * @param month 감사할 월
-     * @return 유효한지 아닌지 boolean 형태로 리턴
+     * 정수형의 월 값을 문자열로 변경
+     * @param day 변경할 월 값
+     * @return 월 문자열
      */
-    private static boolean isLegalMonth(int month) {
-        return month > 0 && month <= 12;
+    private static String convertDayToString(int day) {
+        checkDayFormat(day);
+        return convertDoubleDigitForm(day);
+    }
+
+    /**
+     * int 타입의 값을 두 자릿수 형태의 문자열로 변환
+     * @param value 변환할 int 형태의 값
+     * @return 두 자릿수 형태로 변환된 문자열
+     */
+    private static String convertDoubleDigitForm(int value) {
+        StringBuilder newValue = new StringBuilder();
+
+        if (value < 10) {
+            newValue.append(0);
+        }
+
+        newValue.append(value);
+
+        return newValue.toString();
     }
 
     /**
@@ -188,12 +197,50 @@ public class DateUtils {
     }
 
     /**
+     * 입력받은 '월" 정보의 유효성 검사
+     * @param month 검사할 월
+     */
+    public static void checkMonthFormat(int month) {
+        if (!isLegalMonth(month)) {
+            throw new IllegalArgumentException("month parameter should be 1 to 12");
+        }
+    }
+
+    /**
+     * 입력받은 '일" 정보의 유효성 검사
+     * @param day 검사할 일
+     */
+    private static void checkDayFormat(int day) {
+        if (!isLegalDay(day)) {
+            throw new IllegalArgumentException("month parameter should be 1 to 31");
+        }
+    }
+
+    /**
      * 입력받은 YYYYMMDD 문자열의 형태가 유효한지 검사하여 리턴
      * @param date 검사할 문자열
      * @return 유효한지 아닌지 boolean 형태로 리턴
      */
     private static boolean isLegalDate(String date) {
         return Pattern.matches("^\\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", date);
+    }
+
+    /**
+     * 입력받은 '월" 정보의 유효성 검사하여 리턴
+     * @param month 검사할 월
+     * @return 유효한지 아닌지 boolean 형태로 리턴
+     */
+    private static boolean isLegalMonth(int month) {
+        return month > 0 && month <= 12;
+    }
+
+    /**
+     * 입력받은 '일" 정보의 유효성 검사하여 리턴
+     * @param day 검사할 일
+     * @return 유효한지 아닌지 boolean 형태로 리턴
+     */
+    private static boolean isLegalDay(int day) {
+        return day > 0 && day <= 31;
     }
 
     public enum DateType {
