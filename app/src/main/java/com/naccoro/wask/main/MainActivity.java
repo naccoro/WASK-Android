@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.calendar.CalendarActivity;
+import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.setting.SettingActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     ImageView emotionImageView;
     TextView cardMessageTextView;
     TextView usePeriodTextView;
+    TextView usePeriodMessageTextView;
     TextView changeButton;
 
     @Override
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter = new MainPresenter(this);
+        presenter = new MainPresenter(this, Injection.replacementHistoryRepository(getApplicationContext()));
         initView();
     }
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         emotionImageView = findViewById(R.id.imageview_emotion);
         cardMessageTextView = findViewById(R.id.textview_card_message);
         usePeriodTextView = findViewById(R.id.textview_use_period);
+        usePeriodMessageTextView = findViewById(R.id.textview_use_period_message);
         changeButton = findViewById(R.id.button_change);
 
         settingButton.setOnClickListener(this);
@@ -63,11 +67,27 @@ public class MainActivity extends AppCompatActivity
                 presenter.clickCalendarButton();
                 break;
             case R.id.button_change:
-                // '교체하기' 버튼을 눌렀을 때 (버튼 동작을 확인하기위해 toast메시지를 띄워놓았습니다.)
-                Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+                // 교체 로직 실행
                 presenter.changeMask();
                 break;
         }
+    }
+
+    @Override
+    public void showReplaceToast() {
+        Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void enableReplaceButton() {
+        changeButton.setText("교체하기");
+        changeButton.setBackgroundTintList(null);
+    }
+
+    @Override
+    public void disableReplaceButton() {
+        changeButton.setText("교체 취소");
+        changeButton.setBackgroundTintList(getResources().getColorStateList(R.color.dividerGray, null));
     }
 
     @Override
@@ -118,5 +138,30 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void setPeriodTextValue(int period) {
         usePeriodTextView.setText(period + "");
+    }
+
+    @Override
+    public void showCancelDialog() {
+        new WaskDialogBuilder()
+                .setMessage(getString(R.string.dialog_cancelreplacement))
+                .addHorizontalButton("취소", (dialog, view) -> dialog.dismiss())
+                .addHorizontalButton("확인", ((dialog, view) -> {
+                    presenter.cancelChanging();
+                    dialog.dismiss();
+                }))
+                .build()
+                .show(getSupportFragmentManager(), "cancel");
+    }
+
+    @Override
+    public void showNoReplaceData() {
+        usePeriodTextView.setVisibility(View.GONE);
+        usePeriodMessageTextView.setText(R.string.main_use_period_message_no_replacement);
+    }
+
+    @Override
+    public void changeUsePeriodMessage() {
+        usePeriodTextView.setVisibility(View.VISIBLE);
+        usePeriodMessageTextView.setText(R.string.main_use_period_message);
     }
 }
