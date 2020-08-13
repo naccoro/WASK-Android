@@ -50,6 +50,7 @@ public class SettingPresenter implements SettingContract.Presenter {
      * 마스크 착용일 설정하는 함수
      * @param maskPeriod : 사용자가 연속해서 마스크를 착용한 일수
      * */
+    @Override
     public void getMaskPeriod(int maskPeriod) {
         // TODO : DB에서 값 가져오기
         maskPeriod = 20;
