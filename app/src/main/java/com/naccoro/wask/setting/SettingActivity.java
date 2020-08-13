@@ -99,7 +99,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
-                    presenter.changeReplacementCycleValue(wheelRecyclerView.getWheelValue());
+                    presenter.changeReplacementCycleValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -122,7 +122,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
-                    presenter.changeReplaceLaterValue(wheelRecyclerView.getWheelValue());
+                    presenter.changeReplaceLaterValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()

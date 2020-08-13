@@ -36,8 +36,8 @@ public interface SettingContract {
 
         void changePushAlertValue(Context context, String value);
 
-        void changeReplacementCycleValue(int cycleValue);
+        void changeReplacementCycleValue(Context context, int cycleValue);
 
-        void changeReplaceLaterValue(int laterValue);
+        void changeReplaceLaterValue(Context context, int laterValue);
     }
 }

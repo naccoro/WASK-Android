@@ -23,7 +23,7 @@ public class AlarmUtil {
      *
      * @param periodDelay 며칠 후 Notification이 작동 할지
      */
-    public static void setReplacementCycleAlert(Context context, int periodDelay) {
+    public static void setReplacementCycleAlarm(Context context, int periodDelay) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
@@ -43,7 +43,7 @@ public class AlarmUtil {
      *
      * @param periodDelay 며칠 후 Notification이 작동 할지
      */
-    public static void setReplacementLaterAlert(Context context, int periodDelay) {
+    public static void setReplacementLaterAlarm(Context context, int periodDelay) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, periodDelay);

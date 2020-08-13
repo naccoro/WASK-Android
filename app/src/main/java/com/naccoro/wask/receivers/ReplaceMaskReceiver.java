@@ -30,7 +30,7 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
         NotificationPreferenceManager.setReplacementCycleDate(todayDate);
 
         int period = SettingPreferenceManager.getReplaceCycle();
-        AlarmUtil.setReplacementCycleAlert(context, period);
+        AlarmUtil.setReplacementCycleAlarm(context, period);
     }
 
 }

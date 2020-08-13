@@ -5,7 +5,6 @@ import android.content.Context;
 import com.naccoro.wask.preferences.NotificationPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
-import com.naccoro.wask.utils.NotificationUtil;
 
 import java.util.Calendar;
 
@@ -76,6 +75,6 @@ public class MainPresenter implements MainContract.Presenter {
 
         //교체하기 Date 를 등록한다. BootReceiver 가 작동되어도 등록한 날짜 기준으로 period 후에 alarm 이 동작하게 만든다.
         NotificationPreferenceManager.setReplacementCycleDate(todayDate);
-        AlarmUtil.setReplacementCycleAlert(context);
+        AlarmUtil.setReplacementCycleAlarm(context);
     }
 }

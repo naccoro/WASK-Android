@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.NotificationUtil;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
@@ -87,8 +88,12 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param cycleValue : 교체 주기
      */
     @Override
-    public void changeReplacementCycleValue(int cycleValue) {
+    public void changeReplacementCycleValue(Context context, int cycleValue) {
         SettingPreferenceManager.setReplaceCycle(cycleValue);
+
+        //Alarm 다시 설정
+        AlarmUtil.cancelReplacementCycleAlarm(context);
+        AlarmUtil.setReplacementCycleAlarm(context, cycleValue);
 
         settingView.showReplacementCycleValue(cycleValue);
     }
@@ -98,8 +103,12 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param laterValue : 나중에 교체 주기
      */
     @Override
-    public void changeReplaceLaterValue(int laterValue) {
+    public void changeReplaceLaterValue(Context context, int laterValue) {
         SettingPreferenceManager.setDelayCycle(laterValue);
+
+        //Alarm 다시 설정
+        AlarmUtil.cancelReplacementCycleAlarm(context);
+        AlarmUtil.setReplacementLaterAlarm(context, laterValue);
 
         settingView.showReplaceLaterValue(laterValue);
     }

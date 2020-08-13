@@ -41,7 +41,7 @@ public class BootReceiver extends BroadcastReceiver {
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
         int periodDelay = period + DateUtils.getDelayDay(date);
 
-        AlarmUtil.setReplacementCycleAlert(context, periodDelay);
+        AlarmUtil.setReplacementCycleAlarm(context, periodDelay);
     }
 
     private void setReplaceLaterAlarm(Context context, String date) {
@@ -51,6 +51,6 @@ public class BootReceiver extends BroadcastReceiver {
         //저장되어 있는 나중에 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
         int periodDelay = period + DateUtils.getDelayDay(date);
 
-        AlarmUtil.setReplacementCycleAlert(context, periodDelay);
+        AlarmUtil.setReplacementCycleAlarm(context, periodDelay);
     }
 }

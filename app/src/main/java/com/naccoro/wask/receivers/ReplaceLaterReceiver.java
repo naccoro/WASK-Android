@@ -27,7 +27,7 @@ public class ReplaceLaterReceiver extends BroadcastReceiver {
         int period = SettingPreferenceManager.getDelayCycle();
 
         //나중에 교체하기 알람 등록
-        AlarmUtil.setReplacementLaterAlert(context, period);
+        AlarmUtil.setReplacementLaterAlarm(context, period);
     }
 
 }
