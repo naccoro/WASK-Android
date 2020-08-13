@@ -52,8 +52,10 @@ public class PushNotificationService extends Service {
             stopSelf();
             return START_NOT_STICKY;
         } else if (type.equals(AlarmUtil.REPLACEMENT_CYCLE_VALUE)) {
+            Log.d("notification", "교체 주기");
             data = MockDatabase.getReplacementCycleData(this);
         } else {
+            Log.d("notification", "나중에 교체 주기");
             data = MockDatabase.getReplaceLaterData(this);
         }
 
@@ -61,9 +63,8 @@ public class PushNotificationService extends Service {
         String channelId = NotificationUtil.createNotificationChannel(this, data);
 
         //2. 커스텀한 뷰를 가져온다.
-        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.notification_replacementcycle);
-        contentView.setImageViewResource(R.id.imageview_notification_logo, R.drawable.ic_notification_logo);
-        contentView.setTextViewText(R.id.textview_notification_name, getString(R.string.app_name));
+        RemoteViews contentView = new RemoteViews(getPackageName(), data.getLayoutId());
+        contentView.setImageViewResource(R.id.imageview_notification_logo, R.drawable.ic_wask_logo);
         contentView.setTextViewText(R.id.textview_notification_content, data.getContentText());
 
         Intent okIntent = new Intent(this, ReplaceMaskReceiver.class);
@@ -77,7 +78,7 @@ public class PushNotificationService extends Service {
         PendingIntent pendingXIntent = PendingIntent.getBroadcast(this, 0,
                 xIntent, 0);
 
-        contentView.setOnClickPendingIntent(R.id.button_notification_ok, pendingXIntent);
+        contentView.setOnClickPendingIntent(R.id.button_notification_x, pendingXIntent);
 
 
         //3. Notification을 생성한다. Android Orea 이전 버전에서는 channelId는 무시될 것 입니다.

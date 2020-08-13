@@ -35,6 +35,7 @@ public class MockDatabase {
             contentText = context.getString(R.string.notification_replacelater_text);
             priority = NotificationCompat.PRIORITY_LOW;
             notification_id = 300;
+            layoutId = R.layout.notification_replacemlater;
 
             channelName = context.getString(R.string.notificationchannel_push_name);
             channelDescription = context.getString(R.string.notificationchannel_push_description);
