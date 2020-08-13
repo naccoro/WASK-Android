@@ -138,14 +138,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/main_use_period_message"
                 android:textColor="@color/waskGrayFont"
-                android:textSize="@dimen/textsize_mainuseperiod_text"
-                android:textStyle="bold" />
+                android:textSize="@dimen/textsize_mainuseperiod_text"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/button_change"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:foreground="?android:selectableItemBackground"
             android:background="@drawable/bg_button_change"
             android:elevation="8dp"
             android:text="@string/main_change_button"
