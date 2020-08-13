@@ -6,7 +6,7 @@ import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.DateUtils;
 
 public class MainPresenter implements MainContract.Presenter {
-  
+
     private static final String TAG = "MainPresenter";
 
     private ReplacementHistoryRepository replacementHistoryRepository;
@@ -56,21 +56,11 @@ public class MainPresenter implements MainContract.Presenter {
     /**
      * 첫 번째 교체인지 확인 후 멘트 변경
      */
-<<<<<<< HEAD
-    private int getMaskPeriod() {
-=======
-<<<<<<< HEAD
-    public static int getMaskPeriod() {
->>>>>>> develop
-        //TODO: WaskDatabase에서 교체일자를 비교하여 현재 상태를 가져온다.
-        return 3;
-=======
     private void checkIsFirstReplacement() {
         if (isNoData) {
             mainView.changeUsePeriodMessage();
             isNoData = false;
         }
->>>>>>> develop
     }
 
     @Override
