@@ -1,4 +1,3 @@
-
 package com.naccoro.wask.setting;
 
 import androidx.annotation.NonNull;
@@ -13,8 +12,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
-import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
+import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 
 public class SettingActivity extends AppCompatActivity
@@ -31,6 +30,9 @@ public class SettingActivity extends AppCompatActivity
 
     private SettingPresenter presenter;
 
+    private int periodReplacementCycle;
+
+    private int periodReplaceLater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +89,17 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replacement_cycle))
                 .setContent(R.layout.dialog_replacementcycle)
+                .setContentCallback(new WaskDialog.ContentViewCallback() {
+                    @Override
+                    public void onContentViewAttached(View view) {
+                        WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
+                        wheelRecyclerView.setInitPosition(periodReplacementCycle);
+                    }
+                })
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
-                    presenter.changeReplacementCycleValue(wheelRecyclerView.getSnapValue());
+                    presenter.changeReplacementCycleValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -103,10 +112,17 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replace_later))
                 .setContent(R.layout.dialog_replacelater)
+                .setContentCallback(new WaskDialog.ContentViewCallback() {
+                    @Override
+                    public void onContentViewAttached(View view) {
+                        WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
+                        wheelRecyclerView.setInitPosition(periodReplaceLater);
+                    }
+                })
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
-                    presenter.changeReplaceLaterValue(wheelRecyclerView.getSnapValue());
+                    presenter.changeReplaceLaterValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -139,11 +155,13 @@ public class SettingActivity extends AppCompatActivity
 
     @Override
     public void showReplacementCycleValue(int cycleValue) {
+        periodReplacementCycle = cycleValue;
         replacementCycleAlertLabel.setText(cycleValue + "일");
     }
 
     @Override
     public void showReplaceLaterValue(int laterValue) {
+        periodReplaceLater = laterValue;
         replaceLaterLabel.setText(laterValue + "일");
     }
 

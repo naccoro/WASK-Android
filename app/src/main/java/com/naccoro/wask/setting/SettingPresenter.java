@@ -4,9 +4,9 @@ import com.naccoro.wask.preferences.SettingPreferenceManager;
 
 public class SettingPresenter implements SettingContract.Presenter {
 
-    SettingActivity settingView;
+    SettingContract.View settingView;
 
-    SettingPresenter(SettingActivity settingView) {
+    SettingPresenter(SettingContract.View settingView) {
         this.settingView = settingView;
     }
 

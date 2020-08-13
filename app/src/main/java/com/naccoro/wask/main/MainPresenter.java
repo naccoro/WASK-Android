@@ -6,6 +6,7 @@ import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.DateUtils;
 
 public class MainPresenter implements MainContract.Presenter {
+  
     private static final String TAG = "MainPresenter";
 
     private ReplacementHistoryRepository replacementHistoryRepository;
@@ -14,9 +15,9 @@ public class MainPresenter implements MainContract.Presenter {
 
     private boolean isChanged = false;
 
-    MainActivity mainView;
+    MainContract.View mainView;
 
-    MainPresenter(MainActivity mainView, ReplacementHistoryRepository replacementHistoryRepository) {
+    MainPresenter(MainContract.View mainView, ReplacementHistoryRepository replacementHistoryRepository) {
         this.mainView = mainView;
         this.replacementHistoryRepository = replacementHistoryRepository;
     }
