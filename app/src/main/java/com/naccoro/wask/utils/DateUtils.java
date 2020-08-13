@@ -91,7 +91,7 @@ public class DateUtils {
      * @param calendar 날짜를 계산할 GregorianCalendar
      * @return YYYYMMDD 형태의 GregorianCalendar가 가진 날짜
      */
-    private static int getDateFromGregorianCalendar(GregorianCalendar calendar) {
+    public static int getDateFromGregorianCalendar(GregorianCalendar calendar) {
         String dateString = calendar.get(Calendar.YEAR) +
                 convertMonthToString(calendar.get(Calendar.MONTH) + 1) +
                 convertDayToString(calendar.get(Calendar.DAY_OF_MONTH));

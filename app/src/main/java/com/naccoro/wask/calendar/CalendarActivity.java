@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
+import com.naccoro.wask.replacement.model.Injection;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -44,7 +45,7 @@ public class CalendarActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        presenter = new CalendarPresenter(this);
+        presenter = new CalendarPresenter(this, Injection.replacementHistoryRepository(this));
 
         initView();
     }
