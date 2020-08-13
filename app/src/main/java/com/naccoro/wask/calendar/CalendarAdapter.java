@@ -65,6 +65,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         if (position%7==0) {
             calendarViewHolder.dateTextView.setTextColor(itemView.getResources().getColor(color.waskRed));
         }
+
         // 오늘이면 동그라미 표시
         if (item.isToday()) {
             calendarViewHolder.dateTextView.setTextColor(itemView.getResources().getColor(color.white));
