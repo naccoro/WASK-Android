@@ -27,7 +27,9 @@ public class WaskApplication extends Application {
         SharedPreferenceManager.getInstance().initInstance(getApplicationContext());
     }
 
-    /** 앱이 처음 켜졌을 때, Notification channel을 생성한다. */
+    /**
+     * 앱이 처음 켜졌을 때, Notification channel을 생성한다.
+     */
     private void createPushNotificationChannel() {
         MockDatabase.MockNotificationData pushNotificationData = MockDatabase.getReplacementCycleData(this);
 

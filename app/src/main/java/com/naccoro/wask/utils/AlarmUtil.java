@@ -12,13 +12,12 @@ import com.naccoro.wask.receivers.AlarmReceiver;
 import java.util.Calendar;
 
 public class AlarmUtil {
-    private static int REPLACEMENT_CYCLE_START_HOUR = 6;
-    private static int REPLACE_LATER_START_HOUR = 22;
+    private static final int REPLACEMENT_CYCLE_START_HOUR = 6;
+    private static final int REPLACE_LATER_START_HOUR = 22;
 
-    private static int REQUEST_CODE_REPLACEMENT_CYCLE = 100;
-
-
-    private static int REQUEST_CODE_REPLACE_LATER = 200;
+    //동시에 두 AlarmManager 를 등록해야 하기 때문에 고유 requestcode 값을 저장
+    private static final int REQUEST_CODE_REPLACEMENT_CYCLE = 100;
+    private static final int REQUEST_CODE_REPLACE_LATER = 200;
 
     public static String ALERT_TYPE = "alert_type";
     public static String REPLACEMENT_CYCLE_VALUE = "replacement_cycle";
@@ -26,7 +25,6 @@ public class AlarmUtil {
 
     /**
      * 교체 주기 Alarm을 등록하는 함수
-     *
      */
     public static void setReplacementCycleAlarm(Context context) {
 
@@ -55,7 +53,6 @@ public class AlarmUtil {
 
     /**
      * 나중에 교체 주기 Alarm을 등록하는 함수
-     *
      */
     public static void setReplacementLaterAlarm(Context context) {
 
@@ -99,7 +96,6 @@ public class AlarmUtil {
      */
     public static void cancelReplaceLaterAlarm(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        ;
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALERT_TYPE, REPLACE_LATER_VALUE);

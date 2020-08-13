@@ -56,6 +56,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     /**
      * 사용자가 Foregorund Alert Visible Switch의 값을 변경했을 때
+     *
      * @param isChecked : 변경된 값
      */
     @Override
@@ -66,6 +67,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     /**
      * pushAlert 설정 값을 변경하는 함수
+     *
      * @param value: 사용자가 설정한 값  e.g 소리, 진동, 소리+진동, 없음
      */
     @Override
@@ -87,6 +89,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     /**
      * 마스크 교체주기 설정하는 함수
+     *
      * @param cycleValue : 교체 주기
      */
     @Override
@@ -102,6 +105,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     /**
      * 나중에 교체하기 주기 설정하는 함수
+     *
      * @param laterValue : 나중에 교체 주기
      */
     @Override

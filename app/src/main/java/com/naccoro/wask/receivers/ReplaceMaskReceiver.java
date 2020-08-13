@@ -22,14 +22,14 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         //TODO: foreground 사용일자를 변경하는 작업도 할 수 있을 것 같다.
 
-        int notificationId = intent.getIntExtra("notificationId",  -1);
+        int notificationId = intent.getIntExtra("notificationId", -1);
         if (notificationId != -1) {
             //알람 종료
-            NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             manager.cancel(notificationId);
         }
 
-        //혹여나 핸드폰이 종료되어 BootReceiver 가 작동되어도 ReplaceLater Alarm 을 작동되지 않게 하기 위해 null 을 넣는다.
+        //혹여나 핸드폰이 종료되어 BootReceiver 가 작동되어도 ReplaceLater Alarm 을 작동되지 않게 하기 위해 0 을 넣는다.
         NotificationPreferenceManager.setReplaceLaterDate(0);
 
         //나중에 교체하기 알람을 지운다.

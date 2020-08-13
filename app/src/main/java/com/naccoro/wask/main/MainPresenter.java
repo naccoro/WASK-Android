@@ -94,6 +94,10 @@ public class MainPresenter implements MainContract.Presenter {
                     mainView.showReplaceToast();
                     mainView.enableReplaceButton();
                     isChanged = true;
+
+                    start();
+
+                    setMaskReplaceNotification(context);
                 }
 
                 @Override
@@ -101,9 +105,6 @@ public class MainPresenter implements MainContract.Presenter {
                     Log.d(TAG, "onDuplicated: true");
                 }
             });
-            start();
-
-            setMaskReplaceNotification(context);
         } else {
             mainView.showCancelDialog();
         }

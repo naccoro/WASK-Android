@@ -22,10 +22,10 @@ public class ReplaceLaterReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        int notificationId = intent.getIntExtra("notificationId",  -1);
+        int notificationId = intent.getIntExtra("notificationId", -1);
         if (notificationId != -1) {
             //알람 종료
-            NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             manager.cancel(notificationId);
         }
 

@@ -29,7 +29,7 @@ public class MockDatabase {
         return new ReplaceLaterAppData(context);
     }
 
-    static class ReplaceLaterAppData extends MockNotificationData{
+    static class ReplaceLaterAppData extends MockNotificationData {
 
         public ReplaceLaterAppData(Context context) {
             contentText = context.getString(R.string.notification_replacelater_text);
@@ -61,7 +61,7 @@ public class MockDatabase {
     /**
      * 교체 주기 Notification 관련 Data
      */
-    static class ReplacementCycleAppData extends MockNotificationData{
+    static class ReplacementCycleAppData extends MockNotificationData {
 
         public ReplacementCycleAppData(Context context) {
             contentText = context.getString(R.string.notification_replacementcycle_text);
@@ -92,7 +92,9 @@ public class MockDatabase {
         }
     }
 
-    /**Notification의 필요한 Data를 정의한 클래스*/
+    /**
+     * Notification의 필요한 Data를 정의한 클래스
+     */
     public abstract static class MockNotificationData {
 
         //Notification 값
