@@ -19,15 +19,9 @@ public class ReplaceLaterReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        String date = DateUtils.getStringOfCalendar(Calendar.getInstance());
-
-        //나중에 교체하기 알람을 등록한 날짜를 저장
-        NotificationPreferenceManager.setReplaceLaterDate(date);
-
-        int period = SettingPreferenceManager.getDelayCycle();
 
         //나중에 교체하기 알람 등록
-        AlarmUtil.setReplacementLaterAlarm(context, period);
+        AlarmUtil.setReplacementLaterAlarm(context);
     }
 
 }

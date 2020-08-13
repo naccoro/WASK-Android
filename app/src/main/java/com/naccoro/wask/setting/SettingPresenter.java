@@ -93,7 +93,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
         //Alarm 다시 설정
         AlarmUtil.cancelReplacementCycleAlarm(context);
-        AlarmUtil.setReplacementCycleAlarm(context, cycleValue);
+        AlarmUtil.setReplacementCycleAlarm(context);
 
         settingView.showReplacementCycleValue(cycleValue);
     }
@@ -108,7 +108,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
         //Alarm 다시 설정
         AlarmUtil.cancelReplacementCycleAlarm(context);
-        AlarmUtil.setReplacementLaterAlarm(context, laterValue);
+        AlarmUtil.setReplacementLaterAlarm(context);
 
         settingView.showReplaceLaterValue(laterValue);
     }

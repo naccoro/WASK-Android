@@ -29,8 +29,7 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
         //교체하기 Date 를 등록한다. BootReceiver 가 작동되어도 등록한 날짜 기준으로 period 후에 alarm 이 동작하게 만든다.
         NotificationPreferenceManager.setReplacementCycleDate(todayDate);
 
-        int period = SettingPreferenceManager.getReplaceCycle();
-        AlarmUtil.setReplacementCycleAlarm(context, period);
+        AlarmUtil.setReplacementCycleAlarm(context);
     }
 
 }
