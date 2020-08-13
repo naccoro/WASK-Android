@@ -30,15 +30,15 @@ public class AlarmUtil {
      */
     public static void setReplacementCycleAlarm(Context context) {
 
-        String date = NotificationPreferenceManager.getReplacementCycleDate();
-        if (date == null) {
+        int date = NotificationPreferenceManager.getReplacementCycleDate();
+        if (date == 0) {
             return;
         }
         //사용자가 선택한 교체하기 period 를 가져온다.
         int period = SettingPreferenceManager.getReplaceCycle();
 
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
-        int periodDelay = period + DateUtils.getDelayDay(date);
+        int periodDelay = period + DateUtils.calculateDateGapWithToday(date);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
@@ -59,15 +59,15 @@ public class AlarmUtil {
      */
     public static void setReplacementLaterAlarm(Context context) {
 
-        String date = NotificationPreferenceManager.getReplaceLaterDate();
-        if (date == null) {
+        int date = NotificationPreferenceManager.getReplaceLaterDate();
+        if (date == 0) {
             return;
         }
         //사용자가 선택한 교체하기 period 를 가져온다.
         int period = SettingPreferenceManager.getDelayCycle();
 
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
-        int periodDelay = period + DateUtils.getDelayDay(date);
+        int periodDelay = period + DateUtils.calculateDateGapWithToday(date);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
@@ -114,7 +114,7 @@ public class AlarmUtil {
     private static void setAlertManager(Context context, Calendar calendar, PendingIntent alarmIntent, int period) {
 
         //분 초 0으로 셋팅
-      //  calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
         AlarmManager alarmManager;

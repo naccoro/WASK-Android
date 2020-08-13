@@ -10,23 +10,23 @@ public class NotificationPreferenceManager {
     private static final String PREF_KEY_DELAY_CYCLE = "delay_cycle_date"; // 미루기주기 알람 등록 일자
 
     // default Value
-    private static final String DEFAULT_REPLACEMENT_CYCLE = null;
-    private static final String DEFAULT_REPLACEMENT_LATER = null;
+    private static final int DEFAULT_REPLACEMENT_CYCLE = 0;
+    private static final int DEFAULT_REPLACEMENT_LATER = 0;
 
-    public static void setReplacementCycleDate(String date) {
-        SharedPreferenceManager.getInstance().setString(PREF_KEY_REPLACE_CYCLE, date);
+    public static void setReplacementCycleDate(int date) {
+        SharedPreferenceManager.getInstance().setInt(PREF_KEY_REPLACE_CYCLE, date);
     }
 
-    public static String getReplacementCycleDate() {
-        return SharedPreferenceManager.getInstance().getString(PREF_KEY_REPLACE_CYCLE, DEFAULT_REPLACEMENT_CYCLE);
+    public static int getReplacementCycleDate() {
+        return SharedPreferenceManager.getInstance().getInt(PREF_KEY_REPLACE_CYCLE, DEFAULT_REPLACEMENT_CYCLE);
     }
 
-    public static void setReplaceLaterDate(String date) {
-        SharedPreferenceManager.getInstance().setString(PREF_KEY_DELAY_CYCLE, date);
+    public static void setReplaceLaterDate(int date) {
+        SharedPreferenceManager.getInstance().setInt(PREF_KEY_DELAY_CYCLE, date);
     }
 
-    public static String getReplaceLaterDate() {
-        return SharedPreferenceManager.getInstance().getString(PREF_KEY_REPLACE_CYCLE, DEFAULT_REPLACEMENT_LATER);
+    public static int getReplaceLaterDate() {
+        return SharedPreferenceManager.getInstance().getInt(PREF_KEY_REPLACE_CYCLE, DEFAULT_REPLACEMENT_LATER);
     }
 
 

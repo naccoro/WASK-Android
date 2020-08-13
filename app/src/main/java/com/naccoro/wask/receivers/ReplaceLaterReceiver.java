@@ -29,7 +29,7 @@ public class ReplaceLaterReceiver extends BroadcastReceiver {
             manager.cancel(notificationId);
         }
 
-        String todayDate = DateUtils.getStringOfCalendar(Calendar.getInstance());
+        int todayDate = DateUtils.getToday();
         //나중에 교체하기 Date 를 등록한다. BootReceiver 가 작동되어도 등록한 날짜 기준으로 period 후에 alarm 이 동작하게 만든다.
         NotificationPreferenceManager.setReplaceLaterDate(todayDate);
 
