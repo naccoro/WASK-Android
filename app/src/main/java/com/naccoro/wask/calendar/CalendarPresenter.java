@@ -8,9 +8,12 @@ public class CalendarPresenter implements CalendarContract.Presenter {
     CalendarContract.View calendarView;
     CalendarModel calendarModel;
 
+    private int prevMonth; // 기존 month저장
+
     CalendarPresenter(CalendarContract.View calendarView, ReplacementHistoryRepository replacementHistoryRepository) {
         this.calendarView = calendarView;
         this.calendarModel = new CalendarModel(replacementHistoryRepository);
+        prevMonth = -1; // 처음엔 기존 month가 없음
     }
 
     @Override
@@ -37,6 +40,10 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      */
     @Override
     public void changeCalendarList(Date selectDate) {
+        if (selectDate.getMonth() == prevMonth) {
+            return; // 기존 month와 새로운 month가 같으면 data갱신할 필요 X
+        }
+        prevMonth = selectDate.getMonth(); // 기존 (감사할)월 갱신
         calendarModel.updateCalendarList(selectDate, dateList -> calendarView.initCalendarList(dateList));
     }
 
@@ -57,13 +64,8 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      * @param isChecked
      */
     @Override
-    public void changeModifyMode(boolean isChecked) {
-        if (isChecked) {
-            // 수정가능하게 바꾸어야 함
-
-        } else {
-            // 수정불가
-        }
+    public void changeModifyMode(boolean isChecked, CalendarAdapter calendarAdapter) {
+        calendarAdapter.setModifyMode(isChecked);
         calendarView.showModifyModeTextView(isChecked);
     }
 

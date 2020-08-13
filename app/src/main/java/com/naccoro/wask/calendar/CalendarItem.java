@@ -23,8 +23,8 @@ public class CalendarItem {
         return isSelect;
     }
 
-    public void setToday(boolean today) {
-        isSelect = today;
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 
     public boolean isChangeMask() {

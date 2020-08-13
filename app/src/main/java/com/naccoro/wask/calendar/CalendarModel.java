@@ -73,7 +73,7 @@ public class CalendarModel {
             int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 이번 달의 말일
 
             updateLastMonth(dateList, calendar, startDayOfWeek);
-            updateCurrentMonth(dateList, calendar, lastDayOfMonth);
+            updateCurrentMonth(dateList, calendar, lastDayOfMonth, selectDate);
             updateNextMonth(dateList, calendar, startDayOfWeek, lastDayOfMonth);
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,12 +105,12 @@ public class CalendarModel {
 
     /**
      * 이번 달 데이터 설정
-     *
-     * @param dateList  데이터의 리스트
+     *  @param dateList  데이터의 리스트
      * @param calendar  오늘의 year, month가 저장된 달력객체
      * @param lastDayOfMonth    이번달의 마지막 날짜
+     * @param selectDate    선택한 날짜
      */
-    private void updateCurrentMonth(ArrayList<CalendarItem> dateList, GregorianCalendar calendar, int lastDayOfMonth) {
+    private void updateCurrentMonth(ArrayList<CalendarItem> dateList, GregorianCalendar calendar, int lastDayOfMonth, Date selectDate) {
         boolean isChangedMask;
 
         for (int j = 1; j <= lastDayOfMonth; j++) {

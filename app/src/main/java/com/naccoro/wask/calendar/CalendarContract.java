@@ -16,6 +16,6 @@ public interface CalendarContract {
         void clickChangeDateButton(Date selectDate);
         void changeCalendarList(Date selectDate);
         void changeCalendarDateTextView(Date selectDate);
-        void changeModifyMode(boolean isChecked);
+        void changeModifyMode(boolean isChecked, CalendarAdapter calendarAdapter);
     }
 }

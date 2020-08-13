@@ -66,7 +66,7 @@ public class CalendarActivity extends AppCompatActivity
         modifyModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                presenter.changeModifyMode(isChecked);
+                presenter.changeModifyMode(isChecked, calendarAdapter);
             }
         });
 
@@ -76,7 +76,7 @@ public class CalendarActivity extends AppCompatActivity
         presenter.changeCalendarList(selectDate);
 
         // 리사이클러뷰 초기화
-        calendarAdapter = new CalendarAdapter(dateList);
+        calendarAdapter = new CalendarAdapter(dateList, Injection.replacementHistoryRepository(getApplicationContext()), selectDate);
         gridLayoutManager = new GridLayoutManager(this, 7);
         recyclerView.setAdapter(calendarAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
