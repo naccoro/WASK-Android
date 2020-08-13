@@ -41,6 +41,145 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textView_calendar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_calendar_textview_left"
+            android:layout_marginTop="@dimen/margin_calendar_textview_vertical"
+            android:text="마스크 교체 기록"
+            android:textColor="@color/waskGrayFont"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView_calendar_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constraintlayout_content" />
+
+        <Switch
+            android:id="@+id/switch_modifymode"
+            style="@style/SwitchThumb"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:track="@drawable/selector_foregroundalert_switch"
+            app:layout_constraintBottom_toBottomOf="@id/textView_calendar_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.82"
+            app:layout_constraintStart_toEndOf="@id/textView_calendar_title"
+            app:layout_constraintTop_toTopOf="@id/textView_calendar_title" />
+
+        <TextView
+            android:id="@+id/textView_calendar_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_calendar_textview_left"
+            android:layout_marginTop="@dimen/margin_calendar_textview_vertical"
+            android:text="0000년 0월"
+            android:textColor="@color/waskGrayFont"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_calendar_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/view_divider_week">
+
+            <TextView
+                android:id="@+id/textview_sunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="일"
+                android:textColor="@color/waskRed"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="월"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="화"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="수"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="목"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="금"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_saturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_divider_week"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/calendarDividerGray"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_week"
+            app:layout_constraintTop_toTopOf="@+id/guideline_week" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/guideline_week"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
