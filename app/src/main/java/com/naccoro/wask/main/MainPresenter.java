@@ -121,6 +121,6 @@ public class MainPresenter implements MainContract.Presenter {
             isNoData = true;
             return 0;
         }
-        return DateUtils.getToday() - lastReplacement + 1;
+        return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 }

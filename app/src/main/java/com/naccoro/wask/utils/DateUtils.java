@@ -12,6 +12,72 @@ import java.util.regex.Pattern;
 public class DateUtils {
 
     /**
+     * 오늘 날짜와의 일수 차이를 구함
+     * @param date 비교 대상 날짜
+     * @return 정수형의 차이 일수
+     */
+    public static int calculateDateGapWithToday(int date) {
+        return calculateDateGap(date, getToday());
+    }
+
+    /**
+     * 두 일자 간의 일수 차이를 구함
+     * @param date 계산할 날짜
+     * @param targetDate 비교 대상이 되는 날짜
+     * @return 정수형의 차이 일수
+     */
+    public static int calculateDateGap(int date, int targetDate) {
+        GregorianCalendar dateCalendar =
+                new GregorianCalendar(getYear(date), getMonth(date), getDay(date), 0, 0);
+        GregorianCalendar targetDateCalendar =
+                new GregorianCalendar(getYear(targetDate), getMonth(targetDate), getDay(targetDate), 0, 0);
+
+        dateCalendar.set(Calendar.SECOND, 0);
+        dateCalendar.set(Calendar.MILLISECOND, 0);
+
+        targetDateCalendar.set(Calendar.SECOND, 0);
+        targetDateCalendar.set(Calendar.MILLISECOND, 0);
+
+        long diff = targetDateCalendar.getTimeInMillis() - dateCalendar.getTimeInMillis();
+
+        return (int) diff / (24 * 60 * 60 * 1000);
+    }
+
+    /**
+     * 입력받을 날짜를 입력받은 타입을 파싱하여 리턴
+     * @param type DateType.YEAR, DateType.MONTH, DateType.DAY 중 하나
+     * @param date 파싱할 날짜
+     * @return 파싱된 정수형
+     */
+    private static int getParsedDate(DateType type, int date) {
+        switch (type) {
+            case YEAR:
+                return parseDateToInt(date, 0, 4);
+
+            case MONTH:
+                return parseDateToInt(date, 4, 6);
+
+            case DAY:
+                return parseDateToInt(date, 6, 8);
+
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * 입력받은 날짜를 파싱
+     * @param date 파싱할 날짜
+     * @param start 피상할 시작 인덱스
+     * @param end 파싱할 마지막 인덱스
+     * @return 파싱된 날짜의 정수형
+     */
+    private static int parseDateToInt(int date, int start, int end) {
+        String dateString = checkDateFormat(date);
+        return Integer.parseInt(dateString.substring(start, end));
+    }
+
+    /**
      * 오늘 날짜를 YYYYMMDD 형식으로 가져오기
      * @return YYYYMMDD 형식의 오늘 날짜
      */
@@ -25,11 +91,15 @@ public class DateUtils {
      * @param calendar 날짜를 계산할 GregorianCalendar
      * @return YYYYMMDD 형태의 GregorianCalendar가 가진 날짜
      */
-    public static int getDateFromGregorianCalendar(GregorianCalendar calendar) {
+    private static int getDateFromGregorianCalendar(GregorianCalendar calendar) {
         String dateString = calendar.get(Calendar.YEAR) +
                 convertMonthIntToString(calendar.get(Calendar.MONTH) + 1) +
                 calendar.get(Calendar.DAY_OF_MONTH);
         return Integer.parseInt(dateString);
+    }
+
+    private static int getYear(int date) {
+        return getParsedDate(DateType.YEAR, date);
     }
 
     /**
@@ -38,8 +108,11 @@ public class DateUtils {
      * @return int 타입의 월
      */
     public static int getMonth(int date) {
-        String dateString = checkDateFormat(date);
-        return Integer.parseInt(dateString.substring(4, 6));
+        return getParsedDate(DateType.MONTH, date);
+    }
+
+    private static int getDay(int date) {
+        return getParsedDate(DateType.DAY, date);
     }
 
     /**
@@ -78,7 +151,7 @@ public class DateUtils {
      * @param month 변환할 int 형태의 월
      * @return MM 형태로 변환된 문자열
      */
-    public static String convertMonthIntToString(int month) {
+    private static String convertMonthIntToString(int month) {
         checkMonthFormat(month);
 
         StringBuilder newMonth = new StringBuilder();
@@ -97,7 +170,7 @@ public class DateUtils {
      * @param month 감사할 월
      * @return 유효한지 아닌지 boolean 형태로 리턴
      */
-    public static boolean isLegalMonth(int month) {
+    private static boolean isLegalMonth(int month) {
         return month > 0 && month <= 12;
     }
 
@@ -121,5 +194,9 @@ public class DateUtils {
      */
     private static boolean isLegalDate(String date) {
         return Pattern.matches("^\\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", date);
+    }
+
+    public enum DateType {
+        YEAR, MONTH, DAY
     }
 }

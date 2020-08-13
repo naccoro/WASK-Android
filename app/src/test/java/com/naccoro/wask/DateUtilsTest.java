@@ -29,4 +29,19 @@ public class DateUtilsTest {
     public void getTodayString_isCorrect() {
         assertThat(DateUtils.getToday(), is(20200813));
     }
+
+    @Test
+    public void calculateDateGap_isCorrect() {
+        assertThat(DateUtils.calculateDateGap(20200813, 20200817), is(4));
+        assertThat(DateUtils.calculateDateGap(20200729, 20200801), is(3));
+        assertThat(DateUtils.calculateDateGap(20191230, 20200101), is(2));
+    }
+
+    @Test
+    public void calculateDateGapWithToday_isCorrect() {
+        assertThat(DateUtils.calculateDateGapWithToday(20200813), is(0));
+        assertThat(DateUtils.calculateDateGapWithToday(20200809), is(4));
+        assertThat(DateUtils.calculateDateGapWithToday(20200730), is(14));
+        assertThat(DateUtils.calculateDateGapWithToday(20200815), is(-2));
+    }
 }
