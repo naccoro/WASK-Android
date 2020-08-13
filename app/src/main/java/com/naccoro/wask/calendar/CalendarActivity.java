@@ -22,7 +22,7 @@ public class CalendarActivity extends AppCompatActivity
     CalendarAdapter calendarAdapter;
     GridLayoutManager gridLayoutManager;
 
-    ArrayList<CalendarItem> dateList;
+    ArrayList<CalendarItem> dateList = new ArrayList<CalendarItem>();
 
     private CalendarPresenter presenter;
 
@@ -74,8 +74,8 @@ public class CalendarActivity extends AppCompatActivity
     }
 
     public void setCalendarList() {
+        dateList.clear();
         GregorianCalendar cal = new GregorianCalendar();
-        dateList = new ArrayList<CalendarItem>();
         for (int i = 0; i < 1; i++) {
             try {
                 GregorianCalendar calendar = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + i, 1, 0, 0, 0);

@@ -56,7 +56,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder calendarViewHolder, int position) {
         CalendarItem item = calendarList.get(position);
-        calendarViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH));
+        calendarViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH) + "");
     }
 
     /**
