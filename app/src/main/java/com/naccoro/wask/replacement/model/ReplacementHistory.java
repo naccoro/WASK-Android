@@ -1,26 +1,28 @@
 package com.naccoro.wask.replacement.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.naccoro.wask.utils.DateUtils;
 
-@Entity(tableName = "replacement_histories")
+@Entity(tableName = "replacement_histories", indices = {@Index(value = {"replace_date"}, unique = true)})
 public class ReplacementHistory {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="replacement_histories_id")
     private int id;
 
     @ColumnInfo(name = "replace_date")
-    //YYYY-MM-DD 형태의 문자열로 저장
-    private String replacedDate;
+    //YYYYMMDD 형태의 정수로 저장
+    private int replacedDate;
 
     @ColumnInfo(name = "replace_date_month")
     private int monthOfReplaceDate;
 
-    public ReplacementHistory(String replacedDate) {
+    public ReplacementHistory(int replacedDate) {
         this.replacedDate = replacedDate;
         this.monthOfReplaceDate = DateUtils.getMonth(replacedDate);
     }
@@ -29,7 +31,7 @@ public class ReplacementHistory {
         return id;
     }
 
-    public String getReplacedDate() {
+    public int getReplacedDate() {
         return replacedDate;
     }
 
@@ -41,7 +43,7 @@ public class ReplacementHistory {
         this.id = id;
     }
 
-    public void setReplacedDate(String replacedDate) {
+    public void setReplacedDate(int replacedDate) {
         this.replacedDate = replacedDate;
         this.monthOfReplaceDate = DateUtils.getMonth(replacedDate);
     }
@@ -55,5 +57,14 @@ public class ReplacementHistory {
     @Override
     public String toString() {
         return "[id : " + getId() + " date : " + getReplacedDate() + "]";
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof ReplacementHistory) {
+            return this.replacedDate == ((ReplacementHistory) obj).replacedDate;
+        } else {
+            return false;
+        }
     }
 }
