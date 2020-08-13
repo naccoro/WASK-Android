@@ -32,8 +32,9 @@ public class CalendarActivity extends AppCompatActivity
     CalendarAdapter calendarAdapter;
     GridLayoutManager gridLayoutManager;
 
-    Date selectDate; // DatePicker로 선택된 날짜
+    Date selectDate; // DatePicker로 선택된 날짜 <Calendar에서 핵심역할>
 
+    // 화면에 표시되는 달력 데이터 저장 (저번달 짜투리 + 이번달(1~30) + 다음달 조금)
     ArrayList<CalendarItem> dateList = new ArrayList<CalendarItem>();
 
     private CalendarPresenter presenter;
@@ -60,6 +61,7 @@ public class CalendarActivity extends AppCompatActivity
         backButton.setOnClickListener(this);
         changeDateConstraintLayout.setOnClickListener(this);
 
+        // 스위치 모드 변경
         modifyModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -90,11 +92,21 @@ public class CalendarActivity extends AppCompatActivity
         selectDate.setDay(cal.get(Calendar.DATE));
     }
 
+    /**
+     * 화면에 표시되는 달력 데이터 초기화
+     *
+     * @param calendarItems model에서 만들어진 달력 데이터
+     */
     @Override
     public void initCalendarList(ArrayList<CalendarItem> calendarItems) {
         dateList = calendarItems;
     }
 
+    /**
+     * 수정모드에 따라 '수정모드' 색상 변경
+     *
+     * @param isChecked
+     */
     @Override
     public void showModifyModeTextView(boolean isChecked) {
         if (isChecked) {
@@ -107,10 +119,10 @@ public class CalendarActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageview_back:
+            case R.id.imageview_back: // 뒤로가기버튼
                 presenter.clickBackButton();
                 break;
-            case R.id.constraintlayout_changedate:
+            case R.id.constraintlayout_changedate: // (0000년 00월) 버튼 클릭 시
                 DatePickerDialogFragment.newInstance().
                         setOnDateChangedListener((year, month, day) -> {
                             selectDate.setYear(year);
@@ -144,6 +156,9 @@ public class CalendarActivity extends AppCompatActivity
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
     }
 
+    /**
+     * SelectDate를 저장하기 위한 클래스 (year, month, day 저장)
+     */
     public class Date {
         private int year;
         private int month;

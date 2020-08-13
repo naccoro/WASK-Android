@@ -2,6 +2,9 @@ package com.naccoro.wask.calendar;
 
 import java.util.GregorianCalendar;
 
+/**
+ * 캘린더에 표시되는 '일(Day)'이 하나씩 들어가는 객체
+ */
 public class CalendarItem {
     private boolean isSelect; // 오늘인지
     private boolean isChangeMask; // 마스크 교체했는지

@@ -29,18 +29,32 @@ public class CalendarPresenter implements CalendarContract.Presenter {
         changeCalendarDateTextView(selectDate);
     }
 
-
+    /**
+     * 화면에 표시되는 달력 데이터 변경
+     *
+     * @param selectDate
+     */
     @Override
     public void changeCalendarList(Date selectDate) {
         calendarView.initCalendarList(calendarModel.updateCalendarList(selectDate));
     }
 
+    /**
+     * 0000년 00월 표시
+     *
+     * @param selectDate
+     */
     @Override
     public void changeCalendarDateTextView(Date selectDate) {
         int month = selectDate.getMonth() + 1;
         calendarView.showCalendarDateTextView(month);
     }
 
+    /**
+     * 수정모드 ON/OFF
+     *
+     * @param isChecked
+     */
     @Override
     public void changeModifyMode(boolean isChecked) {
         if (isChecked) {

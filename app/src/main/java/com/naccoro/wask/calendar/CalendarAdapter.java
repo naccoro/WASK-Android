@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,10 +57,22 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder calendarViewHolder, int position) {
 
-        View itemView = calendarViewHolder.getItemView();
-
         CalendarItem item = calendarList.get(position);
         calendarViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH) + "");
+
+        decorateItem(calendarViewHolder, item, position);
+    }
+
+    /**
+     * 아이템(각 날짜) 꾸미기
+     *
+     * @param calendarViewHolder
+     * @param item
+     * @param position
+     */
+    private void decorateItem(CalendarViewHolder calendarViewHolder, CalendarItem item, int position) {
+
+        View itemView = calendarViewHolder.getItemView();
 
         // 일요일은 빨간날
         if (position%7==0) {
@@ -77,6 +90,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             calendarViewHolder.dateTextView.setAlpha(0.4f);
         } else {
             calendarViewHolder.dateTextView.setAlpha(1.0f);
+        }
+
+        // 마스크 교체한 날 표시
+        if (item.isChangeMask()) {
+            calendarViewHolder.changeImageView.setVisibility(itemView.getVisibility());
         }
     }
 
