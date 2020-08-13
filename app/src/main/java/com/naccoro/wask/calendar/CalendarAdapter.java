@@ -1,12 +1,15 @@
 package com.naccoro.wask.calendar;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
+import com.naccoro.wask.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,14 +21,26 @@ import static com.naccoro.wask.R.*;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
 
-    private ArrayList<CalendarItem> calendarList;
+    private static final String TAG = "CalendarAdapter";
 
-    public CalendarAdapter(ArrayList<CalendarItem> calendarList) {
+    private ArrayList<CalendarItem> calendarList;
+    private boolean isModifyMode;
+
+    private ReplacementHistoryRepository replacementHistoryRepository;
+
+    public CalendarAdapter(ArrayList<CalendarItem> calendarList, ReplacementHistoryRepository replacementHistoryRepository) {
         this.calendarList = calendarList;
+        this.isModifyMode = false; // 무조건 실행했을때는 수정 불가 모드
+        this.replacementHistoryRepository = replacementHistoryRepository;
     }
 
     public void setCalendarList(ArrayList<CalendarItem> calendarList) {
         this.calendarList = calendarList;
+        notifyDataSetChanged();
+    }
+
+    public void setModifyMode(boolean isModifyMode) {
+        this.isModifyMode = isModifyMode;
         notifyDataSetChanged();
     }
 
@@ -61,6 +76,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         calendarViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH) + "");
 
         decorateItem(calendarViewHolder, item, position);
+
+        // 수정모드 설정
+        if (isModifyMode) {
+            calendarViewHolder.itemView.setOnClickListener(view -> onDayClick(calendarViewHolder, item));
+        }
     }
 
     /**
@@ -95,6 +115,35 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         // 마스크 교체한 날 표시
         if (item.isChangeMask()) {
             calendarViewHolder.changeImageView.setVisibility(itemView.getVisibility());
+        }
+    }
+
+    /**
+     * 날짜를 클릭했을 때 마스크교체여부가 바뀐다. (DB에도 바로 반영)
+     *
+     * @param calendarViewHolder
+     * @param item
+     */
+    private void onDayClick(CalendarViewHolder calendarViewHolder, CalendarItem item) {
+
+        View itemView = calendarViewHolder.getItemView();
+
+        if (item.isChangeMask()) {
+            item.setChangeMask(false);
+            replacementHistoryRepository.delete(DateUtils.getDateFromGregorianCalendar(item.getDate()));
+            calendarViewHolder.changeImageView.setVisibility(itemView.GONE);
+        } else {
+            item.setChangeMask(true);
+            replacementHistoryRepository.insert(DateUtils.getDateFromGregorianCalendar(item.getDate()), new ReplacementHistoryRepository.InsertHistoryCallback() {
+                @Override
+                public void onSuccess() {
+                    calendarViewHolder.changeImageView.setVisibility(itemView.getVisibility());
+                }
+                @Override
+                public void onDuplicated() {
+                    Log.d(TAG, "onDuplicated: true");
+                }
+            });
         }
     }
 

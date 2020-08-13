@@ -56,13 +56,15 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      * @param isChecked
      */
     @Override
-    public void changeModifyMode(boolean isChecked) {
+    public void changeModifyMode(boolean isChecked, CalendarAdapter calendarAdapter) {
         if (isChecked) {
             // 수정가능하게 바꾸어야 함
+
 
         } else {
             // 수정불가
         }
+        calendarAdapter.setModifyMode(isChecked);
         calendarView.showModifyModeTextView(isChecked);
     }
 

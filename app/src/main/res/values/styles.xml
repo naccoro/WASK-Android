@@ -16,6 +16,8 @@
       
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="colorControlHighlight">@color/effectBlue</item>
       
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.DatePicker.BottomSheetDialog</item>
     </style>
@@ -66,5 +68,9 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CalendarView">
+
     </style>
 </resources>
