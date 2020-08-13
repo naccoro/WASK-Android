@@ -16,6 +16,8 @@ public interface SettingContract {
 
         void showForegroundAlert(int maskPeriod);
 
+        void dismissForegroundAlert();
+
         void setAlertVisibleSwitchValue(boolean isChecked);
 
         void finishSettingView();
@@ -39,5 +41,7 @@ public interface SettingContract {
         void changeReplacementCycleValue(int cycleValue);
 
         void changeReplaceLaterValue(int laterValue);
+
+        void getMaskPeriod(int maskPeriod);
     }
 }
