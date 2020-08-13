@@ -36,7 +36,7 @@ public class AlarmUtil {
         int period = SettingPreferenceManager.getReplaceCycle();
 
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
-        int periodDelay = period + DateUtils.calculateDateGapWithToday(date);
+        int periodDelay = period - DateUtils.calculateDateGapWithToday(date);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
@@ -64,7 +64,7 @@ public class AlarmUtil {
         int period = SettingPreferenceManager.getDelayCycle();
 
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
-        int periodDelay = period + DateUtils.calculateDateGapWithToday(date);
+        int periodDelay = period - DateUtils.calculateDateGapWithToday(date);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
