@@ -3,7 +3,6 @@ package com.naccoro.wask.customview.datepicker.wheel;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,8 +32,6 @@ import java.util.GregorianCalendar;
  * 한 레이아웃에서 3개의 RecyclerView 스크롤을 인식하기 위해 NestedScrollView를 사용합니다.
  */
 public class WheelDatePicker extends NestedScrollView implements WheelSnapScrollListener.OnSnapPositionChangeListener {
-
-    boolean isDateInitDone = true;
 
     private WheelRecyclerView yearRecyclerView;
     private WheelRecyclerView monthRecyclerView;
@@ -80,12 +76,8 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
         this.addView(parent, rootParams);
 
         yearRecyclerView = new WheelRecyclerView(context);
-        //사용자가 RecyclerView의 뷰 끝에서 스크롤을 시도할 시 번지는 효과 제거
-        yearRecyclerView.setOverScrollMode(OVER_SCROLL_NEVER);
         monthRecyclerView = new WheelRecyclerView(context);
-        monthRecyclerView.setOverScrollMode(OVER_SCROLL_NEVER);
         dayRecyclerView = new WheelRecyclerView(context);
-        dayRecyclerView.setOverScrollMode(OVER_SCROLL_NEVER);
 
         recyclerHeight = yearRecyclerView.getMaxHeight();
 
@@ -147,156 +139,69 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
             return;
         }
 
-        final WheelRecyclerView wheelRecyclerView = (WheelRecyclerView) recyclerView;
-        wheelRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                wheelRecyclerView.adapter.setCenterPosition(position);
-            }
-        });
+        WheelRecyclerView wheelRecyclerView = (WheelRecyclerView) recyclerView;
+
+        wheelRecyclerView.setCenterPosition(position);
 
         switch (wheelRecyclerView.recyclerViewType) {
             case YEAR:
             case MONTH:
-                if (isDateInitDone) {
-                    setRangeDay(true);
-                }
+                setRangeDay();
                 break;
-            case DAY:
-                if (!isDateInitDone) {
-                    setAllSnapListenerScroll();
-                    isDateInitDone = true;
-                }
         }
     }
 
     /**
      * dayRecyclerView의 범위를 설정한다. (1일 ~ 31일, 1일 ~ 29일)
-     *
-     * @param scrollTo : 범위를 설정하고 스크롤 할지를 묻는 변수
      */
-    private void setRangeDay(final boolean scrollTo) {
+    private void setRangeDay() {
         int year = getYear();
         int month = getMonth();
 
-        final Calendar calendar = new GregorianCalendar(year, month, 1);
+        Calendar calendar = new GregorianCalendar(year, month, 1);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //해당일자 년 달력의 마지막 요일을 계산
-                int endValue = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-                //마지막 일이 변경될 경우 RecyclerView 범위 초기화
-                if (dayRecyclerView.endDateValue != endValue) {
-                    dayRecyclerView.setRecyclerViewRange(1, endValue);
+        int endValue = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        //마지막 일이 변경될 경우 RecyclerView 범위 초기화
+        if (dayRecyclerView.endDateValue != endValue) {
+            dayRecyclerView.setRecyclerViewRange(1, endValue);
 
-                    int centerPosition = dayRecyclerView.adapter.centerPosition;
-                    if (scrollTo && centerPosition > endValue) {
+            int centerPosition = dayRecyclerView.getCenterPosition();
+            if (centerPosition > endValue) {
 
-                        int dayInitPosition = 0;
-
-                        LinearLayoutManager manager = (LinearLayoutManager) dayRecyclerView.getLayoutManager();
-                        if (manager != null) {
-                            dayRecyclerView.adapter.setCenterPosition(dayRecyclerView.adapter.getEmptySpace());
-                            manager.scrollToPositionWithOffset(dayInitPosition, 0);
-                        }
-                    }
-                }
+                int dayInitPosition = 0;
+                dayRecyclerView.setInitPosition(dayInitPosition);
             }
-        }, 200);
+        }
     }
 
     public int getYear() {
-        int year = yearRecyclerView.adapter.getDate();
-        return year;
+        return yearRecyclerView.getWheelValue();
     }
 
     public int getMonth() {
-        int month = monthRecyclerView.adapter.getDate() - 1;
-        return month;
+        return monthRecyclerView.getWheelValue() - 1;
     }
 
     public int getDay() {
-        int day = dayRecyclerView.adapter.getDate();
-        return day;
+        return dayRecyclerView.getWheelValue();
     }
 
     /**
      * DatePicker의 달력 초기 값을 설정하는 함수
      *
-     * @param year
-     * @param month
-     * @param day
+     * @param year  : 년도
+     * @param month : 월  Calendar 객체 특성상 month 0은 1월을 의미
+     * @param day   : 일자
      */
     public void setDate(int year, int month, int day) {
 
-        setAllSnapListenerScrollIdle();
-        isDateInitDone = false;
+        yearRecyclerView.setInitPosition(year);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final int yearPosition = (year - WheelRecyclerView.START_YEAR_VALUE);
-                LinearLayoutManager manager = (LinearLayoutManager) yearRecyclerView.getLayoutManager();
-                if (manager != null) {
-                    //기존 RecyclerView.smoothScrollToPosition or scrollToPosition은 잘못된 스크롤 동작 방식이 여러 보고 되었다.
-                    //정확한 위치로 이동하기 위해서는 LayoutManager를 사용해야한다.
-                    yearRecyclerView.adapter.setCenterPosition(yearPosition + yearRecyclerView.adapter.getEmptySpace());
-                    manager.scrollToPositionWithOffset(yearPosition, 0);
-                }
-            }
-        }, 200);
+        monthRecyclerView.setInitPosition(month + 1);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final int monthPosition = month;
-                LinearLayoutManager manager = (LinearLayoutManager) monthRecyclerView.getLayoutManager();
-                if (manager != null) {
-                    monthRecyclerView.adapter.setCenterPosition(monthPosition + monthRecyclerView.adapter.getEmptySpace());
-                    manager.scrollToPositionWithOffset(monthPosition, 0);
-                }
-            }
-        }, 400);
+        //변경된 년도와 월로 Day Range 설정
+        setRangeDay();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //변경된 년도 달력에 따라 마지막 요일 적용
-                setRangeDay(false);
-                final int dayPosition = day - 1;
-                LinearLayoutManager manager = (LinearLayoutManager) dayRecyclerView.getLayoutManager();
-                if (manager != null) {
-                    dayRecyclerView.adapter.setCenterPosition(dayPosition + dayRecyclerView.adapter.getEmptySpace());
-                    manager.scrollToPositionWithOffset(dayPosition, 0);
-                }
-            }
-        }, 600);
+        dayRecyclerView.setInitPosition(day);
     }
-
-    private void setAllSnapListenerScrollIdle() {
-        //year, month, day 모두 snap Listener 적용
-        yearRecyclerView.setSnapBehaviorType(
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE);
-
-        monthRecyclerView.setSnapBehaviorType(
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE);
-
-        dayRecyclerView.setSnapBehaviorType(
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE);
-    }
-
-    private void setAllSnapListenerScroll() {
-        //year, month, day 모두 snap Listener 적용
-        yearRecyclerView.setSnapBehaviorType(
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL);
-
-        monthRecyclerView.setSnapBehaviorType(
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL);
-
-        dayRecyclerView.setSnapBehaviorType(
-                WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL);
-    }
-
-
 }

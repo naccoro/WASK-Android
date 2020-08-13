@@ -1,12 +1,19 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
 package com.naccoro.wask.setting;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+<<<<<<< HEAD
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+=======
+
+>>>>>>> develop
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +22,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
+<<<<<<< HEAD
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.notification.WaskService;
+=======
+import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
+import com.naccoro.wask.customview.waskdialog.WaskDialog;
+import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+>>>>>>> develop
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
@@ -34,6 +47,12 @@ public class SettingActivity extends AppCompatActivity
 
     private SettingPresenter presenter;
 
+<<<<<<< HEAD
+=======
+    private int periodReplacementCycle;
+
+    private int periodReplaceLater;
+>>>>>>> develop
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +87,7 @@ public class SettingActivity extends AppCompatActivity
         alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+<<<<<<< HEAD
 
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -81,6 +101,11 @@ public class SettingActivity extends AppCompatActivity
                     Intent service = new Intent(SettingActivity.this, WaskService.class);
                     stopService(service);
                 }
+=======
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                presenter.changeAlertVisibleSwitch(isChecked);
+>>>>>>> develop
             }
         });
     }
@@ -100,10 +125,24 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replacement_cycle))
                 .setContent(R.layout.dialog_replacementcycle)
+<<<<<<< HEAD
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
                     presenter.changeReplacementCycleValue(wheelRecyclerView.getSnapValue());
+=======
+                .setContentCallback(new WaskDialog.ContentViewCallback() {
+                    @Override
+                    public void onContentViewAttached(View view) {
+                        WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
+                        wheelRecyclerView.setInitPosition(periodReplacementCycle);
+                    }
+                })
+                .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
+                    //이후 wheelPicker value로 대체
+                    WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
+                    presenter.changeReplacementCycleValue(wheelRecyclerView.getWheelValue());
+>>>>>>> develop
                     dialog.dismiss();
                 })
                 .build()
@@ -116,10 +155,24 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_replace_later))
                 .setContent(R.layout.dialog_replacelater)
+<<<<<<< HEAD
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
                     presenter.changeReplaceLaterValue(wheelRecyclerView.getSnapValue());
+=======
+                .setContentCallback(new WaskDialog.ContentViewCallback() {
+                    @Override
+                    public void onContentViewAttached(View view) {
+                        WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
+                        wheelRecyclerView.setInitPosition(periodReplaceLater);
+                    }
+                })
+                .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
+                    //이후 wheelPicker value로 대체
+                    WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
+                    presenter.changeReplaceLaterValue(wheelRecyclerView.getWheelValue());
+>>>>>>> develop
                     dialog.dismiss();
                 })
                 .build()
@@ -152,11 +205,19 @@ public class SettingActivity extends AppCompatActivity
 
     @Override
     public void showReplacementCycleValue(int cycleValue) {
+<<<<<<< HEAD
+=======
+        periodReplacementCycle = cycleValue;
+>>>>>>> develop
         replacementCycleAlertLabel.setText(cycleValue + "일");
     }
 
     @Override
     public void showReplaceLaterValue(int laterValue) {
+<<<<<<< HEAD
+=======
+        periodReplaceLater = laterValue;
+>>>>>>> develop
         replaceLaterLabel.setText(laterValue + "일");
     }
 
@@ -173,11 +234,14 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void finishSettingView() {
         finish();
+<<<<<<< HEAD
     }
 
     @Override
     public void finish() {
         super.finish();
+=======
+>>>>>>> develop
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
     }
 
