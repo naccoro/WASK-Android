@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
@@ -197,10 +198,18 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         AlarmUtil.cancelReplaceLaterAlarm(context);
         AlarmUtil.setReplacementCycleAlarm(context);
 
-        int period = getMaskPeriod();
-        if (period > 0) {
-            AlarmUtil.showForegroundService(context, period);
-            //TODO: 포그라운드 알람 등록
+        if (SettingPreferenceManager.getIsShowNotificationBar()) {
+            int period = getMaskPeriod();
+            Log.d("MaksPeriod", period + "");
+            if (period > 0) {
+                AlarmUtil.showForegroundService(context, period);
+
+                AlarmUtil.setForegroundAlarm(context);
+            } else {
+                AlarmUtil.dismissForegroundService(context);
+
+                AlarmUtil.cancelForegroundAlarm(context);
+            }
         }
     }
 
@@ -211,6 +220,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      */
     private int getMaskPeriod() {
         int lastReplacement = replacementHistoryRepository.getLastReplacement();
+
         if (lastReplacement == -1) {
             //교체 기록이 없을 경우
             return 0;

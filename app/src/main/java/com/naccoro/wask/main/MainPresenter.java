@@ -3,6 +3,7 @@ package com.naccoro.wask.main;
 
 import android.content.Context;
 
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
 
@@ -121,12 +122,16 @@ public class MainPresenter implements MainContract.Presenter {
      * Foreground  변경점을 반영한다.
      */
     private void showForegroundNotification(Context context) {
-        AlarmUtil.dismissForegroundService(context);
 
-        int period = getMaskPeriod();
-        if (period != 0) {
-            AlarmUtil.showForegroundService(context, period);
-            AlarmUtil.setForegroundAlarm(context);
+        if (SettingPreferenceManager.getIsShowNotificationBar()) {
+            int period = getMaskPeriod();
+            if (period > 0) {
+                AlarmUtil.showForegroundService(context, period);
+                AlarmUtil.setForegroundAlarm(context);
+            } else {
+                AlarmUtil.dismissForegroundService(context);
+                AlarmUtil.cancelForegroundAlarm(context);
+            }
         }
     }
 
@@ -135,7 +140,6 @@ public class MainPresenter implements MainContract.Presenter {
      */
     private void setMaskReplaceNotification(Context context) {
         //남아있던 alarm 을 종료한다.
-        AlarmUtil.cancelReplacementCycleAlarm(context);
         AlarmUtil.cancelReplaceLaterAlarm(context);
 
         showForegroundNotification(context);

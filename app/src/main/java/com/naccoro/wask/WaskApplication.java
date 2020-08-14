@@ -43,6 +43,9 @@ public class WaskApplication extends Application {
                     "Wask Service",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
+            serviceChannel.setSound(null, null);
+            serviceChannel.enableVibration(false);
+            serviceChannel.setVibrationPattern(null);
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);

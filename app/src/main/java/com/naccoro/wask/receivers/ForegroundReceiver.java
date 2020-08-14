@@ -28,6 +28,7 @@ public class ForegroundReceiver extends BroadcastReceiver {
                 AlarmUtil.showForegroundService(context, getMaskPeriod(context));
             } else {
                 AlarmUtil.cancelForegroundAlarm(context);
+                AlarmUtil.dismissForegroundService(context);
             }
         }
     }
