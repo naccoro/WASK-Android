@@ -194,6 +194,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      * 사용자가 수정모드로 변경할 때마다 알람도 변경해줍니다.
      */
     private void updateMaskAlarm(Context context) {
+        AlarmUtil.cancelReplaceLaterAlarm(context);
         AlarmUtil.setReplacementCycleAlarm(context);
 
         int period = getMaskPeriod();
