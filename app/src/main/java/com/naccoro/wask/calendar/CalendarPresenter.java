@@ -40,7 +40,7 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      */
     @Override
     public void changeCalendarList(Date selectDate) {
-        calendarView.initCalendarList(calendarModel.updateCalendarList(selectDate));
+        calendarModel.updateCalendarList(selectDate, dateList -> calendarView.initCalendarList(dateList));
     }
 
     /**

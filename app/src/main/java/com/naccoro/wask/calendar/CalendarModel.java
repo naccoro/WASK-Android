@@ -69,7 +69,7 @@ public class CalendarModel {
         try {
             GregorianCalendar calendar = new GregorianCalendar(selectDate.getYear(), selectDate.getMonth(), 1, 0, 0, 0);
 
-            int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK); // 해당 월에 시작하는 요일
+            int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1; // 해당 월에 시작하는 요일
             int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 이번 달의 말일
 
             updateLastMonth(dateList, calendar, startDayOfWeek);

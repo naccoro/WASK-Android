@@ -1,9 +1,7 @@
 package com.naccoro.wask.calendar;
 
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -12,6 +10,7 @@ import com.naccoro.wask.R;
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.replacement.model.Injection;
 
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
