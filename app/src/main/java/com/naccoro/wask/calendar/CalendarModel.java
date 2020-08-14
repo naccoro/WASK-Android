@@ -76,6 +76,7 @@ public class CalendarModel {
             // 해당 월에 시작하는 요일의 위치 1 : 일요일 ~ 7 : 토요일
             int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
             if (startDayOfWeek == 0) startDayOfWeek = 7;
+
             int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 이번 달의 말일
 
             updateLastMonth(dateList, calendar, startDayOfWeek);

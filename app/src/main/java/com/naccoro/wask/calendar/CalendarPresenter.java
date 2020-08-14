@@ -42,12 +42,8 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      */
     @Override
     public void changeCalendarList(Date selectDate) {
-        calendarModel.updateCalendarList(selectDate, new CalendarModel.LoadCalendarDateCallback() {
-            @Override
-            public void onCalendarDateLoaded(ArrayList<CalendarItem> dateList) {
-                calendarView.initCalendarList(dateList);
-            }
-        });
+
+        calendarModel.updateCalendarList(selectDate, dateList -> calendarView.initCalendarList(dateList));
     }
 
     /**
