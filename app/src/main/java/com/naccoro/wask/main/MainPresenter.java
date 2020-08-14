@@ -117,7 +117,6 @@ public class MainPresenter implements MainContract.Presenter {
             return 0;
         }
 
-        //20200710
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 }
