@@ -63,12 +63,7 @@ public class CalendarActivity extends AppCompatActivity
         changeDateConstraintLayout.setOnClickListener(this);
 
         // 스위치 모드 변경
-        modifyModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                presenter.changeModifyMode(isChecked, calendarAdapter);
-            }
-        });
+        modifyModeSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> presenter.changeModifyMode(isChecked, calendarAdapter));
 
         // calendar 관련 설정
         initSelectDate();
@@ -87,10 +82,7 @@ public class CalendarActivity extends AppCompatActivity
      */
     private void initSelectDate() {
         GregorianCalendar cal = new GregorianCalendar();
-        selectDate = new Date();
-        selectDate.setYear(cal.get(Calendar.YEAR));
-        selectDate.setMonth(cal.get(Calendar.MONTH));
-        selectDate.setDay(cal.get(Calendar.DATE));
+        selectDate = new Date(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
     }
 
     /**
@@ -126,9 +118,7 @@ public class CalendarActivity extends AppCompatActivity
             case R.id.constraintlayout_changedate: // (0000년 00월) 버튼 클릭 시
                 DatePickerDialogFragment.newInstance().
                         setOnDateChangedListener((year, month, day) -> {
-                            selectDate.setYear(year);
-                            selectDate.setMonth(month);
-                            selectDate.setDay(day);
+                            selectDate.setDate(year, month, day);
                             presenter.clickChangeDateButton(selectDate);
                             calendarAdapter.setCalendarList(dateList);
                         })
@@ -160,10 +150,22 @@ public class CalendarActivity extends AppCompatActivity
     /**
      * SelectDate를 저장하기 위한 클래스 (year, month, day 저장)
      */
-    public class Date {
+    public static class Date {
         private int year;
         private int month;
         private int day;
+
+        public Date(int year, int month, int day) {
+            this.year = year;
+            this.month = month;
+            this.day = day;
+        }
+
+        public void setDate(int year, int month, int day) {
+            this.year = year;
+            this.month = month;
+            this.day = day;
+        }
 
         public int getYear() {
             return year;

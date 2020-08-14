@@ -34,9 +34,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
     public CalendarAdapter(ArrayList<CalendarItem> calendarList, ReplacementHistoryRepository replacementHistoryRepository, Date selectDate) {
         this.calendarList = calendarList;
-        this.isModifyMode = false; // 무조건 실행했을때는 수정 불가 모드
         this.replacementHistoryRepository = replacementHistoryRepository;
-        this.today = selectDate; // 맨 처음 selectDate는 오늘날짜
+        this.setToday(selectDate);
+    }
+
+    public void setToday(Date date) {
+        today = new Date(date.getYear(), date.getMonth(), date.getDay());
     }
 
     public void setCalendarList(ArrayList<CalendarItem> calendarList) {

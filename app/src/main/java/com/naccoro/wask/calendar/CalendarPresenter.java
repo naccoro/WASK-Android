@@ -40,11 +40,7 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      */
     @Override
     public void changeCalendarList(Date selectDate) {
-        if (selectDate.getMonth() == prevMonth) {
-            return; // 기존 month와 새로운 month가 같으면 data갱신할 필요 X
-        }
-        prevMonth = selectDate.getMonth(); // 기존 (감사할)월 갱신
-        calendarModel.updateCalendarList(selectDate, dateList -> calendarView.initCalendarList(dateList));
+        calendarView.initCalendarList(calendarModel.updateCalendarList(selectDate));
     }
 
     /**
