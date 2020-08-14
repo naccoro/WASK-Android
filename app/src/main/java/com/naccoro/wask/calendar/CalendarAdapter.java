@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
+import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
 import com.naccoro.wask.calendar.CalendarActivity.Date;
 
@@ -24,7 +25,7 @@ import static com.naccoro.wask.R.*;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
 
     private static final String TAG = "CalendarAdapter";
-
+    private Context context;
     private ArrayList<CalendarItem> calendarList;
     private boolean isModifyMode;
     private int selectPosition;
@@ -32,7 +33,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     private static Date today;
     private ReplacementHistoryRepository replacementHistoryRepository;
 
-    public CalendarAdapter(ArrayList<CalendarItem> calendarList, ReplacementHistoryRepository replacementHistoryRepository, Date selectDate) {
+    public CalendarAdapter(Context context, ArrayList<CalendarItem> calendarList,
+                           ReplacementHistoryRepository replacementHistoryRepository, Date selectDate) {
+        this.context = context;
         this.calendarList = calendarList;
         this.replacementHistoryRepository = replacementHistoryRepository;
         this.setToday(selectDate);
@@ -166,12 +169,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             item.setChangeMask(false);
             replacementHistoryRepository.delete(DateUtils.getDateFromGregorianCalendar(item.getDate()));
             calendarViewHolder.changeImageView.setVisibility(View.GONE);
+            updateMaskAlarm(context);
         } else {
             item.setChangeMask(true);
             replacementHistoryRepository.insert(DateUtils.getDateFromGregorianCalendar(item.getDate()), new ReplacementHistoryRepository.InsertHistoryCallback() {
                 @Override
                 public void onSuccess() {
                     calendarViewHolder.changeImageView.setVisibility(View.VISIBLE);
+                    updateMaskAlarm(context);
                 }
 
                 @Override
@@ -183,6 +188,34 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         //변경된 날짜만 변경하면 더 효율적
         notifyItemChanged(position);
+    }
+
+    /**
+     * 사용자가 수정모드로 변경할 때마다 알람도 변경해줍니다.
+     */
+    private void updateMaskAlarm(Context context) {
+        AlarmUtil.setReplacementCycleAlarm(context);
+
+        int period = getMaskPeriod();
+        if (period > 0) {
+            AlarmUtil.showForegroundService(context, period);
+            //TODO: 포그라운드 알람 등록
+        }
+    }
+
+    /**
+     * WaskDatabase에서 현재 마스크 교체 상태를 가져오는 함수
+     *
+     * @return [오늘 날짜 - 마지막 교체 일자 + 1]
+     */
+    private int getMaskPeriod() {
+        int lastReplacement = replacementHistoryRepository.getLastReplacement();
+        if (lastReplacement == -1) {
+            //교체 기록이 없을 경우
+            return 0;
+        }
+
+        return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 
     /**

@@ -71,7 +71,7 @@ public class CalendarActivity extends AppCompatActivity
         presenter.changeCalendarList(selectDate);
 
         // 리사이클러뷰 초기화
-        calendarAdapter = new CalendarAdapter(dateList, Injection.replacementHistoryRepository(getApplicationContext()), selectDate);
+        calendarAdapter = new CalendarAdapter(CalendarActivity.this, dateList, Injection.replacementHistoryRepository(getApplicationContext()), selectDate);
         gridLayoutManager = new GridLayoutManager(this, 7);
         recyclerView.setAdapter(calendarAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
