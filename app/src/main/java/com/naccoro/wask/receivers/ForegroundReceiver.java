@@ -3,7 +3,6 @@ package com.naccoro.wask.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
@@ -22,7 +21,7 @@ public class ForegroundReceiver extends BroadcastReceiver {
 
         if (SettingPreferenceManager.getIsShowNotificationBar()) {
             int period = getMaskPeriod(context);
-            
+
             //교체일자가 없다면 실행하지 말것
             if (period > 0) {
                 AlarmUtil.dismissForegroundService(context);
@@ -36,7 +35,7 @@ public class ForegroundReceiver extends BroadcastReceiver {
 
     /**
      * 마스크 착용일 설정하는 함수
-     */
+     * */
     private int getMaskPeriod(Context context) {
         ReplacementHistoryRepository replacementHistoryRepository = Injection.replacementHistoryRepository(context);
         int lastReplacement = replacementHistoryRepository.getLastReplacement();

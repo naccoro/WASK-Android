@@ -129,6 +129,7 @@ public class AlarmUtil {
         calendar.add(Calendar.DAY_OF_MONTH, 1); //다음날
         calendar.set(Calendar.HOUR, 0); //자정으로
 
+
         Intent intent = new Intent(context, ForegroundReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_FOREGROUND, intent, 0);
 

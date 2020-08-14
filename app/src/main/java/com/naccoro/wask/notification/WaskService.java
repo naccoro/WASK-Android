@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -26,8 +27,9 @@ public class WaskService extends Service {
 
     /**
      * foregroundService 실행 메서드
+     *
      * @return onStartCommand 메서드 종료 시 서비스 재 실행하지 않음 (START_NOT_STICKY Option)
-     * */
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         maskPeriod = intent.getIntExtra("maskPeriod", 1);
@@ -39,7 +41,7 @@ public class WaskService extends Service {
     /**
      * foregroundService ( notification ) 선언부
      * TODO : foregroundService 기타 기능 추가 ex) 마스크 교체하기 기능 등
-     * */
+     */
     private void startForegroundService() {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
