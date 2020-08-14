@@ -124,6 +124,18 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     /**
+     * Foreground  변경점을 반영한다.
+     */
+    private void showForegroundNotification(Context context) {
+        AlarmUtil.dismissForegroundService(context);
+
+        int period = getMaskPeriod();
+        if (period != 0) {
+            AlarmUtil.showForegroundService(context, period);
+        }
+    }
+
+    /**
      * 등록되어 있는 알람을 종료하고 새로운 교체하기 알람을 등록한다.
      */
     private void setMaskReplaceNotification(Context context) {
@@ -131,6 +143,7 @@ public class MainPresenter implements MainContract.Presenter {
         AlarmUtil.cancelReplacementCycleAlarm(context);
         AlarmUtil.cancelReplaceLaterAlarm(context);
 
+        showForegroundNotification(context);
         AlarmUtil.setReplacementCycleAlarm(context);
     }
 

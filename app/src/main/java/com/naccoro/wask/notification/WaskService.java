@@ -2,6 +2,7 @@ package com.naccoro.wask.notification;
 
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
@@ -11,6 +12,7 @@ import androidx.core.app.NotificationCompat;
 import com.naccoro.wask.R;
 import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.main.MainActivity;
+import com.naccoro.wask.utils.AlarmUtil;
 
 public class WaskService extends Service {
     private final String CHANNEL_ID = WaskApplication.CHANNEL_ID;
@@ -33,6 +35,7 @@ public class WaskService extends Service {
 
         return START_NOT_STICKY;
     }
+
     /**
      * foregroundService ( notification ) 선언부
      * TODO : foregroundService 기타 기능 추가 ex) 마스크 교체하기 기능 등

@@ -176,19 +176,18 @@ public class SettingActivity extends AppCompatActivity
 
     /**
      * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 On 했을 때
+     *
      * @param maskPeriod : 마스크를 착용한 기간
-     * */
+     */
     @Override
     public void showForegroundAlert(int maskPeriod) {
 
-        if (maskPeriod > 0) {
-            AlarmUtil.showForegroundService(this, maskPeriod);
-        }
+        AlarmUtil.showForegroundService(this, maskPeriod);
     }
 
     /**
      * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 Off 했을 때
-     * */
+     */
     @Override
     public void dismissForegroundAlert() {
         AlarmUtil.dismissForegroundService(this);
