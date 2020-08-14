@@ -4,7 +4,10 @@ import android.content.Context;
 
 import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.replacement.model.Injection;
+import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
+import com.naccoro.wask.utils.DateUtils;
 import com.naccoro.wask.utils.NotificationUtil;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
@@ -60,10 +63,10 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param isChecked : 변경된 값
      */
     @Override
-    public void changeAlertVisibleSwitch(boolean isChecked) {
+    public void changeAlertVisibleSwitch(Context context, boolean isChecked) {
         SettingPreferenceManager.setIsShowNotificationBar(isChecked);
         if (isChecked) {
-            settingView.showForegroundAlert(getMaskPeriod());
+            settingView.showForegroundAlert(getMaskPeriod(context));
         }
         else {
             settingView.dismissForegroundAlert();
@@ -127,9 +130,13 @@ public class SettingPresenter implements SettingContract.Presenter {
     /**
      * 마스크 착용일 설정하는 함수
      * */
-    private int getMaskPeriod() {
-        // TODO : DB에서 값 가져오기
-        int maskPeriod = 900;
-        return maskPeriod;
+    private int getMaskPeriod(Context context) {
+        ReplacementHistoryRepository replacementHistoryRepository = Injection.replacementHistoryRepository(context);
+        int lastReplacement = replacementHistoryRepository.getLastReplacement();
+        if (lastReplacement == -1) {
+            //교체 기록이 없을 경우
+            return 0;
+        }
+        return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 }

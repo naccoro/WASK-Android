@@ -75,7 +75,7 @@ public class SettingActivity extends AppCompatActivity
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                presenter.changeAlertVisibleSwitch(isChecked);
+                presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked);
             }
         });
     }

@@ -36,7 +36,7 @@ public interface SettingContract {
 
         void clickPushAlert();
 
-        void changeAlertVisibleSwitch(boolean isChecked);
+        void changeAlertVisibleSwitch(Context context, boolean isChecked);
 
         void changePushAlertValue(Context context, String value);
 
