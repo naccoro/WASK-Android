@@ -109,10 +109,11 @@ public class ReplacementHistoryRepository {
         dao.insert(newReplacementHistory);
         Log.d(TAG, "insert: " + newReplacementHistory.toString());
 
+        updateHistories();
+
         if (callback != null) {
             callback.onSuccess();
         }
-        updateHistories();
     }
 
     private boolean checkReduplication(ReplacementHistory newReplacementHistory) {
