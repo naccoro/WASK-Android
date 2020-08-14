@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class ReplacementHistoryRepository {
-    
+
+    public static ReplacementHistoryRepository instance = null;
+
     private static final String TAG = "ReplacementHistoryRepo";
 
     private ReplacementHistoryDao dao;
@@ -21,7 +23,19 @@ public class ReplacementHistoryRepository {
 
     boolean cacheIsDirty = false;
 
-    public ReplacementHistoryRepository(Context context) {
+    public static ReplacementHistoryRepository getInstance(Context context) {
+        if (instance == null) {
+            synchronized (ReplacementHistoryRepository.class) {
+                if (instance == null) {
+                    instance = new ReplacementHistoryRepository(context);
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    private ReplacementHistoryRepository(Context context) {
         dao = WaskDatabaseManager.getInstance(context).replacementHistoryDao();
     }
 
@@ -70,7 +84,22 @@ public class ReplacementHistoryRepository {
 
         return cachedReplacementHistory.get(cachedReplacementHistory.size() - 1).getReplacedDate();
     }
-    
+
+    public void getDateAroundThreeMonth(int month, LoadHistoriesAsDateCallback callback) {
+        getDateAll(month - 1, month + 1, callback);
+    }
+
+    private void getDateAll(int startMonth, int endMonth, LoadHistoriesAsDateCallback callback) {
+
+        List<Integer> replacementHistories = dao.getDateAll(startMonth, endMonth);
+
+        if (replacementHistories != null) {
+            callback.onHistoriesLoaded(replacementHistories);
+        } else {
+            callback.onDataNotAvailable();
+        }
+    }
+
     public void insert(ReplacementHistory newReplacementHistory, InsertHistoryCallback callback) {
         if (checkReduplication(newReplacementHistory) && callback != null) {
             callback.onDuplicated();
@@ -170,6 +199,13 @@ public class ReplacementHistoryRepository {
     public interface LoadHistoriesCallback {
 
         void onHistoriesLoaded(List<ReplacementHistory> histories);
+
+        void onDataNotAvailable();
+    }
+
+    public interface LoadHistoriesAsDateCallback {
+
+        void onHistoriesLoaded(List<Integer> histories);
 
         void onDataNotAvailable();
     }

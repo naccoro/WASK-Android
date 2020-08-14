@@ -34,13 +34,7 @@ public class MainPresenter implements MainContract.Presenter {
     public void start() {
         int period;
 
-        if (isChanged) {
-            //오늘 교체했다면 1일 째 사용 중
-            period = 1;
-        } else {
-            //오늘 교체하지 않았다면 연속 사용 일자 계산
-            period = getMaskPeriod();
-        }
+        period = getMaskPeriod();
         mainView.setPeriodTextValue(period);
 
         if (period == 0) {
@@ -160,6 +154,7 @@ public class MainPresenter implements MainContract.Presenter {
             isNoData = true;
             return 0;
         }
+
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 }

@@ -19,6 +19,9 @@ public abstract class ReplacementHistoryDao implements BaseDao<ReplacementHistor
     @Query("SELECT * FROM replacement_histories WHERE replace_date = :date")
     abstract ReplacementHistory get(int date);
 
+    @Query("SELECT replace_date FROM replacement_histories WHERE replace_date_month >= :startMonth AND replace_date_month <= :endMonth")
+    abstract List<Integer> getDateAll(int startMonth, int endMonth);
+
     @Query("DELETE FROM replacement_histories")
     abstract void deleteAll();
 
