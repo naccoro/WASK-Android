@@ -47,23 +47,18 @@ public class SettingPresenter implements SettingContract.Presenter {
     }
 
     /**
-     * 마스크 착용일 설정하는 함수
-     * @param maskPeriod : 사용자가 연속해서 마스크를 착용한 일수
-     * */
-    @Override
-    public void getMaskPeriod(int maskPeriod) {
-        // TODO : DB에서 값 가져오기
-        maskPeriod = 20;
-        settingView.showForegroundAlert(maskPeriod);
-    }
-
-    /**
      * 사용자가 Foregorund Alert Visible Switch의 값을 변경했을 때
      * @param isChecked : 변경된 값
      */
     @Override
     public void changeAlertVisibleSwitch(boolean isChecked) {
         SettingPreferenceManager.setIsShowNotificationBar(isChecked);
+        if (isChecked) {
+            settingView.showForegroundAlert(getMaskPeriod());
+        }
+        else {
+            settingView.dismissForegroundAlert();
+        }
     }
 
     /**
@@ -140,5 +135,14 @@ public class SettingPresenter implements SettingContract.Presenter {
             default:
                 return SettingPreferenceManager.SettingPushAlertType.NONE;
         }
+    }
+
+    /**
+     * 마스크 착용일 설정하는 함수
+     * */
+    private int getMaskPeriod() {
+        // TODO : DB에서 값 가져오기
+        int maskPeriod = 900;
+        return maskPeriod;
     }
 }

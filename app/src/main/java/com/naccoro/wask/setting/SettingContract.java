@@ -41,7 +41,5 @@ public interface SettingContract {
         void changeReplacementCycleValue(int cycleValue);
 
         void changeReplaceLaterValue(int laterValue);
-
-        void getMaskPeriod(int maskPeriod);
     }
 }

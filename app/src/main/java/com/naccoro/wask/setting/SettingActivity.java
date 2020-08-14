@@ -77,14 +77,6 @@ public class SettingActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 presenter.changeAlertVisibleSwitch(isChecked);
-                presenter.getMaskPeriod(setMaskPeriod);
-
-                if (isChecked) {
-                    showForegroundAlert(setMaskPeriod);
-                }
-                else {
-                    dismissForegroundAlert();
-                }
             }
         });
     }
