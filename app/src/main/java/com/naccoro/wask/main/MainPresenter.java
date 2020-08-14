@@ -6,7 +6,7 @@ import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.DateUtils;
 
 public class MainPresenter implements MainContract.Presenter {
-  
+
     private static final String TAG = "MainPresenter";
 
     private ReplacementHistoryRepository replacementHistoryRepository;

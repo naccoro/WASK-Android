@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WASK-Android</string>
+    <string name="app_name">WASK</string>
 
     <string name="setting_title">설정</string>
     <string name="setting_replacement_cycle">마스크 교체 알림 주기</string>

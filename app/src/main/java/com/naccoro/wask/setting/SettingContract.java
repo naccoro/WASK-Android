@@ -14,6 +14,10 @@ public interface SettingContract {
 
         void showPushAlertValue(String pushAlertValue);
 
+        void showForegroundAlert(int maskPeriod);
+
+        void dismissForegroundAlert();
+
         void setAlertVisibleSwitchValue(boolean isChecked);
 
         void finishSettingView();
