@@ -7,159 +7,176 @@
     android:background="@android:color/white"
     tools:context=".setting.SettingActivity">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintlayout_replacementcyclealert"
+    <com.naccoro.wask.customview.WaskToolbar
+        android:id="@+id/wasktoolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textview_replacementcyclealert_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_setting_left"
-            android:layout_marginTop="@dimen/margin_settingchild_top"
-            android:layout_marginBottom="@dimen/margin_settingchild_top"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="8sp"
-            android:textColor="@color/waskGrayFont"
-            android:textSize="@dimen/textsize_setting_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/setting_replacement_cycle" />
-
-        <TextView
-            android:id="@+id/textview_replacementcyclealert_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_settingchild_bottom"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="6sp"
-            android:textColor="@color/waskAccentFont"
-            android:textSize="@dimen/textsize_setting_body"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textview_replacementcyclealert_title"
-            app:layout_constraintTop_toBottomOf="@+id/textview_replacementcyclealert_title"
-            tools:text="3일" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintlayout_replacelater"
-        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_replacementcyclealert">
-
-        <TextView
-            android:id="@+id/textview_replacelater_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_setting_left"
-            android:layout_marginTop="@dimen/margin_settingchild_top"
-            android:layout_marginBottom="@dimen/margin_settingchild_top"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="8sp"
-            android:textColor="@color/waskGrayFont"
-            android:textSize="@dimen/textsize_setting_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/setting_replace_later" />
-
-        <TextView
-            android:id="@+id/textview_replacelater_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_settingchild_bottom"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="6sp"
-            android:textColor="@color/waskAccentFont"
-            android:textSize="@dimen/textsize_setting_body"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textview_replacelater_title"
-            app:layout_constraintTop_toBottomOf="@+id/textview_replacelater_title"
-            tools:text="1일" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintlayout_pushalert"
-        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_replacelater">
+        app:layout_constraintTop_toBottomOf="@id/wasktoolbar_setting">
 
-        <TextView
-            android:id="@+id/textview_pushalert_title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_replacementcyclealert"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_setting_left"
-            android:layout_marginTop="@dimen/margin_settingchild_top"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="8sp"
-            android:textColor="@color/waskGrayFont"
-            android:textSize="@dimen/textsize_setting_title"
+            android:background="?android:attr/selectableItemBackground"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/setting_push_alert"/>
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textview_pushalert_body"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textview_replacementcyclealert_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_setting_left"
+                android:layout_marginTop="@dimen/margin_settingchild_top"
+                android:layout_marginBottom="@dimen/margin_settingchild_top"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="8sp"
+                android:text="@string/setting_replacement_cycle"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="@dimen/textsize_setting_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_replacementcyclealert_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_settingchild_bottom"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/waskAccentFont"
+                android:textSize="@dimen/textsize_setting_body"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_replacementcyclealert_title"
+                app:layout_constraintTop_toBottomOf="@+id/textview_replacementcyclealert_title"
+                tools:text="3일" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_replacelater"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_settingchild_bottom"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="6sp"
-            android:textColor="@color/waskAccentFont"
-            android:textSize="@dimen/textsize_setting_body"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textview_pushalert_title"
-            app:layout_constraintTop_toBottomOf="@+id/textview_pushalert_title"
-            tools:text="소리+진동" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintlayout_foregroundalert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_pushalert">
-
-        <TextView
-            android:id="@+id/textview_foregroundalert_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_setting_left"
-            android:layout_marginTop="@dimen/margin_settingchild_top"
-            android:layout_marginBottom="@dimen/margin_settingchild_bottom"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="8sp"
-            android:text="@string/setting_foreground_alert"
-            android:textColor="@color/waskGrayFont"
-            android:textSize="@dimen/textsize_setting_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Switch
-            android:id="@+id/switch_foregroundalert"
-            style="@style/SwitchThumb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_settingchild_top"
-            android:layout_marginRight="@dimen/margin_settingchild_top"
-            android:track="@drawable/selector_foregroundalert_switch"
-            app:layout_constraintBottom_toBottomOf="@+id/textview_foregroundalert_title"
+            android:background="?android:attr/selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textview_foregroundalert_title" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_replacementcyclealert">
+
+            <TextView
+                android:id="@+id/textview_replacelater_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_setting_left"
+                android:layout_marginTop="@dimen/margin_settingchild_top"
+                android:layout_marginBottom="@dimen/margin_settingchild_top"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="8sp"
+                android:text="@string/setting_replace_later"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="@dimen/textsize_setting_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_replacelater_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_settingchild_bottom"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/waskAccentFont"
+                android:textSize="@dimen/textsize_setting_body"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_replacelater_title"
+                app:layout_constraintTop_toBottomOf="@+id/textview_replacelater_title"
+                tools:text="1일" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_pushalert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_replacelater">
+
+            <TextView
+                android:id="@+id/textview_pushalert_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_setting_left"
+                android:layout_marginTop="@dimen/margin_settingchild_top"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="8sp"
+                android:text="@string/setting_push_alert"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="@dimen/textsize_setting_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_pushalert_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_settingchild_bottom"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/waskAccentFont"
+                android:textSize="@dimen/textsize_setting_body"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_pushalert_title"
+                app:layout_constraintTop_toBottomOf="@+id/textview_pushalert_title"
+                tools:text="소리+진동" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_foregroundalert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_pushalert">
+
+            <TextView
+                android:id="@+id/textview_foregroundalert_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_setting_left"
+                android:layout_marginTop="@dimen/margin_settingchild_top"
+                android:layout_marginBottom="@dimen/margin_settingchild_bottom"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="8sp"
+                android:text="@string/setting_foreground_alert"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="@dimen/textsize_setting_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/switch_foregroundalert"
+                style="@style/SwitchThumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_settingchild_top"
+                android:layout_marginBottom="@dimen/margin_settingchild_top"
+                android:track="@drawable/selector_foregroundalert_switch"
+                app:layout_constraintBottom_toBottomOf="@+id/textview_foregroundalert_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textview_foregroundalert_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
