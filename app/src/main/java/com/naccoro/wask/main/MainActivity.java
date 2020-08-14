@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity
     TextView changeButton;
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         presenter.start();
     }
 
