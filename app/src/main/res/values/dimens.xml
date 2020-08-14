@@ -2,8 +2,8 @@
 <resources>
 
     <dimen name="margin_setting_left">40dp</dimen>
-    <dimen name="margin_settingchild_top">10dp</dimen>
-    <dimen name="margin_settingchild_bottom">10dp</dimen>
+    <dimen name="margin_settingchild_top">19dp</dimen>
+    <dimen name="margin_settingchild_bottom">18dp</dimen>
     <dimen name="textsize_setting_title">17sp</dimen>
     <dimen name="textsize_setting_body">12sp</dimen>
 
