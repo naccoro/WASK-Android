@@ -12,9 +12,9 @@ public class CalendarItem {
 
     private GregorianCalendar date; // 날짜 데이터
 
-    public CalendarItem(boolean isSelect, boolean isCurrentMonth, GregorianCalendar date) {
+    public CalendarItem(boolean isSelect, boolean isChangeMask, boolean isCurrentMonth, GregorianCalendar date) {
         this.isSelect = isSelect;
-        this.isChangeMask = false;
+        this.isChangeMask = isChangeMask;
         this.isCurrentMonth = isCurrentMonth;
         this.date = date;
     }

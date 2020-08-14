@@ -1,6 +1,7 @@
 package com.naccoro.wask.calendar;
 
 import com.naccoro.wask.calendar.CalendarActivity.Date;
+import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 
 public class CalendarPresenter implements CalendarContract.Presenter {
 
@@ -9,9 +10,9 @@ public class CalendarPresenter implements CalendarContract.Presenter {
 
     private int prevMonth; // 기존 month저장
 
-    CalendarPresenter(CalendarContract.View calendarView) {
+    CalendarPresenter(CalendarContract.View calendarView, ReplacementHistoryRepository replacementHistoryRepository) {
         this.calendarView = calendarView;
-        this.calendarModel = new CalendarModel();
+        this.calendarModel = new CalendarModel(replacementHistoryRepository);
         prevMonth = -1; // 처음엔 기존 month가 없음
     }
 

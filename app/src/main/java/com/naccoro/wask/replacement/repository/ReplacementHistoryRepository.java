@@ -70,7 +70,22 @@ public class ReplacementHistoryRepository {
 
         return cachedReplacementHistory.get(cachedReplacementHistory.size() - 1).getReplacedDate();
     }
-    
+
+    public void getDateAroundThreeMonth(int month, LoadHistoriesAsDateCallback callback) {
+        getDateAll(month - 1, month + 1, callback);
+    }
+
+    private void getDateAll(int startMonth, int endMonth, LoadHistoriesAsDateCallback callback) {
+
+        List<Integer> replacementHistories = dao.getDateAll(startMonth, endMonth);
+
+        if (replacementHistories != null) {
+            callback.onHistoriesLoaded(replacementHistories);
+        } else {
+            callback.onDataNotAvailable();
+        }
+    }
+
     public void insert(ReplacementHistory newReplacementHistory, InsertHistoryCallback callback) {
         if (checkReduplication(newReplacementHistory) && callback != null) {
             callback.onDuplicated();
@@ -170,6 +185,13 @@ public class ReplacementHistoryRepository {
     public interface LoadHistoriesCallback {
 
         void onHistoriesLoaded(List<ReplacementHistory> histories);
+
+        void onDataNotAvailable();
+    }
+
+    public interface LoadHistoriesAsDateCallback {
+
+        void onHistoriesLoaded(List<Integer> histories);
 
         void onDataNotAvailable();
     }

@@ -45,7 +45,7 @@ public class CalendarActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        presenter = new CalendarPresenter(this);
+        presenter = new CalendarPresenter(this, Injection.replacementHistoryRepository(this));
 
         initView();
     }

@@ -62,13 +62,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @NonNull
     @Override
     public CalendarAdapter.CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext() ;
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(layout.calendar_item, parent, false) ;
-        CalendarAdapter.CalendarViewHolder viewHolder = new CalendarAdapter.CalendarViewHolder(view) ;
+        View view = inflater.inflate(layout.calendar_item, parent, false);
+        CalendarAdapter.CalendarViewHolder viewHolder = new CalendarAdapter.CalendarViewHolder(view);
 
-        return viewHolder ;
+        return viewHolder;
     }
 
     /**
@@ -83,7 +83,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         CalendarItem item = calendarList.get(position);
         calendarViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH) + "");
 
-         // 수정모드 설정
+        // 수정모드 설정
         if (isModifyMode) {
             calendarViewHolder.itemView.setOnClickListener(view -> onDayClick(calendarViewHolder, item, position));
         }
@@ -103,15 +103,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         View itemView = calendarViewHolder.getItemView();
 
         // 일요일은 빨간날
-        if (position%7==0) {
-            calendarViewHolder.dateTextView.setTextColor(itemView.getResources().getColor(color.waskRed));
+        if (position % 7 == 0) {
+            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.waskRed));
+        } else {
+            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
         }
 
         // 오늘이면 동그라미 표시
         if (item.isSelect()) {
             selectPosition = position; // 어댑터속에 저장! (나중에 지우기 위해)
-            calendarViewHolder.dateTextView.setTextColor(itemView.getResources().getColor(color.white));
-            calendarViewHolder.dateBackgroundImageView.setVisibility(itemView.getVisibility());
+            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
+            calendarViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
         }
 
         //지난 달과 다음 달의 날짜는 흐리게
@@ -123,15 +125,18 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         // 마스크 교체한 날 표시
         if (item.isChangeMask()) {
-            calendarViewHolder.changeImageView.setVisibility(itemView.getVisibility());
+            calendarViewHolder.changeImageView.setVisibility(View.VISIBLE);
+        } else {
+            calendarViewHolder.changeImageView.setVisibility(View.INVISIBLE);
         }
     }
 
     /**
      * 날짜를 클릭했을 때 마스크교체여부가 바뀐다. (DB에도 바로 반영)
-     *  @param calendarViewHolder
+     *
+     * @param calendarViewHolder
      * @param item
-     * @param position  select 로 저장하기 위함
+     * @param position           select 로 저장하기 위함
      */
     private void onDayClick(CalendarViewHolder calendarViewHolder, CalendarItem item, int position) {
 
@@ -165,6 +170,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 public void onSuccess() {
                     calendarViewHolder.changeImageView.setVisibility(itemView.getVisibility());
                 }
+
                 @Override
                 public void onDuplicated() {
                     Log.d(TAG, "onDuplicated: true");
