@@ -1,5 +1,7 @@
 package com.naccoro.wask.main;
 
+import android.content.Context;
+
 public interface MainContract {
 
     interface View {
@@ -34,9 +36,10 @@ public interface MainContract {
 
         void clickCalendarButton();
 
-        void changeMask();
+        void changeMask(Context context);
 
-        void cancelChanging();
+        void cancelChanging(Context context);
+
     }
 
 }

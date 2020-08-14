@@ -3,7 +3,9 @@ package com.naccoro.wask.setting;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,8 @@ import com.naccoro.wask.R;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.notification.WaskService;
+import com.naccoro.wask.utils.AlarmUtil;
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
@@ -69,7 +73,7 @@ public class SettingActivity extends AppCompatActivity
         alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                presenter.changeAlertVisibleSwitch(isChecked);
+                presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked);
             }
         });
     }
@@ -99,7 +103,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
-                    presenter.changeReplacementCycleValue(wheelRecyclerView.getWheelValue());
+                    presenter.changeReplacementCycleValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -122,7 +126,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
-                    presenter.changeReplaceLaterValue(wheelRecyclerView.getWheelValue());
+                    presenter.changeReplaceLaterValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -134,19 +138,19 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_push_alert))
                 .addVerticalButton(getString(R.string.setting_push_alert_sound), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_sound));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_sound));
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_vibration), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_vibration));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_vibration));
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_all), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_all));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_all));
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_none), (dialog, view) -> {
-                    presenter.changePushAlertValue(getString(R.string.setting_push_alert_none));
+                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_none));
                     dialog.dismiss();
                 })
                 .build()
@@ -168,6 +172,26 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void showPushAlertValue(String pushAlertValue) {
         pushAlertLabel.setText(pushAlertValue);
+    }
+
+    /**
+     * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 On 했을 때
+     * @param maskPeriod : 마스크를 착용한 기간
+     * */
+    @Override
+    public void showForegroundAlert(int maskPeriod) {
+
+        if (maskPeriod > 0) {
+            AlarmUtil.showForegroundService(this, maskPeriod);
+        }
+    }
+
+    /**
+     * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 Off 했을 때
+     * */
+    @Override
+    public void dismissForegroundAlert() {
+        AlarmUtil.dismissForegroundService(this);
     }
 
     @Override
@@ -197,4 +221,3 @@ public class SettingActivity extends AppCompatActivity
         }
     }
 }
-

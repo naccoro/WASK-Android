@@ -67,8 +67,9 @@ public class MainActivity extends AppCompatActivity
                 presenter.clickCalendarButton();
                 break;
             case R.id.button_change:
-                // 교체 로직 실행
-                presenter.changeMask();
+
+                //교체하기 로직
+                presenter.changeMask(this);
                 break;
         }
     }
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity
                 .setMessage(getString(R.string.dialog_cancelreplacement))
                 .addHorizontalButton("취소", (dialog, view) -> dialog.dismiss())
                 .addHorizontalButton("확인", ((dialog, view) -> {
-                    presenter.cancelChanging();
+                    presenter.cancelChanging(MainActivity.this);
                     dialog.dismiss();
                 }))
                 .build()

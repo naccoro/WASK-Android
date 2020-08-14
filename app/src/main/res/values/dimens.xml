@@ -35,4 +35,10 @@
     <dimen name="margin_week_top">27dp</dimen>
     <dimen name="margin_calendarrecyclerview_top">2dp</dimen>
 
+    <dimen name="radius_notification_logo">16dp</dimen>
+    <dimen name="margin_notification_small">10dp</dimen>
+    <dimen name="margin_notification_large">30dp</dimen>
+    <dimen name="height_notification_icon">10dp</dimen>
+    <dimen name="textsize_notification_name">10sp</dimen>
+
 </resources>

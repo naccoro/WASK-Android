@@ -59,6 +59,7 @@ public class CalendarActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.recyclerview_calender);
 
         backButton.setOnClickListener(this);
+
         changeDateConstraintLayout.setOnClickListener(this);
 
         // 스위치 모드 변경
@@ -106,6 +107,7 @@ public class CalendarActivity extends AppCompatActivity
         } else {
             modifyModeTextView.setTextColor(getColor(R.color.colorDatePickerNoSelectedLabel));
         }
+
     }
 
     @Override
