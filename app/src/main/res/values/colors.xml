@@ -15,6 +15,13 @@
     <color name="waskGrayFont">#707070</color>
     <color name="dividerGray">#e2e2e2</color>
 
+    <color name="calendarDividerGray">#c6c5c5</color>
+
+    <color name="effectBlue">#EEE7FE</color>
+
     <color name="waskAccentFont">@color/waskBlue</color>
+
+    <color name="black">#111111</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>

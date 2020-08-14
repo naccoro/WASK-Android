@@ -39,9 +39,9 @@ public class DateUtilsTest {
 
     @Test
     public void calculateDateGapWithToday_isCorrect() {
-        assertThat(DateUtils.calculateDateGapWithToday(20200813), is(0));
-        assertThat(DateUtils.calculateDateGapWithToday(20200809), is(4));
-        assertThat(DateUtils.calculateDateGapWithToday(20200730), is(14));
-        assertThat(DateUtils.calculateDateGapWithToday(20200815), is(-2));
+        assertThat(DateUtils.calculateDateGapWithToday(20200813), is(1));
+        assertThat(DateUtils.calculateDateGapWithToday(20200809), is(5));
+        assertThat(DateUtils.calculateDateGapWithToday(20200710), is(35));
+        assertThat(DateUtils.calculateDateGapWithToday(20200815), is(-1));
     }
 }

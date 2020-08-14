@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 
+    <dimen name="margin_logo_top">16dp</dimen>
     <dimen name="margin_setting_left">40dp</dimen>
     <dimen name="margin_settingchild_top">10dp</dimen>
     <dimen name="margin_settingchild_bottom">10dp</dimen>
@@ -15,16 +16,24 @@
     <dimen name="textsize_maincard">13sp</dimen>
     <dimen name="textsize_mainuseperiod_number">56sp</dimen>
     <dimen name="textsize_mainuseperiod_text">20sp</dimen>
-    <dimen name="margin_mainlayout_top">56dp</dimen>
+    <dimen name="margin_mainlayout_top">19dp</dimen>
     <dimen name="height_main_imagebutton">23dp</dimen>
 
     <dimen name="height_calendar_backbutton">17dp</dimen>
 
     <dimen name="padding_all_imagebutton">16dp</dimen>
 
+    <dimen name="margin_calendar_textview_left">16dp</dimen>
+    <dimen name="margin_calendar_textview_vertical">22dp</dimen>
+    <dimen name="margin_calendar_textviewmodify_right">10dp</dimen>
+    <dimen name="padding_calendar_changebutton">11dp</dimen>
+    <dimen name="textsize_calendar_content">12sp</dimen>
+
     <dimen name="textsize_dialogreplacementcycle_body">15sp</dimen>
     <dimen name="margin_dialogreplacementcycle_top">35dp</dimen>
     <dimen name="margin_dialogreplacementcycle_bottom">31dp</dimen>
+    <dimen name="margin_week_top">27dp</dimen>
+    <dimen name="margin_calendarrecyclerview_top">2dp</dimen>
 
     <dimen name="radius_notification_logo">16dp</dimen>
     <dimen name="margin_notification_small">10dp</dimen>
