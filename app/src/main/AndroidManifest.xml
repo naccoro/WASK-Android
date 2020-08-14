@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.naccoro.wask">
 
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
 
     <application
         android:name=".WaskApplication"
@@ -42,6 +46,9 @@
         <receiver android:name=".receivers.ReplaceMaskReceiver"/>
         <receiver android:name=".receivers.ReplaceLaterReceiver"/>
         <receiver android:name=".receivers.AlarmReceiver"/>
+
+        <service android:name=".notification.WaskService" android:enabled="true"/>
+
     </application>
 
 </manifest>

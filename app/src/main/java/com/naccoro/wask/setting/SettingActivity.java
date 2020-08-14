@@ -3,7 +3,9 @@ package com.naccoro.wask.setting;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.naccoro.wask.R;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.notification.WaskService;
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
@@ -29,6 +32,9 @@ public class SettingActivity extends AppCompatActivity
     private Switch alertVisibleSwitch;
 
     private SettingPresenter presenter;
+
+    //마스크 착용일
+    private int setMaskPeriod;
 
     private int periodReplacementCycle;
 
@@ -170,6 +176,27 @@ public class SettingActivity extends AppCompatActivity
         pushAlertLabel.setText(pushAlertValue);
     }
 
+    /**
+     * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 On 했을 때
+     * @param maskPeriod : 마스크를 착용한 기간
+     * */
+    @Override
+    public void showForegroundAlert(int maskPeriod) {
+        Intent service = new Intent(SettingActivity.this, WaskService.class);
+        setMaskPeriod = maskPeriod;
+        service.putExtra("maskPeriod", setMaskPeriod);
+        ContextCompat.startForegroundService(SettingActivity.this, service);
+    }
+
+    /**
+     * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 Off 했을 때
+     * */
+    @Override
+    public void dismissForegroundAlert() {
+        Intent service = new Intent(SettingActivity.this, WaskService.class);
+        stopService(service);
+    }
+
     @Override
     public void setAlertVisibleSwitchValue(boolean isChecked) {
         alertVisibleSwitch.setChecked(isChecked);
@@ -197,4 +224,3 @@ public class SettingActivity extends AppCompatActivity
         }
     }
 }
-

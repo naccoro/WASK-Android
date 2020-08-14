@@ -62,8 +62,13 @@ public class SettingPresenter implements SettingContract.Presenter {
     @Override
     public void changeAlertVisibleSwitch(boolean isChecked) {
         SettingPreferenceManager.setIsShowNotificationBar(isChecked);
+        if (isChecked) {
+            settingView.showForegroundAlert(getMaskPeriod());
+        }
+        else {
+            settingView.dismissForegroundAlert();
+        }
     }
-
 
     /**
      * pushAlert 설정 값을 변경하는 함수
@@ -117,5 +122,14 @@ public class SettingPresenter implements SettingContract.Presenter {
         AlarmUtil.setReplacementLaterAlarm(context);
 
         settingView.showReplaceLaterValue(laterValue);
+    }
+
+    /**
+     * 마스크 착용일 설정하는 함수
+     * */
+    private int getMaskPeriod() {
+        // TODO : DB에서 값 가져오기
+        int maskPeriod = 900;
+        return maskPeriod;
     }
 }
