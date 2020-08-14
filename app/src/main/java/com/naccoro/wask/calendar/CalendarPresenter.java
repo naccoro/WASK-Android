@@ -3,6 +3,8 @@ package com.naccoro.wask.calendar;
 import com.naccoro.wask.calendar.CalendarActivity.Date;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 
+import java.util.ArrayList;
+
 public class CalendarPresenter implements CalendarContract.Presenter {
 
     CalendarContract.View calendarView;
@@ -40,7 +42,12 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      */
     @Override
     public void changeCalendarList(Date selectDate) {
-        calendarView.initCalendarList(calendarModel.updateCalendarList(selectDate));
+        calendarModel.updateCalendarList(selectDate, new CalendarModel.LoadCalendarDateCallback() {
+            @Override
+            public void onCalendarDateLoaded(ArrayList<CalendarItem> dateList) {
+                calendarView.initCalendarList(dateList);
+            }
+        });
     }
 
     /**

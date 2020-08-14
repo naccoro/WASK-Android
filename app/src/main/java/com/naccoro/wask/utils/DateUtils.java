@@ -40,7 +40,7 @@ public class DateUtils {
 
         long diff = targetDateCalendar.getTimeInMillis() - dateCalendar.getTimeInMillis();
 
-        return (int) diff / (24 * 60 * 60 * 1000);
+        return (int) (diff / (24 * 60 * 60 * 1000));
     }
 
     /**

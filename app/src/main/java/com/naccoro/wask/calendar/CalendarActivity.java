@@ -3,7 +3,6 @@ package com.naccoro.wask.calendar;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -103,9 +102,9 @@ public class CalendarActivity extends AppCompatActivity
     @Override
     public void showModifyModeTextView(boolean isChecked) {
         if (isChecked) {
-            modifyModeTextView.setTextColor(getResources().getColor(R.color.waskBlue));
+            modifyModeTextView.setTextColor(getColor(R.color.waskBlue));
         } else {
-            modifyModeTextView.setTextColor(getResources().getColor(R.color.colorDatePickerNoSelectedLabel));
+            modifyModeTextView.setTextColor(getColor(R.color.colorDatePickerNoSelectedLabel));
         }
     }
 

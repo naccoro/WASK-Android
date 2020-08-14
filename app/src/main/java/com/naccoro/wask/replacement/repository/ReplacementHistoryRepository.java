@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class ReplacementHistoryRepository {
-    
+
+    public static ReplacementHistoryRepository instance = null;
+
     private static final String TAG = "ReplacementHistoryRepo";
 
     private ReplacementHistoryDao dao;
@@ -21,7 +23,19 @@ public class ReplacementHistoryRepository {
 
     boolean cacheIsDirty = false;
 
-    public ReplacementHistoryRepository(Context context) {
+    public static ReplacementHistoryRepository getInstance(Context context) {
+        if (instance == null) {
+            synchronized (ReplacementHistoryRepository.class) {
+                if (instance == null) {
+                    instance = new ReplacementHistoryRepository(context);
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    private ReplacementHistoryRepository(Context context) {
         dao = WaskDatabaseManager.getInstance(context).replacementHistoryDao();
     }
 

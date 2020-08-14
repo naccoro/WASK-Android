@@ -114,6 +114,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             selectPosition = position; // 어댑터속에 저장! (나중에 지우기 위해)
             calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
             calendarViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
+        } else {
+            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
+            calendarViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
         }
 
         //지난 달과 다음 달의 날짜는 흐리게
@@ -140,11 +143,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      */
     private void onDayClick(CalendarViewHolder calendarViewHolder, CalendarItem item, int position) {
 
-        View itemView = calendarViewHolder.getItemView();
-
         GregorianCalendar clickItem = item.getDate();
 
         calendarList.get(selectPosition).setSelect(false); // 이전 선택 해제
+        notifyItemChanged(selectPosition);
+
 
         item.setSelect(true);
         selectPosition = position; // select로 지정
@@ -162,13 +165,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         if (item.isChangeMask()) {
             item.setChangeMask(false);
             replacementHistoryRepository.delete(DateUtils.getDateFromGregorianCalendar(item.getDate()));
-            calendarViewHolder.changeImageView.setVisibility(itemView.GONE);
+            calendarViewHolder.changeImageView.setVisibility(View.GONE);
         } else {
             item.setChangeMask(true);
             replacementHistoryRepository.insert(DateUtils.getDateFromGregorianCalendar(item.getDate()), new ReplacementHistoryRepository.InsertHistoryCallback() {
                 @Override
                 public void onSuccess() {
-                    calendarViewHolder.changeImageView.setVisibility(itemView.getVisibility());
+                    calendarViewHolder.changeImageView.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -178,7 +181,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             });
         }
 
-        notifyDataSetChanged();
+        //변경된 날짜만 변경하면 더 효율적
+        notifyItemChanged(position);
     }
 
     /**

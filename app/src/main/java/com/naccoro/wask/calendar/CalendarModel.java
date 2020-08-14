@@ -1,8 +1,8 @@
 package com.naccoro.wask.calendar;
 
-import android.icu.util.Calendar;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -45,7 +45,9 @@ public class CalendarModel {
                     cachingMonth = selectDate.getMonth() + 1;
                     replacementHistories = histories;
 
-                    callback.onCalendarDateLoaded(updateCalendarList());
+                    if (callback != null) {
+                        callback.onCalendarDateLoaded(updateCalendarList());
+                    }
                 }
 
                 @Override
@@ -53,7 +55,9 @@ public class CalendarModel {
                     Log.d(TAG, "onDataNotAvailable: No data");
                     replacementHistories = null;
 
-                    callback.onCalendarDateLoaded(updateCalendarList());
+                    if (callback != null) {
+                        callback.onCalendarDateLoaded(updateCalendarList());
+                    }
                 }
             });
         } else {
@@ -69,7 +73,9 @@ public class CalendarModel {
         try {
             GregorianCalendar calendar = new GregorianCalendar(selectDate.getYear(), selectDate.getMonth(), 1, 0, 0, 0);
 
-            int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK); // 해당 월에 시작하는 요일
+            // 해당 월에 시작하는 요일의 위치 1 : 일요일 ~ 7 : 토요일
+            int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+            if (startDayOfWeek == 0) startDayOfWeek = 7;
             int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 이번 달의 말일
 
             updateLastMonth(dateList, calendar, startDayOfWeek);
@@ -91,14 +97,14 @@ public class CalendarModel {
      */
     private void updateLastMonth(ArrayList<CalendarItem> dateList, GregorianCalendar calendar, int startDayOfWeek) {
         boolean isChangedMask;
+        Calendar prevCalendar = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) - 1, 1);
+        int lastDayOfPreMonth = prevCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        int lastDayOfPreMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        for (int j = startDayOfWeek - 1; j >= 0; j--) {
-            GregorianCalendar item = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) - 1, lastDayOfPreMonth - j);
+        for (int j = 0; j < startDayOfWeek; j++) {
+            GregorianCalendar item = new GregorianCalendar(prevCalendar.get(Calendar.YEAR), prevCalendar.get(Calendar.MONTH), lastDayOfPreMonth - j);
             isChangedMask = replacementHistories.contains(DateUtils.getDateFromGregorianCalendar(item));
 
-            dateList.add(new CalendarItem(false, isChangedMask,false, item));
+            dateList.add(0, new CalendarItem(false, isChangedMask,false, item));
         }
 
     }

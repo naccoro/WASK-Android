@@ -9,6 +9,6 @@ import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 public class Injection {
 
     public static ReplacementHistoryRepository replacementHistoryRepository(@NonNull Context context) {
-        return new ReplacementHistoryRepository(context);
+        return ReplacementHistoryRepository.getInstance(context);
     }
 }
