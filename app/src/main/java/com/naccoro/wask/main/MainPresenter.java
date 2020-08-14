@@ -1,9 +1,14 @@
 package com.naccoro.wask.main;
 
+
+import android.content.Context;
+
+import com.naccoro.wask.utils.AlarmUtil;
+import com.naccoro.wask.utils.DateUtils;
+
 import android.util.Log;
 
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
-import com.naccoro.wask.utils.DateUtils;
 
 public class MainPresenter implements MainContract.Presenter {
 
@@ -77,7 +82,8 @@ public class MainPresenter implements MainContract.Presenter {
      * 사용자가 교체하기 버튼을 누를 경우 호출되는 함수
      */
     @Override
-    public void changeMask() {
+    public void changeMask(Context context) {
+
         if (!isChanged) {
             checkIsFirstReplacement();
 
@@ -87,6 +93,10 @@ public class MainPresenter implements MainContract.Presenter {
                     mainView.showReplaceToast();
                     mainView.enableReplaceButton();
                     isChanged = true;
+
+                    start();
+
+                    setMaskReplaceNotification(context);
                 }
 
                 @Override
@@ -94,7 +104,6 @@ public class MainPresenter implements MainContract.Presenter {
                     Log.d(TAG, "onDuplicated: true");
                 }
             });
-            start();
         } else {
             mainView.showCancelDialog();
         }
@@ -104,10 +113,25 @@ public class MainPresenter implements MainContract.Presenter {
      * 교체 취소 다이얼로그에서 확인을 눌렀을 때 호출되는 함수
      */
     @Override
-    public void cancelChanging() {
+    public void cancelChanging(Context context) {
         replacementHistoryRepository.deleteToday();
         isChanged = false;
+
+        //메인화면 갱신
         start();
+
+        setMaskReplaceNotification(context);
+    }
+
+    /**
+     * 등록되어 있는 알람을 종료하고 새로운 교체하기 알람을 등록한다.
+     */
+    private void setMaskReplaceNotification(Context context) {
+        //남아있던 alarm 을 종료한다.
+        AlarmUtil.cancelReplacementCycleAlarm(context);
+        AlarmUtil.cancelReplaceLaterAlarm(context);
+
+        AlarmUtil.setReplacementCycleAlarm(context);
     }
 
     /**
