@@ -132,6 +132,7 @@ public class MainPresenter implements MainContract.Presenter {
         int period = getMaskPeriod();
         if (period != 0) {
             AlarmUtil.showForegroundService(context, period);
+            AlarmUtil.setForegroundAlarm(context);
         }
     }
 

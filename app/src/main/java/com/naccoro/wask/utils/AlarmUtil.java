@@ -161,8 +161,6 @@ public class AlarmUtil {
         service.putExtra("maskPeriod", maskPeriod);
         ContextCompat.startForegroundService(context, service);
 
-        //Foreground 알람 등록
-        setForegroundAlarm(context);
     }
 
     public static void dismissForegroundService(Context context) {

@@ -36,6 +36,8 @@ public class BootReceiver extends BroadcastReceiver {
                 //교체일자가 없다면 실행하지 말것
                 if (period > 0) {
                     AlarmUtil.showForegroundService(context, getMaskPeriod(context));
+
+                    AlarmUtil.setForegroundAlarm(context);
                 }
             }
         }

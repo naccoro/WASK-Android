@@ -183,6 +183,8 @@ public class SettingActivity extends AppCompatActivity
     public void showForegroundAlert(int maskPeriod) {
 
         AlarmUtil.showForegroundService(this, maskPeriod);
+
+        AlarmUtil.setForegroundAlarm(this);
     }
 
     /**
