@@ -18,6 +18,7 @@ import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.notification.WaskService;
+import com.naccoro.wask.utils.AlarmUtil;
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
@@ -32,9 +33,6 @@ public class SettingActivity extends AppCompatActivity
     private Switch alertVisibleSwitch;
 
     private SettingPresenter presenter;
-
-    //마스크 착용일
-    private int setMaskPeriod;
 
     private int periodReplacementCycle;
 
@@ -182,10 +180,10 @@ public class SettingActivity extends AppCompatActivity
      * */
     @Override
     public void showForegroundAlert(int maskPeriod) {
-        Intent service = new Intent(SettingActivity.this, WaskService.class);
-        setMaskPeriod = maskPeriod;
-        service.putExtra("maskPeriod", setMaskPeriod);
-        ContextCompat.startForegroundService(SettingActivity.this, service);
+
+        if (maskPeriod > 0) {
+            AlarmUtil.showForegroundService(this, maskPeriod);
+        }
     }
 
     /**
@@ -193,8 +191,7 @@ public class SettingActivity extends AppCompatActivity
      * */
     @Override
     public void dismissForegroundAlert() {
-        Intent service = new Intent(SettingActivity.this, WaskService.class);
-        stopService(service);
+        AlarmUtil.dismissForegroundService(this);
     }
 
     @Override

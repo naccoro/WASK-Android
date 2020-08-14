@@ -31,22 +31,15 @@ public class BootReceiver extends BroadcastReceiver {
             AlarmUtil.setReplacementCycleAlarm(context);
 
             if (SettingPreferenceManager.getIsShowNotificationBar()) {
-                showForegroundAlert(context, getMaskPeriod(context));
+                int period = getMaskPeriod(context);
+
+                if (period > 0) {
+                    AlarmUtil.showForegroundService(context, getMaskPeriod(context));
+                }
             }
         }
     }
 
-
-    /**
-     * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 On 했을 때
-     * @param maskPeriod : 마스크를 착용한 기간
-     * */
-    public void showForegroundAlert(Context context, int maskPeriod) {
-        Intent service = new Intent(context, WaskService.class);
-
-        service.putExtra("maskPeriod", maskPeriod);
-        ContextCompat.startForegroundService(context, service);
-    }
 
     /**
      * 마스크 착용일 설정하는 함수

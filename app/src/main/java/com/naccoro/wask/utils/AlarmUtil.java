@@ -5,10 +5,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.core.content.ContextCompat;
+
+import com.naccoro.wask.notification.WaskService;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.receivers.AlarmReceiver;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
+import com.naccoro.wask.setting.SettingActivity;
 
 import java.util.Calendar;
 
@@ -126,5 +130,17 @@ public class AlarmUtil {
         //처음 Calendar 날짜에 AlertManager가 작동되고 이후 하루마다 작동됩니다.
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
+    }
+
+    public static void showForegroundService(Context context, int maskPeriod) {
+        Intent service = new Intent(context, WaskService.class);
+
+        service.putExtra("maskPeriod", maskPeriod);
+        ContextCompat.startForegroundService(context, service);
+    }
+
+    public static void dismissForegroundService(Context context) {
+        Intent service = new Intent(context, WaskService.class);
+        context.stopService(service);
     }
 }
