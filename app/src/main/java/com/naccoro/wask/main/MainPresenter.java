@@ -3,7 +3,6 @@ package com.naccoro.wask.main;
 
 import android.content.Context;
 
-import com.naccoro.wask.preferences.NotificationPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
 
@@ -131,14 +130,6 @@ public class MainPresenter implements MainContract.Presenter {
         //남아있던 alarm 을 종료한다.
         AlarmUtil.cancelReplacementCycleAlarm(context);
         AlarmUtil.cancelReplaceLaterAlarm(context);
-
-        //혹여나 핸드폰이 종료되어 BootReceiver 가 작동되어도 ReplaceLater Alarm 을 작동되지 않게 하기 위해 0 을 넣는다.
-        NotificationPreferenceManager.setReplaceLaterDate(0);
-
-        int todayDate = DateUtils.getToday();
-
-        //교체하기 Date 를 등록한다. BootReceiver 가 작동되어도 등록한 날짜 기준으로 period 후에 alarm 이 동작하게 만든다.
-        NotificationPreferenceManager.setReplacementCycleDate(todayDate);
 
         AlarmUtil.setReplacementCycleAlarm(context);
     }

@@ -4,10 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.naccoro.wask.preferences.NotificationPreferenceManager;
-import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
-import com.naccoro.wask.utils.DateUtils;
 
 public class BootReceiver extends BroadcastReceiver {
 

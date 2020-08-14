@@ -4,14 +4,9 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
-import com.naccoro.wask.preferences.NotificationPreferenceManager;
-import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
-
-import java.util.Calendar;
 
 public class ReplaceLaterReceiver extends BroadcastReceiver {
 
@@ -28,10 +23,6 @@ public class ReplaceLaterReceiver extends BroadcastReceiver {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             manager.cancel(notificationId);
         }
-
-        int todayDate = DateUtils.getToday();
-        //나중에 교체하기 Date 를 등록한다. BootReceiver 가 작동되어도 등록한 날짜 기준으로 period 후에 alarm 이 동작하게 만든다.
-        NotificationPreferenceManager.setReplaceLaterDate(todayDate);
 
         //나중에 교체하기 알람 등록
         AlarmUtil.setReplacementLaterAlarm(context);

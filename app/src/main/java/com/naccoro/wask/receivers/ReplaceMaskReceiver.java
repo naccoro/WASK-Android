@@ -5,14 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.naccoro.wask.preferences.NotificationPreferenceManager;
-import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
-
-import java.util.Calendar;
 
 public class ReplaceMaskReceiver extends BroadcastReceiver {
 
@@ -44,15 +40,13 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
         replacementHistoryRepository.insertToday(new ReplacementHistoryRepository.InsertHistoryCallback() {
             @Override
             public void onSuccess() {
-                //혹여나 핸드폰이 종료되어 BootReceiver 가 작동되어도 ReplaceLater Alarm 을 작동되지 않게 하기 위해 0 을 넣는다.
-                NotificationPreferenceManager.setReplaceLaterDate(0);
 
-                //나중에 교체하기 알람을 지운다.
+                //알람을 지운다.
                 AlarmUtil.cancelReplaceLaterAlarm(context);
+                AlarmUtil.cancelReplacementCycleAlarm(context);
 
-                int todayDate = DateUtils.getToday();
-                //교체하기 Date 를 등록한다. BootReceiver 가 작동되어도 등록한 날짜 기준으로 period 후에 alarm 이 동작하게 만든다.
-                NotificationPreferenceManager.setReplacementCycleDate(todayDate);
+                //알람 재등록
+                AlarmUtil.setReplacementCycleAlarm(context);
             }
 
             @Override

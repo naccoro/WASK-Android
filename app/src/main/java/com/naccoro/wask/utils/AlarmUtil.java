@@ -5,9 +5,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.naccoro.wask.preferences.NotificationPreferenceManager;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.receivers.AlarmReceiver;
+import com.naccoro.wask.replacement.model.Injection;
+import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 
 import java.util.Calendar;
 
@@ -28,15 +29,17 @@ public class AlarmUtil {
      */
     public static void setReplacementCycleAlarm(Context context) {
 
-        int date = NotificationPreferenceManager.getReplacementCycleDate();
-        if (date == 0) {
-            return;
-        }
+        ReplacementHistoryRepository replacementHistoryRepository = Injection.replacementHistoryRepository(context);
+
+        int replaceDate = replacementHistoryRepository.getLastReplacement();
+
         //사용자가 선택한 교체하기 period 를 가져온다.
         int period = SettingPreferenceManager.getReplaceCycle();
 
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
-        int periodDelay = period - DateUtils.calculateDateGapWithToday(date);
+        int periodDelay = DateUtils.calculateDateGapWithToday(replaceDate);
+
+        period = period > periodDelay ? period - periodDelay : 0;
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
@@ -56,18 +59,20 @@ public class AlarmUtil {
      */
     public static void setReplacementLaterAlarm(Context context) {
 
-        int date = NotificationPreferenceManager.getReplaceLaterDate();
-        if (date == 0) {
-            return;
-        }
+        ReplacementHistoryRepository replacementHistoryRepository = Injection.replacementHistoryRepository(context);
+
+        int replaceDate = replacementHistoryRepository.getLastReplacement();
+
         //사용자가 선택한 교체하기 period 를 가져온다.
         int period = SettingPreferenceManager.getDelayCycle();
 
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
-        int periodDelay = period - DateUtils.calculateDateGapWithToday(date);
+        int periodDelay = DateUtils.calculateDateGapWithToday(replaceDate);
+
+        period = period > periodDelay ? period - periodDelay : 0;
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, periodDelay);
+        calendar.add(Calendar.DAY_OF_MONTH, period);
         calendar.set(Calendar.HOUR_OF_DAY, REPLACE_LATER_START_HOUR); //오후 10시 알람
 
         Intent intent = new Intent(context, AlarmReceiver.class);
@@ -117,10 +122,9 @@ public class AlarmUtil {
 
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        long interval = 1000 * 60 * 60 * 24 * period;
 
-        //처음 Calendar 날짜에 AlertManager가 작동되고 이후 interval 차이를 두며 작동됩니다.
+        //처음 Calendar 날짜에 AlertManager가 작동되고 이후 하루마다 작동됩니다.
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                interval, alarmIntent);
+                AlarmManager.INTERVAL_DAY, alarmIntent);
     }
 }

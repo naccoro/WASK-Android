@@ -1,6 +1,5 @@
 package com.naccoro.wask.notification;
 
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -13,20 +12,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.naccoro.wask.R;
-import com.naccoro.wask.main.MainActivity;
 import com.naccoro.wask.mock.MockDatabase;
-import com.naccoro.wask.preferences.NotificationPreferenceManager;
-import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.receivers.ReplaceLaterReceiver;
 import com.naccoro.wask.receivers.ReplaceMaskReceiver;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.NotificationUtil;
-
-import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.ALL;
-import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.NONE;
-import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.SOUND;
-import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.VIBRATION;
-import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
 
 
 public class PushNotificationService extends Service {
