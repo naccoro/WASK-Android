@@ -24,7 +24,7 @@
         android:id="@+id/imageview_main_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/constraintlayout_content"
+        android:layout_marginTop="@dimen/margin_logo_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,14 +38,15 @@
         android:background="@drawable/bg_layout_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imageview_main_logo">
 
-        <TextView
+    <TextView
             android:id="@+id/textview_calendar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_calendar_textview_left"
+            android:layout_marginStart="@dimen/margin_calendar_textview_left"
             android:layout_marginTop="@dimen/margin_calendar_textview_vertical"
             android:text="마스크 교체 기록"
             android:textColor="@color/waskGrayFont"
@@ -73,7 +74,7 @@
             style="@style/SwitchThumb"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:paddingRight="@dimen/padding_all_imagebutton"
+            android:layout_marginEnd="@dimen/padding_all_imagebutton"
             android:track="@drawable/selector_foregroundalert_switch"
             app:layout_constraintBottom_toBottomOf="@id/textview_calendar_title"
             app:layout_constraintEnd_toEndOf="parent"
@@ -117,13 +118,12 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginBottom="6dp"
-            app:layout_constraintBottom_toTopOf="@id/view_divider_week"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_week_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_changedate">
 
             <TextView
                 android:id="@+id/textview_sunday"
@@ -197,31 +197,19 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view_divider_week"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/calendarDividerGray"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_week"
-            app:layout_constraintTop_toTopOf="@+id/guideline_week" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25" />
-
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_calender"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
-            android:id="@+id/recyclerview_calender"
             android:scrollbars="none"
+            android:layout_marginTop="@dimen/margin_calendarrecyclerview_top"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_divider_week" />
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
