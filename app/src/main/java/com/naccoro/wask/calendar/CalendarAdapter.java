@@ -30,7 +30,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     private Context context;
     private ArrayList<CalendarItem> calendarList;
     private boolean isModifyMode;
-    private int selectPosition;
 
     private static Date today;
     private ReplacementHistoryRepository replacementHistoryRepository;
@@ -108,7 +107,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         View itemView = calendarViewHolder.getItemView();
 
         // 날짜(Day) 부분
-        if (item.isSelect()) {
+        if (today.isSameDate(item.getDate())) {
             // 오늘이면 동그라미 표시
             calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
             calendarViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
@@ -146,13 +145,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     private void onDayClick(CalendarViewHolder calendarViewHolder, CalendarItem item, int position) {
 
         GregorianCalendar clickItem = item.getDate();
-
-        calendarList.get(selectPosition).setSelect(false); // 이전 선택 해제
-        notifyItemChanged(selectPosition);
-
-
-        item.setSelect(true);
-        selectPosition = position; // select로 지정
 
         // 미래는 마스크 교체여부 변경 제한
         if (clickItem.get(Calendar.YEAR) > today.getYear()) {

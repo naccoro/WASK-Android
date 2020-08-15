@@ -2,7 +2,6 @@ package com.naccoro.wask.calendar;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -34,7 +33,7 @@ public class CalendarActivity extends AppCompatActivity
 
     WaskToolbar toolbar;
 
-    Date selectDate; // DatePicker로 선택된 날짜 <Calendar에서 핵심역할>
+    Date selectDate; // DatePicker로 선택된 날짜
 
     // 화면에 표시되는 달력 데이터 저장 (저번달 짜투리 + 이번달(1~30) + 다음달 조금)
     ArrayList<CalendarItem> dateList = new ArrayList<CalendarItem>();
@@ -189,6 +188,19 @@ public class CalendarActivity extends AppCompatActivity
 
         public void setDay(int day) {
             this.day = day;
+        }
+
+        public boolean isSameDate(GregorianCalendar cal) {
+            if (cal.get(Calendar.YEAR) != year) {
+                return false;
+            }
+            if (cal.get(Calendar.MONTH) != month) {
+                return false;
+            }
+            if (cal.get(Calendar.DATE) != day) {
+                return false;
+            }
+            return true;
         }
     }
 }
