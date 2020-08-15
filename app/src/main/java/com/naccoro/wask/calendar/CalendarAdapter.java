@@ -107,18 +107,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         View itemView = calendarViewHolder.getItemView();
 
-        // 일요일은 빨간날
-        if (position % 7 == 0) {
-            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.waskRed));
-        } else {
-            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
-        }
-
-        // 오늘이면 동그라미 표시
+        // 날짜(Day) 부분
         if (item.isSelect()) {
-            selectPosition = position; // 어댑터속에 저장! (나중에 지우기 위해)
+            // 오늘이면 동그라미 표시
             calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
             calendarViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
+        } else if (position % 7 == 0) {
+            // 일요일은 빨간날
+            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.waskRed));
+            calendarViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
         } else {
             calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
             calendarViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
