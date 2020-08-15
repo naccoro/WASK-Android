@@ -35,6 +35,7 @@
     <string name="notification_replacelater_text">오늘 마스크 교체 하셨나요?</string>
     <string name="notification_replacelater_ok">네</string>
     <string name="notification_replacelater_x">아니요</string>
+    <string name="notification_foreground_action">WASK 열기</string>
 
     <string name="dialog_cancelreplacement">교체 기록을\n취소하시겠습니까?</string>
 

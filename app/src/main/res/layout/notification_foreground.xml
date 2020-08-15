@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/imageview_notification_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_notification_icon"
+        android:scaleType="fitStart"
+        android:layout_marginTop="@dimen/margin_notification_small"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/margin_notification_large"/>
+
+
+    <TextView
+        android:id="@+id/textview_notification_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_notification_small"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/black"
+        android:layout_below="@id/imageview_notification_logo"
+        android:layout_marginLeft="@dimen/margin_notification_large"
+        />
+
+
+    <TextView
+        android:id="@+id/textview_notification_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_notification_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/margin_notification_large"
+        android:layout_marginTop="@dimen/margin_notification_small"
+        android:layout_marginBottom="@dimen/margin_notification_small"
+        android:text="@string/notification_foreground_action" />
+
+</RelativeLayout>

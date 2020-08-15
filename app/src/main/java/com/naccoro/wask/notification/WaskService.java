@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -49,12 +50,17 @@ public class WaskService extends Service {
         // 노티피케이션을 터치했을 때 이동하는 액티비티 설정
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+
+        //2. 커스텀한 뷰를 가져온다.
+        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.notification_foreground);
+        contentView.setImageViewResource(R.id.imageview_notification_logo, R.drawable.ic_notification_logo);
+        contentView.setTextViewText(R.id.textview_notification_content, String.format("마스크를 %d일 째 사용중입니다.", maskPeriod));
+
         // 노티피케이션 관련 변수
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification_logo)
                 .setColor(this.getColor(R.color.waskBlue))
-                .setContentTitle(String.format("마스크를 %d일 째 사용중입니다.", maskPeriod))
-                .setContentText("WASK 열기")
+                .setCustomContentView(contentView)
                 .setShowWhen(false)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
