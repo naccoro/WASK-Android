@@ -157,7 +157,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         item.setSelect(true);
         selectPosition = position; // select로 지정
 
-        // 미래는 마스크 교체유무 변경 제한
+        // 미래는 마스크 교체여부 변경 제한
         if (clickItem.get(Calendar.YEAR) > today.getYear()) {
             return;
         } else if (clickItem.get(Calendar.MONTH) > today.getMonth()) {
@@ -166,7 +166,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             return;
         }
 
-        // 마스크 교체유무 변경
+        // 마스크 교체여부 변경
         if (item.isChangeMask()) {
             item.setChangeMask(false);
             replacementHistoryRepository.delete(DateUtils.getDateFromGregorianCalendar(item.getDate()));
