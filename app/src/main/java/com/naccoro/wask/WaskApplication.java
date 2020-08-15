@@ -14,7 +14,9 @@ import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushA
 
 public class WaskApplication extends Application {
 
-    public static final String CHANNEL_ID="WaskChannel";
+    public static final String CHANNEL_ID = "WaskChannel";
+
+    public static boolean isChanged;
 
     @Override
     public void onCreate() {

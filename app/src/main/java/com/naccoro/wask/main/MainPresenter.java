@@ -3,6 +3,7 @@ package com.naccoro.wask.main;
 
 import android.content.Context;
 
+import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
@@ -18,8 +19,6 @@ public class MainPresenter implements MainContract.Presenter {
     private ReplacementHistoryRepository replacementHistoryRepository;
 
     private boolean isNoData = true;
-
-    private boolean isChanged = false;
 
     MainContract.View mainView;
 
@@ -48,7 +47,7 @@ public class MainPresenter implements MainContract.Presenter {
             mainView.enableReplaceButton();
         } else {
             //교체한 당일
-            isChanged = true;
+            WaskApplication.isChanged = true;
             mainView.showGoodMainView();
             mainView.disableReplaceButton();
         }
@@ -80,7 +79,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void changeMask(Context context) {
 
-        if (!isChanged) {
+        if (!WaskApplication.isChanged) {
             checkIsFirstReplacement();
 
             replacementHistoryRepository.insertToday(new ReplacementHistoryRepository.InsertHistoryCallback() {
@@ -88,7 +87,7 @@ public class MainPresenter implements MainContract.Presenter {
                 public void onSuccess() {
                     mainView.showReplaceToast();
                     mainView.enableReplaceButton();
-                    isChanged = true;
+                    WaskApplication.isChanged = true;
 
                     start();
 
@@ -111,7 +110,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void cancelChanging(Context context) {
         replacementHistoryRepository.deleteToday();
-        isChanged = false;
+        WaskApplication.isChanged = false;
 
         //메인화면 갱신
         start();
