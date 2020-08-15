@@ -46,6 +46,7 @@ public class WaskApplication extends Application {
             serviceChannel.setSound(null, null);
             serviceChannel.enableVibration(false);
             serviceChannel.setVibrationPattern(null);
+            serviceChannel.setShowBadge(false); //뱃지 제거
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);

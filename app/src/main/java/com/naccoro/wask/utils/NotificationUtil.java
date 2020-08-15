@@ -39,6 +39,7 @@ public class NotificationUtil {
                     new NotificationChannel(channelId, channelName, channelImportance);
             notificationChannel.setDescription(channelDescription);
             notificationChannel.enableVibration(channelEnableVibrate); //진동 켜고 끄기
+            notificationChannel.setShowBadge(false); //뱃지 제거
 
             if (!channelEnableSound) {
                 notificationChannel.setSound(null, null);
