@@ -51,9 +51,11 @@ public class WaskService extends Service {
 
         // 노티피케이션 관련 변수
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification_logo) // OREO 이상에서 mipmap 사용시 시스템 UI 에러납니다.
+                .setSmallIcon(R.drawable.ic_notification_logo)
+                .setColor(this.getColor(R.color.waskBlue))
                 .setContentTitle(String.format("마스크를 %d일 째 사용중입니다.", maskPeriod))
                 .setContentText("WASK 열기")
+                .setShowWhen(false)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
