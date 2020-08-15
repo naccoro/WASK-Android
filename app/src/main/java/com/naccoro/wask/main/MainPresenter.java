@@ -45,6 +45,7 @@ public class MainPresenter implements MainContract.Presenter {
         } else if (period > 1) {
             //교체한지 하루 이상 지남
             mainView.showBadMainView();
+            mainView.enableReplaceButton();
         } else {
             //교체한 당일
             isChanged = true;
