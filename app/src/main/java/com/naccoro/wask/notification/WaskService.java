@@ -35,8 +35,6 @@ public class WaskService extends Service {
         maskPeriod = intent.getIntExtra("maskPeriod", 1);
         startForegroundService();
 
-        Log.d("test", "test");
-
         return START_NOT_STICKY;
     }
 
