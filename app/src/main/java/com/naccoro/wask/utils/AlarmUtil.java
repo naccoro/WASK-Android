@@ -80,6 +80,7 @@ public class AlarmUtil {
         //int period = SettingPreferenceManager.getDelayCycle();
         int period = SettingPreferenceManager.getDelayCycle() + 1; //Fixme: period 를 하루 적게 가져옵니다. 임시로 + 1
 
+        Log.d("period", period + "");
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
         if (replaceDate != -1) {
             int periodDelay = DateUtils.calculateDateGapWithToday(replaceDate);
@@ -137,7 +138,7 @@ public class AlarmUtil {
     public static void setForegroundAlarm(Context context) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 1); //다음날
-        calendar.set(Calendar.HOUR, 0); //자정으로
+        calendar.set(Calendar.HOUR_OF_DAY, 0); //자정으로
 
 
         Intent intent = new Intent(context, ForegroundReceiver.class);
