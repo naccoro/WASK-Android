@@ -20,6 +20,27 @@
         app:layout_constraintTop_toTopOf="@+id/imageview_wasktoolbar_logo"
         app:srcCompat="@drawable/ic_setting" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_wasktoolbar_fortitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <TextView
+        android:id="@+id/textview_wasktoolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="-0.02"
+        android:lineSpacingExtra="8sp"
+        android:textColor="@color/white"
+        android:textFontWeight="700"
+        android:visibility="gone"
+        android:textSize="@dimen/textsize_setting_title"
+        app:layout_constraintBottom_toBottomOf="@id/imagebutton_wasktoolbar_left"
+        app:layout_constraintStart_toStartOf="@id/guideline_wasktoolbar_fortitle"
+        app:layout_constraintTop_toTopOf="@id/imagebutton_wasktoolbar_left" />
+
     <ImageView
         android:id="@+id/imageview_wasktoolbar_logo"
         android:layout_width="wrap_content"
@@ -44,5 +65,7 @@
         app:layout_constraintStart_toEndOf="@+id/imageview_wasktoolbar_logo"
         app:layout_constraintTop_toTopOf="@+id/imageview_wasktoolbar_logo"
         app:srcCompat="@drawable/ic_calendar" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

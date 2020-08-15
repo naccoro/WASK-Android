@@ -68,6 +68,7 @@ public class SettingActivity extends AppCompatActivity
         });
 
         toolbar.setBackButton(() -> presenter.clickHomeButton());
+        toolbar.setLeftSideTitle(getString(R.string.setting_title));
     }
 
     @Override

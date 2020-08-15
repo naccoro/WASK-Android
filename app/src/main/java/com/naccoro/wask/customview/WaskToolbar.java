@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -20,6 +22,10 @@ public class WaskToolbar extends ConstraintLayout {
     private ImageButton leftButton;
 
     private ImageButton rightButton;
+
+    private ImageView logo;
+
+    private TextView leftSideTitle;
 
     public WaskToolbar(Context context) {
         super(context);
@@ -44,6 +50,8 @@ public class WaskToolbar extends ConstraintLayout {
 
         leftButton = view.findViewById(R.id.imagebutton_wasktoolbar_left);
         rightButton = view.findViewById(R.id.imagebutton_wasktoolbar_right);
+        leftSideTitle = view.findViewById(R.id.textview_wasktoolbar_title);
+        logo = view.findViewById(R.id.imageview_wasktoolbar_logo);
         leftButton.setVisibility(View.INVISIBLE);
         rightButton.setVisibility(View.INVISIBLE);
     }
@@ -66,6 +74,12 @@ public class WaskToolbar extends ConstraintLayout {
 
     public void setBackButton(OnClickListener listener) {
         setLeftButton(R.drawable.ic_appbarback, listener);
+    }
+
+    public void setLeftSideTitle(String title) {
+        leftSideTitle.setVisibility(View.VISIBLE);
+        leftSideTitle.setText(title);
+        logo.setVisibility(View.INVISIBLE);
     }
 
     public interface OnClickListener {
