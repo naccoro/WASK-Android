@@ -3,6 +3,8 @@ package com.naccoro.wask.main;
 
 import android.content.Context;
 
+import com.naccoro.wask.WaskApplication;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
 
@@ -17,8 +19,6 @@ public class MainPresenter implements MainContract.Presenter {
     private ReplacementHistoryRepository replacementHistoryRepository;
 
     private boolean isNoData = true;
-
-    private boolean isChanged = false;
 
     MainContract.View mainView;
 
@@ -44,9 +44,10 @@ public class MainPresenter implements MainContract.Presenter {
         } else if (period > 1) {
             //교체한지 하루 이상 지남
             mainView.showBadMainView();
+            mainView.enableReplaceButton();
         } else {
             //교체한 당일
-            isChanged = true;
+            WaskApplication.isChanged = true;
             mainView.showGoodMainView();
             mainView.disableReplaceButton();
         }
@@ -78,7 +79,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void changeMask(Context context) {
 
-        if (!isChanged) {
+        if (!WaskApplication.isChanged) {
             checkIsFirstReplacement();
 
             replacementHistoryRepository.insertToday(new ReplacementHistoryRepository.InsertHistoryCallback() {
@@ -86,7 +87,7 @@ public class MainPresenter implements MainContract.Presenter {
                 public void onSuccess() {
                     mainView.showReplaceToast();
                     mainView.enableReplaceButton();
-                    isChanged = true;
+                    WaskApplication.isChanged = true;
 
                     start();
 
@@ -109,7 +110,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void cancelChanging(Context context) {
         replacementHistoryRepository.deleteToday();
-        isChanged = false;
+        WaskApplication.isChanged = false;
 
         //메인화면 갱신
         start();
@@ -118,13 +119,30 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     /**
+     * Foreground  변경점을 반영한다.
+     */
+    private void showForegroundNotification(Context context) {
+
+        if (SettingPreferenceManager.getIsShowNotificationBar()) {
+            int period = getMaskPeriod();
+            if (period > 0) {
+                AlarmUtil.showForegroundService(context, period);
+                AlarmUtil.setForegroundAlarm(context);
+            } else {
+                AlarmUtil.dismissForegroundService(context);
+                AlarmUtil.cancelForegroundAlarm(context);
+            }
+        }
+    }
+
+    /**
      * 등록되어 있는 알람을 종료하고 새로운 교체하기 알람을 등록한다.
      */
     private void setMaskReplaceNotification(Context context) {
         //남아있던 alarm 을 종료한다.
-        AlarmUtil.cancelReplacementCycleAlarm(context);
         AlarmUtil.cancelReplaceLaterAlarm(context);
 
+        showForegroundNotification(context);
         AlarmUtil.setReplacementCycleAlarm(context);
     }
 

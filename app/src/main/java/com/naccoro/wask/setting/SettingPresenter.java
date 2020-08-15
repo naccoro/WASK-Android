@@ -66,7 +66,12 @@ public class SettingPresenter implements SettingContract.Presenter {
     public void changeAlertVisibleSwitch(Context context, boolean isChecked) {
         SettingPreferenceManager.setIsShowNotificationBar(isChecked);
         if (isChecked) {
-            settingView.showForegroundAlert(getMaskPeriod(context));
+            int period = getMaskPeriod(context);
+
+            //교체일자가 없다면 실행하지 말것
+            if (period > 0) {
+                settingView.showForegroundAlert(getMaskPeriod(context));
+            }
         }
         else {
             settingView.dismissForegroundAlert();

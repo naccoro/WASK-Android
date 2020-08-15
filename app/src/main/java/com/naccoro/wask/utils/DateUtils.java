@@ -1,5 +1,7 @@
 package com.naccoro.wask.utils;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
@@ -206,6 +208,7 @@ public class DateUtils {
     private static String checkDateFormat(int date) {
         String dateString = String.valueOf(date);
         if (!isLegalDate(dateString)) {
+            Log.d("test", dateString);
             throw new IllegalArgumentException("date parameter should be YYYYMMDD format");
         }
         return dateString;

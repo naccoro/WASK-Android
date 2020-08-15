@@ -14,7 +14,9 @@ import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushA
 
 public class WaskApplication extends Application {
 
-    public static final String CHANNEL_ID="WaskChannel";
+    public static final String CHANNEL_ID = "WaskChannel";
+
+    public static boolean isChanged;
 
     @Override
     public void onCreate() {
@@ -43,6 +45,10 @@ public class WaskApplication extends Application {
                     "Wask Service",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
+            serviceChannel.setSound(null, null);
+            serviceChannel.enableVibration(false);
+            serviceChannel.setVibrationPattern(null);
+            serviceChannel.setShowBadge(false); //뱃지 제거
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);

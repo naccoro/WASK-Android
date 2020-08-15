@@ -46,7 +46,7 @@
         <receiver android:name=".receivers.ReplaceMaskReceiver"/>
         <receiver android:name=".receivers.ReplaceLaterReceiver"/>
         <receiver android:name=".receivers.AlarmReceiver"/>
-
+        <receiver android:name=".receivers.ForegroundReceiver"/>
         <service android:name=".notification.WaskService" android:enabled="true"/>
 
     </application>

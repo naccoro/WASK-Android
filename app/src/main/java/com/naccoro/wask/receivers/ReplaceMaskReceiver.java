@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
@@ -12,7 +13,7 @@ import com.naccoro.wask.utils.DateUtils;
 
 public class ReplaceMaskReceiver extends BroadcastReceiver {
 
-
+    private ReplacementHistoryRepository replacementHistoryRepository;
     /**
      * Notification에서 교체하기 버튼을 눌렀을 때 교체하기 기능을 수행한다.
      */
@@ -27,6 +28,8 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
             manager.cancel(notificationId);
         }
 
+        replacementHistoryRepository = Injection.replacementHistoryRepository(context);
+
         insertMaskChangeHistory(context);
 
     }
@@ -35,7 +38,6 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
      * Notification으로 사용자가 교체하기를 작동
      */
     private void insertMaskChangeHistory(Context context) {
-        ReplacementHistoryRepository replacementHistoryRepository = Injection.replacementHistoryRepository(context);
 
         replacementHistoryRepository.insertToday(new ReplacementHistoryRepository.InsertHistoryCallback() {
             @Override
@@ -43,10 +45,11 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
 
                 //알람을 지운다.
                 AlarmUtil.cancelReplaceLaterAlarm(context);
-                AlarmUtil.cancelReplacementCycleAlarm(context);
 
                 //알람 재등록
                 AlarmUtil.setReplacementCycleAlarm(context);
+
+                updateMaskAlarm(context);
             }
 
             @Override
@@ -56,4 +59,42 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
         });
     }
 
+    /**
+     * 사용자가 수정모드로 변경할 때마다 알람도 변경해줍니다.
+     */
+    private void updateMaskAlarm(Context context) {
+        AlarmUtil.cancelReplaceLaterAlarm(context);
+        AlarmUtil.setReplacementCycleAlarm(context);
+
+        if (SettingPreferenceManager.getIsShowNotificationBar()) {
+            int period = getMaskPeriod();
+            if (period > 0) {
+
+                AlarmUtil.showForegroundService(context, period);
+
+                AlarmUtil.setForegroundAlarm(context);
+            } else {
+                AlarmUtil.dismissForegroundService(context);
+
+                AlarmUtil.cancelForegroundAlarm(context);
+            }
+        }
+    }
+
+    /**
+     * WaskDatabase에서 현재 마스크 교체 상태를 가져오는 함수
+     *
+     * @return [오늘 날짜 - 마지막 교체 일자 + 1]
+     */
+    private int getMaskPeriod() {
+
+        int lastReplacement = replacementHistoryRepository.getLastReplacement();
+
+        if (lastReplacement == -1) {
+            //교체 기록이 없을 경우
+            return 0;
+        }
+
+        return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
+    }
 }
