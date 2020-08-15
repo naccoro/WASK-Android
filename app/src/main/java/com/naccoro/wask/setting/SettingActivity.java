@@ -1,23 +1,16 @@
 package com.naccoro.wask.setting;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
-import com.naccoro.wask.notification.WaskService;
 import com.naccoro.wask.utils.AlarmUtil;
 
 public class SettingActivity extends AppCompatActivity
@@ -32,6 +25,8 @@ public class SettingActivity extends AppCompatActivity
     //포그라운드 서비스 알람
     private Switch alertVisibleSwitch;
 
+    private WaskToolbar toolbar;
+
     private SettingPresenter presenter;
 
     private int periodReplacementCycle;
@@ -45,12 +40,6 @@ public class SettingActivity extends AppCompatActivity
 
         presenter = new SettingPresenter(this);
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(R.string.setting_title);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
         init();
 
         //start()함수를 호출하여 초기 설정값을 불러옴
@@ -61,6 +50,7 @@ public class SettingActivity extends AppCompatActivity
         replacementCycleAlertLabel = findViewById(R.id.textview_replacementcyclealert_body);
         replaceLaterLabel = findViewById(R.id.textview_replacelater_body);
         pushAlertLabel = findViewById(R.id.textview_pushalert_body);
+        toolbar = findViewById(R.id.wasktoolbar_setting);
 
         findViewById(R.id.constraintlayout_replacementcyclealert).setOnClickListener(this);
 
@@ -76,16 +66,9 @@ public class SettingActivity extends AppCompatActivity
                 presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked);
             }
         });
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                presenter.clickHomeButton();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        toolbar.setBackButton(() -> presenter.clickHomeButton());
+        toolbar.setLeftSideTitle(getString(R.string.setting_title));
     }
 
     @Override

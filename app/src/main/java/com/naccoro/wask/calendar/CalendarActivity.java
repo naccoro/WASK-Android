@@ -7,6 +7,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.replacement.model.Injection;
 
@@ -22,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CalendarActivity extends AppCompatActivity
         implements View.OnClickListener, CalendarContract.View {
 
-    ImageView backButton;
     TextView calendarDateTextView;
     ConstraintLayout changeDateConstraintLayout;
     Switch modifyModeSwitch;
@@ -31,6 +31,8 @@ public class CalendarActivity extends AppCompatActivity
     RecyclerView recyclerView;
     CalendarAdapter calendarAdapter;
     GridLayoutManager gridLayoutManager;
+
+    WaskToolbar toolbar;
 
     Date selectDate; // DatePicker로 선택된 날짜 <Calendar에서 핵심역할>
 
@@ -50,15 +52,13 @@ public class CalendarActivity extends AppCompatActivity
     }
 
     private void initView() {
-        backButton = findViewById(R.id.imageview_back);
-
         calendarDateTextView = findViewById(R.id.textview_calendar_date);
         changeDateConstraintLayout = findViewById(R.id.constraintlayout_changedate);
         modifyModeSwitch = findViewById(R.id.switch_calendar_modify);
         modifyModeTextView = findViewById(R.id.textview_calendar_modify);
         recyclerView = findViewById(R.id.recyclerview_calender);
 
-        backButton.setOnClickListener(this);
+        toolbar = findViewById(R.id.wasktoolbar_calendar);
 
         changeDateConstraintLayout.setOnClickListener(this);
 
@@ -75,6 +75,8 @@ public class CalendarActivity extends AppCompatActivity
         gridLayoutManager = new GridLayoutManager(this, 7);
         recyclerView.setAdapter(calendarAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+        toolbar.setBackButton(() -> presenter.clickBackButton());
     }
 
     /**
@@ -113,9 +115,6 @@ public class CalendarActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageview_back: // 뒤로가기버튼
-                presenter.clickBackButton();
-                break;
             case R.id.constraintlayout_changedate: // (0000년 00월) 버튼 클릭 시
                 DatePickerDialogFragment.newInstance().
                         setOnDateChangedListener((year, month, day) -> {

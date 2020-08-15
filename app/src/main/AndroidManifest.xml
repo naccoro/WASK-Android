@@ -22,8 +22,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".setting.SettingActivity"
-            android:theme="@style/SettingTheme" />
+            android:name=".setting.SettingActivity"/>
         <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".main.MainActivity" />
         <activity

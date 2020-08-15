@@ -36,12 +36,6 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="SettingTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_appbarback</item>
-    </style>
-
     <style name="WaskDialogText">
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/waskGrayFont</item>
@@ -66,6 +60,9 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="windowNoTitle">true</item>
     </style>
