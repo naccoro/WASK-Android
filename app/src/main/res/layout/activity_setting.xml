@@ -170,7 +170,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_settingchild_top"
-                android:layout_marginBottom="@dimen/margin_settingchild_top"
                 android:track="@drawable/selector_foregroundalert_switch"
                 app:layout_constraintBottom_toBottomOf="@+id/textview_foregroundalert_title"
                 app:layout_constraintEnd_toEndOf="parent"
