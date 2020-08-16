@@ -48,8 +48,8 @@
         android:id="@+id/view_center"
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:src="@color/waskGrayFont"
-        android:background="@color/waskGrayFont"
+        android:src="@color/dividerGray"
+        android:paddingVertical="3dp"
         android:layout_alignTop="@id/button_notification_ok"
         android:layout_alignBottom="@id/button_notification_ok"
         android:layout_centerHorizontal="true" />
