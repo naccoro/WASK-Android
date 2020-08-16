@@ -1,10 +1,73 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!--custom font-family 적용-->
+        <item name="android:textViewStyle">@style/waskTextViewFontStyle</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:buttonStyle">@style/waskButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/waskEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/waskRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/waskCheckboxFontStyle</item>
+      
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorControlHighlight">@color/effectBlue</item>
+      
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.DatePicker.BottomSheetDialog</item>
     </style>
 
+    <style name="ThemeOverlay.DatePicker.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.DatePicker.BottomSheet</item>
+    </style>
+
+    <style name="Widget.DatePicker.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.DatePicker</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.DatePicker" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="WaskDialogText">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/waskGrayFont</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WaskDialogButtonText" parent="WaskDialogText">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="divider">
+        <item name="android:background">@color/dividerGray</item>
+    </style>
+
+    <style name="SwitchThumb" parent="Widget.AppCompat.CompoundButton.Switch">
+
+        <item name="android:colorForeground">@color/white</item>
+        <item name="android:colorControlActivated">@color/white</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CalendarView">
+
+    </style>
 </resources>

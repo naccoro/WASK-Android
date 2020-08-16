@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/waskBlue"
+    tools:context=".calendar.CalendarActivity">
+
+    <com.naccoro.wask.customview.WaskToolbar
+        android:id="@+id/wasktoolbar_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_main_logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_layout_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wasktoolbar_calendar">
+
+    <TextView
+            android:id="@+id/textview_calendar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_calendar_textview_left"
+            android:layout_marginTop="@dimen/margin_calendar_textview_vertical"
+            android:text="마스크 교체 기록"
+            android:textColor="@color/waskGrayFont"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintlayout_changedate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constraintlayout_content" />
+
+        <TextView
+            android:id="@+id/textview_calendar_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_calendar_textviewmodify_right"
+            android:text="수정모드"
+            android:textColor="@color/colorDatePickerNoSelectedLabel"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/switch_calendar_modify"
+            app:layout_constraintEnd_toStartOf="@id/switch_calendar_modify"
+            app:layout_constraintTop_toTopOf="@id/switch_calendar_modify" />
+
+        <Switch
+            android:id="@+id/switch_calendar_modify"
+            style="@style/SwitchThumb"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="@dimen/padding_all_imagebutton"
+            android:track="@drawable/selector_foregroundalert_switch"
+            app:layout_constraintBottom_toBottomOf="@id/textview_calendar_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textview_calendar_title" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_changedate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:selectableItemBackground"
+            android:paddingVertical="@dimen/padding_calendar_changebutton"
+            android:paddingEnd="@dimen/padding_calendar_changebutton"
+            android:layout_marginLeft="@dimen/margin_calendar_textview_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_calendar_title" >
+
+            <TextView
+                android:id="@+id/textview_calendar_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0000년 0월"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/imageView_calendar_changedate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_calendar_changedate"
+                android:padding="@dimen/padding_calendar_changebutton"
+                app:layout_constraintStart_toEndOf="@id/textview_calendar_date"
+                app:layout_constraintTop_toTopOf="@id/textview_calendar_date"
+                app:layout_constraintBottom_toBottomOf="@id/textview_calendar_date" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_week_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_changedate">
+
+            <TextView
+                android:id="@+id/textview_sunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="일"
+                android:textColor="@color/waskRed"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="월"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="화"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="수"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="목"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="금"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+            <TextView
+                android:id="@+id/textview_saturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_calendar_content" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_calender"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:layout_marginTop="@dimen/margin_calendarrecyclerview_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

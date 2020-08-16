@@ -4,15 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/waskBlue"
+    tools:context=".main.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.naccoro.wask.customview.WaskToolbar
+        android:id="@+id/wasktoolbar_main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        app:layout_constraintBottom_toTopOf="@+id/constraintlayout_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_main_logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintlayout_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_layout_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wasktoolbar_main">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_card_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.82"
+            app:layout_constraintDimensionRatio="1.35"
+            app:layout_constraintVertical_bias="0.185">
+
+            <ImageView
+                android:id="@+id/imageview_emotion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toTopOf="@+id/imageview_people"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.14"
+                app:layout_constraintVertical_bias="0.32"
+                app:srcCompat="@drawable/ic_good" />
+
+            <TextView
+                android:id="@+id/textview_card_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_card_good"
+                android:textColor="@color/waskBlue"
+                android:textSize="@dimen/textsize_maincard"
+                app:layout_constraintBottom_toTopOf="@+id/imageview_people"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageview_emotion"
+                app:layout_constraintVertical_bias="0.44" />
+
+            <ImageView
+                android:id="@+id/imageview_people"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toTopOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.7"
+                app:srcCompat="@drawable/ic_people" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9649123" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/constraintlayout_use_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/button_change"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_card">
+
+            <TextView
+                android:id="@+id/textview_use_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/waskBlue"
+                android:textSize="@dimen/textsize_mainuseperiod_number"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_use_period_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_use_period_message"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="@dimen/textsize_mainuseperiod_text"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/button_change"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:foreground="?android:selectableItemBackground"
+            android:background="@drawable/bg_button_change"
+            android:elevation="8dp"
+            android:text="@string/main_change_button"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_card"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintDimensionRatio="3.07" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
