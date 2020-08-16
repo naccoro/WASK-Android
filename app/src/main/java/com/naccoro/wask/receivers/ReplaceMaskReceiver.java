@@ -60,11 +60,9 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
     }
 
     /**
-     * 사용자가 수정모드로 변경할 때마다 알람도 변경해줍니다.
+     * 사용자가 알림으로 교체일자를 수정하면 영구 노티도 변경해줍니다.
      */
     private void updateMaskAlarm(Context context) {
-        AlarmUtil.cancelReplaceLaterAlarm(context);
-        AlarmUtil.setReplacementCycleAlarm(context);
 
         if (SettingPreferenceManager.getIsShowNotificationBar()) {
             int period = getMaskPeriod();

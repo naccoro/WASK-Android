@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -29,6 +30,9 @@ public class AlarmUtil {
     public static String ALERT_TYPE = "alert_type";
     public static String REPLACEMENT_CYCLE_VALUE = "replacement_cycle";
     public static String REPLACE_LATER_VALUE = "replace_later";
+
+    private static final String TAG = "AlarmUtil";
+
 
     /**
      * 교체 주기 Alarm을 등록하는 함수
@@ -65,14 +69,18 @@ public class AlarmUtil {
      * 나중에 교체 주기 Alarm을 등록하는 함수
      */
     public static void setReplacementLaterAlarm(Context context) {
+        //나중에 교체하기를 누르면 기존 교체 주기 알람은 제거
+        cancelReplacementCycleAlarm(context);
 
         ReplacementHistoryRepository replacementHistoryRepository = Injection.replacementHistoryRepository(context);
 
         int replaceDate = replacementHistoryRepository.getLastReplacement();
 
         //사용자가 선택한 교체하기 period 를 가져온다.
-        int period = SettingPreferenceManager.getDelayCycle();
+        //int period = SettingPreferenceManager.getDelayCycle();
+        int period = SettingPreferenceManager.getDelayCycle() + 1; //Fixme: period 를 하루 적게 가져옵니다. 임시로 + 1
 
+        Log.d("period", period + "");
         //저장되어 있는 교체주기 알람 date가 오늘보다 얼마나 지났는지 체크한다.
         if (replaceDate != -1) {
             int periodDelay = DateUtils.calculateDateGapWithToday(replaceDate);
@@ -81,11 +89,12 @@ public class AlarmUtil {
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, period);
-        calendar.set(Calendar.HOUR_OF_DAY, REPLACE_LATER_START_HOUR); //오후 10시 알람
+        //calendar.set(Calendar.HOUR_OF_DAY, REPLACE_LATER_START_HOUR); //오후 10시 알람
+        calendar.set(Calendar.HOUR_OF_DAY, REPLACEMENT_CYCLE_START_HOUR); //오전 6시 알림
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(ALERT_TYPE, REPLACE_LATER_VALUE);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_REPLACE_LATER, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_REPLACEMENT_CYCLE, intent, 0);
 
         //처음에 Notification 이 작동 후 며칠 단위로 작동할지
         setAlertManager(context, calendar, alarmIntent);
@@ -129,7 +138,7 @@ public class AlarmUtil {
     public static void setForegroundAlarm(Context context) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 1); //다음날
-        calendar.set(Calendar.HOUR, 0); //자정으로
+        calendar.set(Calendar.HOUR_OF_DAY, 0); //자정으로
 
 
         Intent intent = new Intent(context, ForegroundReceiver.class);
@@ -155,6 +164,9 @@ public class AlarmUtil {
         //처음 Calendar 날짜에 AlertManager가 작동되고 이후 하루마다 작동됩니다.
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
+
+        Log.d(TAG, "setAlertManager: " + calendar.get(Calendar.YEAR) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.DAY_OF_MONTH));
+
     }
 
     public static void showForegroundService(Context context, int maskPeriod) {

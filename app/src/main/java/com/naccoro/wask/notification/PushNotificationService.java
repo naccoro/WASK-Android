@@ -54,7 +54,7 @@ public class PushNotificationService extends Service {
 
         //2. 커스텀한 뷰를 가져온다.
         RemoteViews contentView = new RemoteViews(getPackageName(), data.getLayoutId());
-        contentView.setImageViewResource(R.id.imageview_notification_logo, R.drawable.ic_wask_logo);
+        contentView.setImageViewResource(R.id.imageview_notification_logo, R.drawable.ic_notification_logo);
         contentView.setTextViewText(R.id.textview_notification_content, data.getContentText());
 
         Intent okIntent = new Intent(this, ReplaceMaskReceiver.class);
@@ -76,6 +76,7 @@ public class PushNotificationService extends Service {
                 .setCustomContentView(contentView)
                 .setPriority(data.getPriority())
                 .setSmallIcon(R.drawable.ic_main_logo)
+                .setColor(this.getColor(R.color.waskBlue))
                 .setVisibility(data.getChannelLockscreenVisibility())
                 .setAutoCancel(true);// 사용자가 알람을 탭했을 때, 알람이 사라짐
 
