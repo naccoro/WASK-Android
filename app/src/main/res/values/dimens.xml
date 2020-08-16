@@ -39,6 +39,7 @@
     <dimen name="margin_notification_small">4dp</dimen>
     <dimen name="margin_notification_medium">10dp</dimen>
     <dimen name="margin_notification_large">22dp</dimen>
+    <dimen name="margin_notification_top">16dp</dimen>
     <dimen name="height_notification_icon">10dp</dimen>
     <dimen name="textsize_notification_name">11sp</dimen>
 

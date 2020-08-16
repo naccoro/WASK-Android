@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/height_notification_icon"
         android:scaleType="fitStart"
-        android:layout_marginTop="@dimen/margin_notification_medium"
+        android:layout_marginTop="@dimen/margin_notification_top"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/margin_notification_large"/>
 
@@ -24,6 +24,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/imageview_notification_logo"
         android:layout_marginLeft="@dimen/margin_notification_large"
+        style="@style/TextAppearance.Compat.Notification.Title"
         />
 
 
