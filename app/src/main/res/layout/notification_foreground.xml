@@ -35,8 +35,9 @@
         android:layout_below="@id/textview_notification_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/margin_notification_large"
-        android:layout_marginTop="@dimen/margin_notification_medium"
+        android:layout_marginTop="@dimen/margin_notification_small"
         android:layout_marginBottom="@dimen/margin_notification_medium"
+        android:textSize="@dimen/textsize_notification_name"
         android:text="@string/notification_foreground_action" />
 
 </RelativeLayout>
