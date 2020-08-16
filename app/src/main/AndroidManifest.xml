@@ -26,8 +26,7 @@
         <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".main.MainActivity" />
         <activity
-            android:name=".splash.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:name=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
