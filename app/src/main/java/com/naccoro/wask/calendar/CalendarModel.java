@@ -105,7 +105,7 @@ public class CalendarModel {
             GregorianCalendar item = new GregorianCalendar(prevCalendar.get(Calendar.YEAR), prevCalendar.get(Calendar.MONTH), lastDayOfPreMonth - j);
             isChangedMask = replacementHistories.contains(DateUtils.getDateFromGregorianCalendar(item));
 
-            dateList.add(0, new CalendarItem(false, isChangedMask,false, item));
+            dateList.add(0, new CalendarItem(isChangedMask,false, item));
         }
 
     }
@@ -124,12 +124,7 @@ public class CalendarModel {
             GregorianCalendar item = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), j);
             isChangedMask = replacementHistories.contains(DateUtils.getDateFromGregorianCalendar(item));
 
-            if (selectDate.getDay() == j) {
-                // 선택일자와 같으면 select 체크
-                dateList.add(new CalendarItem(true, isChangedMask, true, item));
-            } else {
-                dateList.add(new CalendarItem(false, isChangedMask, true, item));
-            }
+            dateList.add(new CalendarItem(isChangedMask, true, item));
         }
     }
 
@@ -150,7 +145,7 @@ public class CalendarModel {
             GregorianCalendar item = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, j);
             isChangedMask = replacementHistories.contains(DateUtils.getDateFromGregorianCalendar(item));
 
-            dateList.add(new CalendarItem(false, isChangedMask, false, item));
+            dateList.add(new CalendarItem(isChangedMask, false, item));
         }
     }
 

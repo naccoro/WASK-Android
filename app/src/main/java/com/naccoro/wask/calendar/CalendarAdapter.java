@@ -30,7 +30,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     private Context context;
     private ArrayList<CalendarItem> calendarList;
     private boolean isModifyMode;
-    private int selectPosition;
 
     private static Date today;
     private ReplacementHistoryRepository replacementHistoryRepository;
@@ -107,18 +106,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         View itemView = calendarViewHolder.getItemView();
 
-        // 일요일은 빨간날
-        if (position % 7 == 0) {
-            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.waskRed));
-        } else {
-            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
-        }
-
-        // 오늘이면 동그라미 표시
-        if (item.isSelect()) {
-            selectPosition = position; // 어댑터속에 저장! (나중에 지우기 위해)
+        // 날짜(Day) 부분
+        if (today.isSameDate(item.getDate())) {
+            // 오늘이면 동그라미 표시
             calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
             calendarViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
+        } else if (position % 7 == 0) {
+            // 일요일은 빨간날
+            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.waskRed));
+            calendarViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
         } else {
             calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
             calendarViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
@@ -150,14 +146,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         GregorianCalendar clickItem = item.getDate();
 
-        calendarList.get(selectPosition).setSelect(false); // 이전 선택 해제
-        notifyItemChanged(selectPosition);
-
-
-        item.setSelect(true);
-        selectPosition = position; // select로 지정
-
-        // 미래는 마스크 교체유무 변경 제한
+        // 미래는 마스크 교체여부 변경 제한
         if (clickItem.get(Calendar.YEAR) > today.getYear()) {
             return;
         } else if (clickItem.get(Calendar.MONTH) > today.getMonth()) {
@@ -166,7 +155,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             return;
         }
 
-        // 마스크 교체유무 변경
+        // 마스크 교체여부 변경
         if (item.isChangeMask()) {
             item.setChangeMask(false);
             replacementHistoryRepository.delete(DateUtils.getDateFromGregorianCalendar(item.getDate()));
