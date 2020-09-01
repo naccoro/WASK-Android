@@ -2,10 +2,8 @@ package com.naccoro.wask.notification;
 
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.Nullable;
@@ -13,8 +11,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.WaskApplication;
-import com.naccoro.wask.main.MainActivity;
-import com.naccoro.wask.utils.AlarmUtil;
+import com.naccoro.wask.ui.main.MainActivity;
 
 public class WaskService extends Service {
     private final String CHANNEL_ID = WaskApplication.CHANNEL_ID;
