@@ -35,6 +35,7 @@ public class MainPresenter implements MainContract.Presenter {
         int period;
 
         period = getMaskPeriod();
+        Log.d("period", period + "");
         mainView.setPeriodTextValue(period);
 
         if (period == 0) {
@@ -42,11 +43,14 @@ public class MainPresenter implements MainContract.Presenter {
             mainView.showNoReplaceData();
             mainView.enableReplaceButton();
         } else if (period > 1) {
-            //교체한지 하루 이상 지남
+
+            checkIsFirstReplacement();
+
             mainView.showBadMainView();
             mainView.enableReplaceButton();
         } else {
             //교체한 당일
+            checkIsFirstReplacement();
             WaskApplication.isChanged = true;
             mainView.showGoodMainView();
             mainView.disableReplaceButton();

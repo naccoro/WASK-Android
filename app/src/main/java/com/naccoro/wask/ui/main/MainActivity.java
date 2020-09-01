@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity
     WaskToolbar toolbar;
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         presenter.start();
     }
 
