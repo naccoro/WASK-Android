@@ -17,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service
-            android:name=".notification.PushNotificationService"
-            android:exported="false"/>
-
         <activity
             android:name=".setting.SettingActivity"/>
         <activity android:name=".calendar.CalendarActivity" />
