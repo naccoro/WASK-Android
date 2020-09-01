@@ -17,16 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service
-            android:name=".notification.PushNotificationService"
-            android:exported="false"/>
-
         <activity
             android:name=".setting.SettingActivity"/>
-        <activity android:name=".calendar.CalendarActivity" />
-        <activity android:name=".main.MainActivity" />
+        <activity android:name=".ui.calendar.CalendarActivity" />
+        <activity android:name=".ui.main.MainActivity" />
         <activity
-            android:name=".splash.SplashActivity">
+            android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
