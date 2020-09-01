@@ -1,4 +1,4 @@
-package com.naccoro.wask.calendar;
+package com.naccoro.wask.ui.calendar;
 
 import android.os.Bundle;
 import android.view.View;

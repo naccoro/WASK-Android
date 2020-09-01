@@ -1,11 +1,10 @@
-package com.naccoro.wask.splash;
+package com.naccoro.wask.ui.splash;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import android.content.Intent;
-import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.naccoro.wask.R;
-import com.naccoro.wask.main.MainActivity;
+import com.naccoro.wask.ui.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -1,9 +1,7 @@
-package com.naccoro.wask.calendar;
+package com.naccoro.wask.ui.calendar;
 
-import com.naccoro.wask.calendar.CalendarActivity.Date;
+import com.naccoro.wask.ui.calendar.CalendarActivity.Date;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
-
-import java.util.ArrayList;
 
 public class CalendarPresenter implements CalendarContract.Presenter {
 

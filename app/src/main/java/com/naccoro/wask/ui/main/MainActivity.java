@@ -1,4 +1,4 @@
-package com.naccoro.wask.main;
+package com.naccoro.wask.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.naccoro.wask.R;
-import com.naccoro.wask.calendar.CalendarActivity;
+import com.naccoro.wask.ui.calendar.CalendarActivity;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.replacement.model.Injection;

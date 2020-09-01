@@ -1,4 +1,4 @@
-package com.naccoro.wask.main;
+package com.naccoro.wask.ui.main;
 
 
 import android.content.Context;
