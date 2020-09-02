@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.naccoro.wask.utils.AlarmUtil;
-import com.naccoro.wask.utils.DateUtils;
 
 public class ReplaceLaterReceiver extends BroadcastReceiver {
 
@@ -25,7 +24,6 @@ public class ReplaceLaterReceiver extends BroadcastReceiver {
         }
 
         //나중에 교체하기 알람 등록
-        AlarmUtil.setReplacementLaterAlarm(context);
+        AlarmUtil.setReplacementLaterAlarm(context, false);
     }
-
 }
