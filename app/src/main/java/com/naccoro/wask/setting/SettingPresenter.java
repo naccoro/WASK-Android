@@ -125,9 +125,11 @@ public class SettingPresenter implements SettingContract.Presenter {
     public void changeReplaceLaterValue(Context context, int laterValue) {
         SettingPreferenceManager.setDelayCycle(laterValue);
 
-        //Alarm 다시 설정
-        AlarmUtil.cancelReplacementCycleAlarm(context);
-        AlarmUtil.setReplacementLaterAlarm(context);
+        //나중에 교체하기 알람 중이었다면 재설정
+        if (AlarmUtil.isLaterAlarmExist(context)) {
+            AlarmUtil.cancelReplaceLaterAlarm(context);
+            AlarmUtil.setReplacementLaterAlarm(context, true);
+        }
 
         settingView.showReplaceLaterValue(laterValue);
     }

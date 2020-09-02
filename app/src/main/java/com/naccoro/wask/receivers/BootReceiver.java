@@ -7,6 +7,7 @@ import android.content.Intent;
 import androidx.core.content.ContextCompat;
 
 import com.naccoro.wask.notification.WaskService;
+import com.naccoro.wask.preferences.AlarmPreferenceManager;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
@@ -26,19 +27,24 @@ public class BootReceiver extends BroadcastReceiver {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             // Set the alarm here.
 
-            AlarmUtil.setReplacementCycleAlarm(context);
+            int period = getMaskPeriod(context);
 
-            AlarmUtil.setReplacementCycleAlarm(context);
+            //교체일자가 없다면 실행하지 말것
+            if (period < 0) {
+                return;
+            }
+
+            //나중에 교체하기 실행 중이었다면 나중에 교체하기 알람을 재조정
+            if (AlarmPreferenceManager.getIsReplacementLater()) {
+                AlarmUtil.setReplacementLaterAlarm(context, true);
+            } else {
+                //일반 교체하기 알람을 실행 중이었다면 알람을 재조정
+                AlarmUtil.setReplacementCycleAlarm(context);
+            }
 
             if (SettingPreferenceManager.getIsShowNotificationBar()) {
-                int period = getMaskPeriod(context);
-
-                //교체일자가 없다면 실행하지 말것
-                if (period > 0) {
-                    AlarmUtil.showForegroundService(context, getMaskPeriod(context));
-
-                    AlarmUtil.setForegroundAlarm(context);
-                }
+                AlarmUtil.showForegroundService(context, period);
+                AlarmUtil.setForegroundAlarm(context);
             }
         }
     }

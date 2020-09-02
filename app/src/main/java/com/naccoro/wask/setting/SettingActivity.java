@@ -3,7 +3,6 @@ package com.naccoro.wask.setting;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import com.naccoro.wask.R;
@@ -44,6 +43,9 @@ public class SettingActivity extends AppCompatActivity
 
         //start()함수를 호출하여 초기 설정값을 불러옴
         presenter.start();
+
+        //영구 알림 스위치 리스너 초기화
+        initSwitchListener();
     }
 
     private void init() {
@@ -60,15 +62,13 @@ public class SettingActivity extends AppCompatActivity
 
         alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
-        alertVisibleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked);
-            }
-        });
-
         toolbar.setBackButton(() -> presenter.clickHomeButton());
         toolbar.setLeftSideTitle(getString(R.string.setting_title));
+    }
+
+    private void initSwitchListener() {
+        alertVisibleSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
+                presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked));
     }
 
     @Override
