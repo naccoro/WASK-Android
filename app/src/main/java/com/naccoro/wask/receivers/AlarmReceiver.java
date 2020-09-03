@@ -11,6 +11,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.mock.MockDatabase;
+import com.naccoro.wask.preferences.AlarmPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.NotificationUtil;
 
@@ -28,13 +29,19 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if (type != null) {
             MockDatabase.MockNotificationData data;
-            if (type.equals(AlarmUtil.REPLACEMENT_CYCLE_VALUE)) {
+//            if (type.equals(AlarmUtil.REPLACEMENT_CYCLE_VALUE)) {
+//
+//                data = MockDatabase.getReplacementCycleData(context);
+//            } else {
+//
+//                data = MockDatabase.getReplaceLaterData(context);
+//            }
 
-                data = MockDatabase.getReplacementCycleData(context);
-            } else {
+            //나중에 교체하기 알림은 끝이 난 걸로 저장
+            AlarmPreferenceManager.setIsReplacementLater(false);
 
-                data = MockDatabase.getReplaceLaterData(context);
-            }
+            //동일한 형상의 Notification
+            data = MockDatabase.getReplacementCycleData(context);
 
             showPushNotification(context, data);
         }

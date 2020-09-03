@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.naccoro.wask.preferences.AlarmPreferenceManager;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
@@ -44,7 +45,13 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
             public void onSuccess() {
 
                 //알람을 지운다.
-                AlarmUtil.cancelReplaceLaterAlarm(context);
+                if (AlarmUtil.isLaterAlarmExist(context)) {
+                    AlarmUtil.cancelReplaceLaterAlarm(context);
+                    AlarmPreferenceManager.setIsReplacementLater(false);
+                }
+                if (AlarmUtil.isCycleAlarmExist(context)) {
+                    AlarmUtil.cancelReplacementCycleAlarm(context);
+                }
 
                 //알람 재등록
                 AlarmUtil.setReplacementCycleAlarm(context);
