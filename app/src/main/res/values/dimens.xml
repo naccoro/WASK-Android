@@ -13,7 +13,7 @@
     <dimen name="margin_datepicker_top">16dp</dimen>
     <dimen name="textsize_datepicker_text">20sp</dimen>
 
-    <dimen name="textsize_maincard">13sp</dimen>
+    <dimen name="textsize_maincard">13dp</dimen>
     <dimen name="textsize_mainuseperiod_number">56sp</dimen>
     <dimen name="textsize_mainuseperiod_text">20sp</dimen>
     <dimen name="margin_mainlayout_top">19dp</dimen>
