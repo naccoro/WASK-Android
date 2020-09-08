@@ -60,6 +60,7 @@
                 android:text="@string/main_card_good"
                 android:textColor="@color/waskBlue"
                 android:textSize="@dimen/textsize_maincard"
+                android:gravity="center"
                 app:layout_constraintBottom_toTopOf="@+id/imageview_people"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
