@@ -59,15 +59,4 @@
         <item name="android:colorControlActivated">@color/white</item>
     </style>
 
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@drawable/splash</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="CalendarView">
-
-    </style>
 </resources>
