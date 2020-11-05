@@ -85,6 +85,13 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     private void init(Context context) {
         this.context = context;
         this.setItemAnimator(null);
+
+        //크기 고정
+        this.setHasFixedSize(true);
+
+        //캐시 사이즈 설정
+        this.setItemViewCacheSize(5);
+
         //사용자가 RecyclerView의 뷰 끝에서 스크롤을 시도할 시 번지는 효과 제거
         this.setOverScrollMode(OVER_SCROLL_NEVER);
 
@@ -343,7 +350,7 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
          */
         void setCenterPosition(int centerPosition) {
             this.centerPosition = centerPosition;
-            this.notifyItemRangeChanged(centerPosition - emptySpace, centerPosition + emptySpace);
+            this.notifyItemRangeChanged(centerPosition - emptySpace, emptySpace * 2);
         }
 
         @NonNull
