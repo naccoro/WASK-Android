@@ -38,5 +38,40 @@
     <string name="notification_foreground_action">WASK 열기</string>
 
     <string name="dialog_cancelreplacement">교체 기록을\n취소하시겠습니까?</string>
-
 </resources>
+<!--중국어 번역-->
+<!--<resources>-->
+<!--    <string name="app_name">WASK</string>-->
+<!--    <string name="setting_title">设置</string>-->
+<!--    <string name="setting_replacement_cycle">口罩替换周期</string>-->
+<!--    <string name="setting_replace_later">以后替换</string>-->
+<!--    <string name="setting_push_alert">提醒通知</string>-->
+<!--    <string name="setting_foreground_alert">表显口罩替换日子顶栏</string>-->
+<!--    <string name="setting_dialog_ok">确认</string>-->
+<!--    <string name="setting_push_alert_sound">声音 </string>-->
+<!--    <string name="setting_push_alert_vibration">振动</string>-->
+<!--    <string name="setting_push_alert_all">声音+振动</string>-->
+<!--    <string name="setting_push_alert_none">关闭</string>-->
+<!--    <string name="main_card_good">推荐口罩一日一个使用 </string>-->
+<!--    <string name="main_card_bad">推荐替换口罩</string>-->
+<!--    <string name="main_use_period_message">日 使用中</string>-->
+<!--    <string name="main_use_period_message_no_replacement">没有替换记录。</string>-->
+<!--    <string name="main_change_button">替换</string>-->
+<!--    <string name="dialog_replacementcycle">日</string>-->
+<!--    <string name="dialog_replacelater">日后替换</string>-->
+<!--    <string name="notificationchannel_push_name">口罩替换通知</string>-->
+<!--    <string name="notificationchannel_push_description">到口罩替换周期收到通知。如果变更重要度，会不能正常地收到WASK上设定的通知</string>-->
+<!--    <string name="notificationchannel_pushsound_id">wask_push_sound</string>-->
+<!--    <string name="notificationchannel_pushvibration_id">wask_push_vibration</string>-->
+<!--    <string name="notificationchannel_pushall_id">wask_push_all</string>-->
+<!--    <string name="notificationchannel_pushnone_id">wask_push_none</string>-->
+<!--    <string name="notification_replacementcycle_text">到了口罩替换时间!</string>-->
+<!--    <string name="notification_replacementcycle_ok">替换</string>-->
+<!--    <string name="notification_replacementcycle_later">以后替换</string>-->
+<!--    <string name="notification_replacelater_text">今天替换口罩了吗?</string>-->
+<!--    <string name="notification_replacelater_ok">是</string>-->
+<!--    <string name="notification_replacelater_x">不是</string>-->
+<!--    <string name="notification_foreground_action">WASK 打开</string>-->
+<!--    <string name="dialog_cancelreplacement">想把替换记录\n取消吗?</string>-->
+
+<!--</resources>-->
