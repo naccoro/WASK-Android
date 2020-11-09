@@ -45,7 +45,7 @@ public class MainPresenter implements MainContract.Presenter {
         } else if (period > 1) {
 
             checkIsFirstReplacement();
-
+            WaskApplication.isChanged = false;
             mainView.showBadMainView();
             mainView.enableReplaceButton();
         } else {
@@ -168,7 +168,6 @@ public class MainPresenter implements MainContract.Presenter {
             isNoData = true;
             return 0;
         }
-
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 }
