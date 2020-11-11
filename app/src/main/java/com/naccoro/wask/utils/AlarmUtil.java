@@ -63,7 +63,7 @@ public class AlarmUtil {
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_REPLACEMENT_CYCLE, intent, 0);
 
         //처음에 Notification 이 작동 후 며칠 단위로 작동할지
-        setAlertManager(context, calendar, alarmIntent);
+        setAlertManager(context, calendar, alarmIntent, true);
     }
 
 
@@ -113,7 +113,7 @@ public class AlarmUtil {
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_REPLACE_LATER, intent, 0);
 
         //처음에 Notification 이 작동 후 며칠 단위로 작동할지
-        setAlertManager(context, calendar, alarmIntent);
+        setAlertManager(context, calendar, alarmIntent, true);
     }
 
     /**
@@ -160,45 +160,35 @@ public class AlarmUtil {
         Intent intent = new Intent(context, ForegroundReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_FOREGROUND, intent, 0);
 
-        setAlertManager(context, calendar, alarmIntent);
+        setAlertManager(context, calendar, alarmIntent, false);
     }
 
     /**
      * 실제로 AlertManager 등록하는 함수
      */
-    private static void setAlertManager(Context context, Calendar calendar, PendingIntent alarmIntent) {
-
-        //분 초 0으로 셋팅
+    private static void setAlertManager(Context context, Calendar calendar, PendingIntent alarmIntent, Boolean isRepeat) {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
         AlarmManager alarmManager;
-
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (isRepeat) {
+            setRepeatAlertManager(alarmManager, calendar, alarmIntent);
+        } else {
+            setAlertManagerWhileIdle(alarmManager, calendar, alarmIntent);
+        }
+        Log.d(TAG, "setAlertManager: " + calendar.get(Calendar.YEAR) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.DAY_OF_MONTH));
+    }
 
-
+    private static void setRepeatAlertManager(AlarmManager alarmManager, Calendar calendar, PendingIntent alarmIntent) {
         //처음 Calendar 날짜에 AlertManager가 작동되고 이후 하루마다 작동됩니다.
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
-
-        Log.d(TAG, "setAlertManager: " + calendar.get(Calendar.YEAR) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.DAY_OF_MONTH));
-
     }
 
-    public static void showForegroundService(Context context, int maskPeriod) {
-        Intent service = new Intent(context, WaskService.class);
-
-        service.putExtra("maskPeriod", maskPeriod);
-        ContextCompat.startForegroundService(context, service);
-
-    }
-
-    public static void dismissForegroundService(Context context) {
-        Intent service = new Intent(context, WaskService.class);
-        context.stopService(service);
-
-        //Foreground 알람 삭제
-        cancelForegroundAlarm(context);
+    private static void setAlertManagerWhileIdle(AlarmManager alarmManager, Calendar calendar, PendingIntent alarmIntent) {
+        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                alarmIntent);
     }
 
     public static boolean isCycleAlarmExist(Context context) {

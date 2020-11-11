@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import androidx.core.content.ContextCompat;
 
+import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.notification.WaskService;
 import com.naccoro.wask.preferences.AlarmPreferenceManager;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
@@ -43,7 +44,7 @@ public class BootReceiver extends BroadcastReceiver {
             }
 
             if (SettingPreferenceManager.getIsShowNotificationBar()) {
-                AlarmUtil.showForegroundService(context, period);
+                ServiceUtil.showForegroundService(context, period);
                 AlarmUtil.setForegroundAlarm(context);
             }
         }

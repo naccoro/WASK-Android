@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.AlarmPreferenceManager;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
@@ -75,11 +76,11 @@ public class ReplaceMaskReceiver extends BroadcastReceiver {
             int period = getMaskPeriod();
             if (period > 0) {
 
-                AlarmUtil.showForegroundService(context, period);
+                ServiceUtil.showForegroundService(context, period);
 
                 AlarmUtil.setForegroundAlarm(context);
             } else {
-                AlarmUtil.dismissForegroundService(context);
+                ServiceUtil.dismissForegroundService(context);
 
                 AlarmUtil.cancelForegroundAlarm(context);
             }
