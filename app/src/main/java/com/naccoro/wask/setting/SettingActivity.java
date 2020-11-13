@@ -10,6 +10,7 @@ import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.utils.AlarmUtil;
 
 public class SettingActivity extends AppCompatActivity
@@ -165,7 +166,7 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void showForegroundAlert(int maskPeriod) {
 
-        AlarmUtil.showForegroundService(this, maskPeriod);
+        ServiceUtil.showForegroundService(this, maskPeriod);
 
         AlarmUtil.setForegroundAlarm(this);
     }
@@ -175,7 +176,7 @@ public class SettingActivity extends AppCompatActivity
      */
     @Override
     public void dismissForegroundAlert() {
-        AlarmUtil.dismissForegroundService(this);
+        ServiceUtil.dismissForegroundService(this);
     }
 
     @Override

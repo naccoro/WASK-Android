@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naccoro.wask.WaskApplication;
+import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
@@ -195,11 +196,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             WaskApplication.isChanged = period == 1;
 
             if (period > 0) {
-                AlarmUtil.showForegroundService(context, period);
+                ServiceUtil.showForegroundService(context, period);
 
                 AlarmUtil.setForegroundAlarm(context);
             } else {
-                AlarmUtil.dismissForegroundService(context);
+                ServiceUtil.dismissForegroundService(context);
 
                 AlarmUtil.cancelForegroundAlarm(context);
             }
