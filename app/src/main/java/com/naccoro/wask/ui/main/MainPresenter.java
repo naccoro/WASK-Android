@@ -4,6 +4,7 @@ package com.naccoro.wask.ui.main;
 import android.content.Context;
 
 import com.naccoro.wask.WaskApplication;
+import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
@@ -45,7 +46,7 @@ public class MainPresenter implements MainContract.Presenter {
         } else if (period > 1) {
 
             checkIsFirstReplacement();
-
+            WaskApplication.isChanged = false;
             mainView.showBadMainView();
             mainView.enableReplaceButton();
         } else {
@@ -130,10 +131,10 @@ public class MainPresenter implements MainContract.Presenter {
         if (SettingPreferenceManager.getIsShowNotificationBar()) {
             int period = getMaskPeriod();
             if (period > 0) {
-                AlarmUtil.showForegroundService(context, period);
+                ServiceUtil.showForegroundService(context, period);
                 AlarmUtil.setForegroundAlarm(context);
             } else {
-                AlarmUtil.dismissForegroundService(context);
+                ServiceUtil.dismissForegroundService(context);
                 AlarmUtil.cancelForegroundAlarm(context);
             }
         }
@@ -168,7 +169,6 @@ public class MainPresenter implements MainContract.Presenter {
             isNoData = true;
             return 0;
         }
-
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 }
