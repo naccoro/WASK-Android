@@ -67,18 +67,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showReplaceToast() {
-        Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(), R.string.toast_replacement, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void enableReplaceButton() {
-        changeButton.setText("교체하기");
+        changeButton.setText(R.string.main_change_button);
         changeButton.setBackgroundTintList(null);
     }
 
     @Override
     public void disableReplaceButton() {
-        changeButton.setText("교체 취소");
+        changeButton.setText(R.string.main_cancel_replacement);
         changeButton.setBackgroundTintList(getResources().getColorStateList(R.color.dividerGray, null));
     }
 
@@ -135,9 +135,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showCancelDialog() {
         new WaskDialogBuilder()
-                .setMessage(getString(R.string.dialog_cancelreplacement))
-                .addHorizontalButton("취소", (dialog, view) -> dialog.dismiss())
-                .addHorizontalButton("확인", ((dialog, view) -> {
+                .setMessage(getString(R.string.dialog_cancel_replacement))
+                .addHorizontalButton(getString(R.string.dialog_cancel), (dialog, view) -> dialog.dismiss())
+                .addHorizontalButton(getString(R.string.dialog_ok), ((dialog, view) -> {
                     presenter.cancelChanging(MainActivity.this);
                     dialog.dismiss();
                 }))

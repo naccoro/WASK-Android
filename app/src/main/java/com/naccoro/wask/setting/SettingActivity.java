@@ -144,13 +144,13 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void showReplacementCycleValue(int cycleValue) {
         periodReplacementCycle = cycleValue;
-        replacementCycleAlertLabel.setText(cycleValue + "일");
+        replacementCycleAlertLabel.setText(cycleValue + getString(R.string.setting_day));
     }
 
     @Override
     public void showReplaceLaterValue(int laterValue) {
         periodReplaceLater = laterValue;
-        replaceLaterLabel.setText(laterValue + "일");
+        replaceLaterLabel.setText(laterValue + getString(R.string.setting_day));
     }
 
     @Override

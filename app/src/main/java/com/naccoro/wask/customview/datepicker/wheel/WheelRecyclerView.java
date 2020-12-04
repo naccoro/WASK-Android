@@ -418,15 +418,15 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         }
 
         private String getYearString(int year) {
-            return year + "년";
+            return year + getContext().getString(R.string.wheel_year);
         }
 
         private String getMonthString(int month) {
-            return month + "월";
+            return month + getContext().getString(R.string.wheel_month);
         }
 
         private String getDayString(int day) {
-            return day + "일";
+            return day + getContext().getString(R.string.wheel_day);
         }
 
         class WheelViewHolder extends RecyclerView.ViewHolder {

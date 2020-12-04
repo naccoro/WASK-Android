@@ -132,7 +132,8 @@ public class CalendarActivity extends AppCompatActivity
      */
     @Override
     public void showCalendarDateTextView(int month) {
-        calendarDateTextView.setText(selectDate.getYear() + "년 " + month + "월");
+        calendarDateTextView.setText(selectDate.getYear() + getString(R.string.calendar_year)
+                + month + getString(R.string.calendar_month));
     }
 
     @Override

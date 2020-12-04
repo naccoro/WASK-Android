@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">WASK</string>
+
+    <string name="setting_title">Setting</string>
+    <string name="setting_replacement_cycle">Cycle of replacement</string>
+    <string name="setting_replace_later">replace later</string>
+    <string name="setting_push_alert">Push alert</string>
+    <string name="setting_foreground_alert">Show a status bar notification</string>
+    <string name="setting_dialog_ok">OK</string>
+    <string name="setting_push_alert_sound">Sound</string>
+    <string name="setting_push_alert_vibration">Vibrate</string>
+    <string name="setting_push_alert_all">Sound+Vibrate</string>
+    <string name="setting_push_alert_none">None</string>
+    <string name="setting_day"> days</string>
+
+    <string name="main_card_good">It is recommended to use the mask once a day</string>
+    <string name="main_card_bad">You need to replace the mask</string>
+    <string name="main_use_period_message">days used</string>
+    <string name="main_use_period_message_no_replacement">No replacement data</string>
+    <string name="main_change_button">Replace</string>
+    <string name="main_cancel_replacement">Cancel</string>
+
+    <string name="dialog_replacementcycle">days</string>
+    <string name="dialog_replacelater">days later</string>
+    <string name="dialog_cancel_replacement">Are you sure?</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_ok">OK</string>
+
+    <string name="notificationchannel_push_name">Notification for replacement the mask</string>
+    <string name="notificationchannel_push_description">We inform you need to replace the mask. If you change the priority, You may not be took our notification.</string>
+    <string name="notificationchannel_pushsound_id">wask_push_sound</string>
+    <string name="notificationchannel_pushvibration_id">wask_push_vibration</string>
+    <string name="notificationchannel_pushall_id">wask_push_all</string>
+    <string name="notificationchannel_pushnone_id">wask_push_none</string>
+
+    <string name="notification_replacementcycle_text">It\'s time to replace the mask!</string>
+    <string name="notification_replacementcycle_ok">Replace</string>
+    <string name="notification_replacementcycle_later">Later</string>
+
+    <string name="notification_replacelater_text">Did you replace the mask?</string>
+    <string name="notification_replacelater_ok">Yes</string>
+    <string name="notification_replacelater_x">Not yet</string>
+    <string name="notification_foreground_action">Open the WASK</string>
+
+    <string name="toast_replacement">You have been replaced</string>
+
+    <string name="calendar_year">.</string>
+    <string name="calendar_month"></string>
+    <string name="calendar_history_of_replacement">History</string>
+    <string name="calendar_edit_mode">Edit</string>
+    <string name="calendar_sunday">sun</string>
+    <string name="calendar_monday">mon</string>
+    <string name="calendar_tuesday">tue</string>
+    <string name="calendar_wednesday">wen</string>
+    <string name="calendar_thursday">thu</string>
+    <string name="calendar_friday">fri</string>
+    <string name="calendar_saturday">sat</string>
+
+    <string name="wheel_year"></string>
+    <string name="wheel_month"></string>
+    <string name="wheel_day"></string>
+
+    <string name="notification_alert">You have been using the mask for %d days</string>
+
+</resources>
