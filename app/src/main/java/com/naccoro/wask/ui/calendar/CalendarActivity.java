@@ -6,6 +6,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.DatePresenter;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.replacement.model.Injection;
@@ -15,15 +16,13 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CalendarActivity extends AppCompatActivity
         implements View.OnClickListener, CalendarContract.View {
 
-    TextView calendarDateTextView;
-    ConstraintLayout changeDateConstraintLayout;
+    DatePresenter changeDatePresenter;
     Switch modifyModeSwitch;
     TextView modifyModeTextView;
 
@@ -51,22 +50,21 @@ public class CalendarActivity extends AppCompatActivity
     }
 
     private void initView() {
-        calendarDateTextView = findViewById(R.id.textview_calendar_date);
-        changeDateConstraintLayout = findViewById(R.id.constraintlayout_changedate);
+        changeDatePresenter = findViewById(R.id.datepresenter_changedate);
         modifyModeSwitch = findViewById(R.id.switch_calendar_modify);
         modifyModeTextView = findViewById(R.id.textview_calendar_modify);
         recyclerView = findViewById(R.id.recyclerview_calender);
 
         toolbar = findViewById(R.id.wasktoolbar_calendar);
 
-        changeDateConstraintLayout.setOnClickListener(this);
+        changeDatePresenter.setOnClickListener(this);
 
         // 스위치 모드 변경
         modifyModeSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> presenter.changeModifyMode(isChecked, calendarAdapter));
 
         // calendar 관련 설정
         initSelectDate();
-        presenter.changeCalendarDateTextView(selectDate);
+        changeDatePresenter.setDate(selectDate);
         presenter.changeCalendarList(selectDate);
 
         // 리사이클러뷰 초기화
@@ -114,12 +112,13 @@ public class CalendarActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.constraintlayout_changedate: // (0000년 00월) 버튼 클릭 시
+            case R.id.datepresenter_changedate: // (0000년 00월) 버튼 클릭 시
                 DatePickerDialogFragment.newInstance().
                         setOnDateChangedListener((year, month, day) -> {
                             selectDate.setDate(year, month, day);
                             presenter.clickChangeDateButton(selectDate);
                             calendarAdapter.setCalendarList(dateList);
+                            showCalendarDateTextView();
                         })
                         .setDate(selectDate.getYear(), selectDate.getMonth(), selectDate.getDay())
                         .show(getSupportFragmentManager(), "dialog");
@@ -131,9 +130,8 @@ public class CalendarActivity extends AppCompatActivity
      * date picker에서 설정된 날짜(selectDate)기준으로 0000년 00월 표시 설정
      */
     @Override
-    public void showCalendarDateTextView(int month) {
-        calendarDateTextView.setText(selectDate.getYear() + getString(R.string.calendar_year)
-                + month + getString(R.string.calendar_month));
+    public void showCalendarDateTextView() {
+        changeDatePresenter.setDate(selectDate);
     }
 
     @Override
@@ -145,63 +143,5 @@ public class CalendarActivity extends AppCompatActivity
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
-    }
-
-    /**
-     * SelectDate를 저장하기 위한 클래스 (year, month, day 저장)
-     */
-    public static class Date {
-        private int year;
-        private int month;
-        private int day;
-
-        public Date(int year, int month, int day) {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-        }
-
-        public void setDate(int year, int month, int day) {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-        }
-
-        public int getYear() {
-            return year;
-        }
-
-        public void setYear(int year) {
-            this.year = year;
-        }
-
-        public int getMonth() {
-            return month;
-        }
-
-        public void setMonth(int month) {
-            this.month = month;
-        }
-
-        public int getDay() {
-            return day;
-        }
-
-        public void setDay(int day) {
-            this.day = day;
-        }
-
-        public boolean isSameDate(GregorianCalendar cal) {
-            if (cal.get(Calendar.YEAR) != year) {
-                return false;
-            }
-            if (cal.get(Calendar.MONTH) != month) {
-                return false;
-            }
-            if (cal.get(Calendar.DATE) != day) {
-                return false;
-            }
-            return true;
-        }
     }
 }
