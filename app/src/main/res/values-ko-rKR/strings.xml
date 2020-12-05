@@ -43,7 +43,7 @@
     <string name="notification_foreground_action">WASK 열기</string>
 
     <string name="toast_replacement">교체되었습니다</string>
-    <string name="calendar_year">년 </string>
+    <string name="calendar_year">년</string>
     <string name="calendar_month">월</string>
     <string name="calendar_history_of_replacement">마스크 교체 기록</string>
     <string name="calendar_edit_mode">수정모드</string>

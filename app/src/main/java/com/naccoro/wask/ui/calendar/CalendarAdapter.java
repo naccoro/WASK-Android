@@ -14,7 +14,6 @@ import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
-import com.naccoro.wask.ui.calendar.CalendarActivity.Date;
 
 import java.util.ArrayList;
 import java.util.Calendar;
