@@ -55,6 +55,21 @@
     <string name="calendar_friday">금</string>
     <string name="calendar_saturday">토</string>
 
+    <string-array name="datepicker_shortmonth">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
     <string name="wheel_year">년</string>
     <string name="wheel_month">월</string>
     <string name="wheel_day">일</string>
