@@ -55,18 +55,20 @@
     <string name="calendar_friday">금</string>
     <string name="calendar_saturday">토</string>
 
-    <string name="month_january">1</string>
-    <string name="month_february">2</string>
-    <string name="month_march">3</string>
-    <string name="month_april">4</string>
-    <string name="month_may">5</string>
-    <string name="month_june">6</string>
-    <string name="month_july">7</string>
-    <string name="month_august">8</string>
-    <string name="month_september">9</string>
-    <string name="month_october">10</string>
-    <string name="month_november">11</string>
-    <string name="month_december">12</string>
+    <string-array name="datepicker_shortmonth">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
 
     <string name="wheel_year">년</string>
     <string name="wheel_month">월</string>

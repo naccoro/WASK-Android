@@ -440,50 +440,9 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         }
 
         private String getMonthString(int month) {
-            String monthString;
+            String[] monthData = getContext().getResources().getStringArray(R.array.datepicker_shortmonth);
 
-            switch (month) {
-                case 1:
-                    monthString =  getContext().getString(R.string.month_january);
-                    break;
-                case 2:
-                    monthString = getContext().getString(R.string.month_february);
-                    break;
-                case 3:
-                    monthString = getContext().getString(R.string.month_march);
-                    break;
-                case 4:
-                    monthString = getContext().getString(R.string.month_april);
-                    break;
-                case 5:
-                    monthString = getContext().getString(R.string.month_may);
-                    break;
-                case 6:
-                    monthString = getContext().getString(R.string.month_june);
-                    break;
-                case 7:
-                    monthString = getContext().getString(R.string.month_july);
-                    break;
-                case 8:
-                    monthString = getContext().getString(R.string.month_august);
-                    break;
-                case 9:
-                    monthString = getContext().getString(R.string.month_september);
-                    break;
-                case 10:
-                    monthString = getContext().getString(R.string.month_october);
-                    break;
-                case 11:
-                    monthString = getContext().getString(R.string.month_november);
-                    break;
-                case 12:
-                    monthString = getContext().getString(R.string.month_december);
-                    break;
-                default:
-                    monthString = month + "";
-            }
-
-            return monthString + getContext().getString(R.string.wheel_month);
+            return  monthData[month - 1] + getContext().getString(R.string.wheel_month);
         }
 
         private String getDayString(int day) {
