@@ -40,9 +40,9 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     private final int SELECTED_LABEL_PADDING = 5;
     private final int NON_SELECTED_LABEL_PADDING = 2;
 
-    //picker에 표시할 년도의 범위를 2000년도~2030년도로 설정 (변경가능)
+    //picker에 표시할 년도의 범위를 2000년도~2050년도로 설정 (변경가능)
     public static final int START_YEAR_VALUE = 2000;
-    public static final int END_YEAR_VALUE = 2030;
+    public static final int END_YEAR_VALUE = 2050;
 
     //picker에 표시되는 월의 범위를 1(고정)~12월로 설정
     public static final int END_MONTH_VALUE = 12;
@@ -202,8 +202,15 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         int initPosition = position - startDateValue;
         LinearLayoutManager manager = (LinearLayoutManager) WheelRecyclerView.this.getLayoutManager();
         if (manager != null) {
+
+            WheelRecyclerView.this.post(new Runnable() {
+                @Override
+                public void run() {
+                    manager.scrollToPositionWithOffset(initPosition, 0);
+                }
+            });
+
             WheelRecyclerView.this.setCenterPosition(initPosition + WheelRecyclerView.this.adapter.getEmptySpace());
-            manager.scrollToPositionWithOffset(initPosition, 0);
         }
     }
 
@@ -422,7 +429,50 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         }
 
         private String getMonthString(int month) {
-            return month + getContext().getString(R.string.wheel_month);
+            String monthString;
+
+            switch (month) {
+                case 1:
+                    monthString =  getContext().getString(R.string.month_january);
+                    break;
+                case 2:
+                    monthString = getContext().getString(R.string.month_february);
+                    break;
+                case 3:
+                    monthString = getContext().getString(R.string.month_march);
+                    break;
+                case 4:
+                    monthString = getContext().getString(R.string.month_april);
+                    break;
+                case 5:
+                    monthString = getContext().getString(R.string.month_may);
+                    break;
+                case 6:
+                    monthString = getContext().getString(R.string.month_june);
+                    break;
+                case 7:
+                    monthString = getContext().getString(R.string.month_july);
+                    break;
+                case 8:
+                    monthString = getContext().getString(R.string.month_august);
+                    break;
+                case 9:
+                    monthString = getContext().getString(R.string.month_september);
+                    break;
+                case 10:
+                    monthString = getContext().getString(R.string.month_october);
+                    break;
+                case 11:
+                    monthString = getContext().getString(R.string.month_november);
+                    break;
+                case 12:
+                    monthString = getContext().getString(R.string.month_december);
+                    break;
+                default:
+                    monthString = month + "";
+            }
+
+            return monthString + getContext().getString(R.string.wheel_month);
         }
 
         private String getDayString(int day) {

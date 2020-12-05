@@ -56,6 +56,19 @@
     <string name="calendar_friday">fri</string>
     <string name="calendar_saturday">sat</string>
 
+    <string name="month_january">Jan</string>
+    <string name="month_february">Feb</string>
+    <string name="month_march">Mar</string>
+    <string name="month_april">Apr</string>
+    <string name="month_may">May</string>
+    <string name="month_june">Jun</string>
+    <string name="month_july">Jul</string>
+    <string name="month_august">Aug</string>
+    <string name="month_september">Sep</string>
+    <string name="month_october">Oct</string>
+    <string name="month_november">Nov</string>
+    <string name="month_december">Dec</string>
+
     <string name="wheel_year"></string>
     <string name="wheel_month"></string>
     <string name="wheel_day"></string>
