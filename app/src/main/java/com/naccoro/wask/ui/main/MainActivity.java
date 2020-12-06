@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         emotionImageView = findViewById(R.id.imageview_emotion);
         cardMessageTextView = findViewById(R.id.textview_card_message);
         usePeriodTextView = findViewById(R.id.textview_use_period);
-        usePeriodMessageTextView = findViewById(R.id.textview_use_period_message);
+        usePeriodMessageTextView = findViewById(R.id.periodpresenter_use_period_message);
         changeButton = findViewById(R.id.button_change);
         toolbar = findViewById(R.id.wasktoolbar_main);
 

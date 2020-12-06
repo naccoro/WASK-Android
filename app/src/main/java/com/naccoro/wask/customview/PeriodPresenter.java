@@ -10,6 +10,11 @@ import com.naccoro.wask.R;
 
 import java.util.Locale;
 
+/**
+ * 한국어/영어, 단수/복수, 주기 형태에 따른 문자열 조합 커스텀 뷰
+ * @author seonggyu
+ * @since 2020/12/06
+ */
 public class PeriodPresenter extends androidx.appcompat.widget.AppCompatTextView {
     private static final int REPLACEMENT_CYCLE = 0;
     private static final int SNOOZE_REMINDER = 1;
@@ -34,6 +39,7 @@ public class PeriodPresenter extends androidx.appcompat.widget.AppCompatTextView
     }
 
     private void init(@Nullable AttributeSet attrs) {
+        //format 초기화
         if (attrs != null) {
             TypedArray typedArray = getContext().getTheme()
                     .obtainStyledAttributes(attrs, R.styleable.PeriodPresenter, 0, 0);
@@ -43,6 +49,7 @@ public class PeriodPresenter extends androidx.appcompat.widget.AppCompatTextView
         } else {
             format = REPLACEMENT_CYCLE;
         }
+        //언어 초기화
         setLocaleDateType();
     }
 
@@ -56,6 +63,10 @@ public class PeriodPresenter extends androidx.appcompat.widget.AppCompatTextView
         isKoreanType = !language.equals("en");
     }
 
+    /**
+     * 주기 표현 메서드
+     * @param period 나타내고자하는 주기 값
+     */
     public void setPeriod(int period) {
         StringBuilder builder = new StringBuilder()
         .append(getPrefix())
@@ -65,6 +76,7 @@ public class PeriodPresenter extends androidx.appcompat.widget.AppCompatTextView
         setText(builder.toString());
     }
 
+    //접두사 결정
     private String getPrefix() {
         if (isKoreanType) {
             return "";
@@ -82,6 +94,7 @@ public class PeriodPresenter extends androidx.appcompat.widget.AppCompatTextView
         }
     }
 
+    //주기 표기 결정
     private String getPeriod(int period) {
         if (format == CURRENT_USING) {
             return "";
@@ -93,6 +106,7 @@ public class PeriodPresenter extends androidx.appcompat.widget.AppCompatTextView
         }
     }
 
+    //접미사 결정
     private String getSuffix(int period) {
         if (isKoreanType) {
             switch (format) {

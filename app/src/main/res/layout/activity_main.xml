@@ -107,7 +107,7 @@
                 android:textStyle="bold" />
 
             <com.naccoro.wask.customview.PeriodPresenter
-                android:id="@+id/textview_use_period_message"
+                android:id="@+id/periodpresenter_use_period_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/period_suffix_current_using"
