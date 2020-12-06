@@ -106,13 +106,14 @@
                 android:textSize="@dimen/textsize_mainuseperiod_number"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.naccoro.wask.customview.PeriodPresenter
                 android:id="@+id/textview_use_period_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/main_use_period_message"
+                android:text="@string/period_suffix_current_using"
                 android:textColor="@color/waskGrayFont"
-                android:textSize="@dimen/textsize_mainuseperiod_text"/>
+                android:textSize="@dimen/textsize_mainuseperiod_text"
+                app:type="current_using"/>
         </LinearLayout>
 
         <TextView

@@ -15,7 +15,7 @@
 
     <string name="main_card_good">Use one mask a day</string>
     <string name="main_card_bad">Time to change your mask!</string>
-    <string name="main_use_period_message">days used</string>
+    <string name="period_suffix_current_using">days used</string>
     <string name="main_use_period_message_no_replacement">No data</string>
     <string name="main_change_button">Change</string>
     <string name="main_cancel_replacement">Cancel</string>
@@ -61,5 +61,13 @@
     <string name="wheel_day"></string>
 
     <string name="notification_alert">You\'ve been wearing your mask for %d days</string>
+
+    <string name="period_prefix_snooze">in&#160;</string>
+    <string name="period_prefix_cycle">Every&#160;</string>
+    <string name="period_suffix_singular">&#160;day</string>
+    <string name="period_suffix_plural">&#160;days</string>
+    <string name="period_suffix_used">&#160;used</string>
+    <string name="period_suffix_cycle">@string/period_suffix_plural</string>
+    <string name="period_suffix_snooze">@string/period_suffix_plural</string>
 
 </resources>
