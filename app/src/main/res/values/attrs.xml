@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PeriodPresenter">
+        <attr name="type" format="enum">
+            <enum name="replacement_cycle" value="0"/>
+            <enum name="snooze_reminder" value="1"/>
+            <enum name="current_using" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

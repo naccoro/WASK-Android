@@ -15,7 +15,7 @@
 
     <string name="main_card_good">마스크 1일 1사용을 권장합니다</string>
     <string name="main_card_bad">마스크를 교체하는 것을 권장합니다</string>
-    <string name="main_use_period_message">일 째 사용중</string>
+    <string name="period_suffix_current_using">일 째 사용중</string>
     <string name="main_use_period_message_no_replacement">교체 기록이 없습니다.</string>
     <string name="main_change_button">교체하기</string>
     <string name="main_cancel_replacement">교체 취소</string>
@@ -75,5 +75,13 @@
     <string name="wheel_day">일</string>
 
     <string name="notification_alert">마스크를 %d일 째 사용중입니다</string>
+
+    <string name="period_prefix_snooze"></string>
+    <string name="period_prefix_cycle"></string>
+    <string name="period_suffix_singular"></string>
+    <string name="period_suffix_plural"></string>
+    <string name="period_suffix_used"></string>
+    <string name="period_suffix_cycle">일 마다</string>
+    <string name="period_suffix_snooze">일 뒤</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.PeriodPresenter;
 import com.naccoro.wask.ui.calendar.CalendarActivity;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity
     ImageView emotionImageView;
     TextView cardMessageTextView;
     TextView usePeriodTextView;
-    TextView usePeriodMessageTextView;
+    PeriodPresenter usePeriodMessageTextView;
     TextView changeButton;
     WaskToolbar toolbar;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         emotionImageView = findViewById(R.id.imageview_emotion);
         cardMessageTextView = findViewById(R.id.textview_card_message);
         usePeriodTextView = findViewById(R.id.textview_use_period);
-        usePeriodMessageTextView = findViewById(R.id.textview_use_period_message);
+        usePeriodMessageTextView = findViewById(R.id.periodpresenter_use_period_message);
         changeButton = findViewById(R.id.button_change);
         toolbar = findViewById(R.id.wasktoolbar_main);
 
@@ -152,8 +153,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void changeUsePeriodMessage() {
+    public void changeUsePeriodMessage(int period) {
         usePeriodTextView.setVisibility(View.VISIBLE);
-        usePeriodMessageTextView.setText(R.string.main_use_period_message);
+        usePeriodMessageTextView.setPeriod(period);
     }
 }
