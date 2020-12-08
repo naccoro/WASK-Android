@@ -3,12 +3,21 @@ package com.naccoro.wask.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import com.naccoro.wask.R;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.ui.splash.SplashActivity;
+
 import java.util.Locale;
 
 public class LanguageUtil {
 
-    public static void changeLocale(Context context, String localeIdentifier) {
+    public static void initLanguage(Context context) {
+        changeLocale(context, SettingPreferenceManager.getLanguage());
+    }
+
+    public static void changeLocale(Context context, int languageIndex) {
         Locale locale;
+        String localeIdentifier = getLanguageIdentifier(context, languageIndex);
 
         if (localeIdentifier.isEmpty()) {
             locale = Locale.getDefault();
@@ -17,8 +26,12 @@ public class LanguageUtil {
         }
 
         Locale.setDefault(locale);
-        Configuration configuration = context.getResources().getConfiguration();
+        Configuration configuration = new Configuration();
         configuration.locale = locale;
         context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
+
+    private static String getLanguageIdentifier(Context context, int languageIndex) {
+        return context.getResources().getStringArray(R.array.LANGUASE_IDENTIFIER)[languageIndex];
     }
 }

@@ -1,7 +1,6 @@
 package com.naccoro.wask.setting;
 
 import android.content.Context;
-import android.content.res.Configuration;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.mock.MockDatabase;
@@ -12,8 +11,6 @@ import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
 import com.naccoro.wask.utils.LanguageUtil;
 import com.naccoro.wask.utils.NotificationUtil;
-
-import java.util.Locale;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithValue;
@@ -152,7 +149,7 @@ public class SettingPresenter implements SettingContract.Presenter {
         SettingPreferenceManager.setLanguage(language);
         settingView.showLanguageLabel(getLanguageString(context, language.getLanguageIndex()));
 
-        LanguageUtil.changeLocale(context, getLanguageIdentifier(context, language.getLanguageIndex()));
+        LanguageUtil.changeLocale(context, language.getLanguageIndex());
         settingView.refresh();
     }
 
@@ -171,9 +168,5 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     private String getLanguageString(Context context, int languageIndex) {
         return context.getResources().getStringArray(R.array.LANGUASE)[languageIndex];
-    }
-
-    private String getLanguageIdentifier(Context context, int languageIndex) {
-        return context.getResources().getStringArray(R.array.LANGUASE_IDENTIFIER)[languageIndex];
     }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.naccoro.wask.R;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.ui.main.MainActivity;
+import com.naccoro.wask.utils.LanguageUtil;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,6 +25,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        LanguageUtil.initLanguage(this);
 
         ImageView splashImageView = findViewById(R.id.imageview_splash);
 
@@ -50,5 +55,9 @@ public class SplashActivity extends AppCompatActivity {
                         super.onResourceReady(resource, transition);
                     }
                 });
+    }
+
+    private String getLanguageIdentifier(Context context, int languageIndex) {
+        return context.getResources().getStringArray(R.array.LANGUASE_IDENTIFIER)[languageIndex];
     }
 }
