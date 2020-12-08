@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.naccoro.wask.ui.calendar.CalendarActivity.Date;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.DateUtils;
 
