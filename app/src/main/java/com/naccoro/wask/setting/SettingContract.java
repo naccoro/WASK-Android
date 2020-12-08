@@ -2,6 +2,8 @@ package com.naccoro.wask.setting;
 
 import android.content.Context;
 
+import com.naccoro.wask.preferences.SettingPreferenceManager;
+
 public interface SettingContract {
     interface View {
         void showReplacementCycleDialog();
@@ -26,7 +28,7 @@ public interface SettingContract {
     }
 
     interface Presenter {
-        void start();
+        void start(Context context);
 
         void clickHomeButton();
 
@@ -38,7 +40,7 @@ public interface SettingContract {
 
         void changeAlertVisibleSwitch(Context context, boolean isChecked);
 
-        void changePushAlertValue(Context context, String value);
+        void changePushAlertValue(Context context, SettingPreferenceManager.SettingPushAlertType value);
 
         void changeReplacementCycleValue(Context context, int cycleValue);
 
