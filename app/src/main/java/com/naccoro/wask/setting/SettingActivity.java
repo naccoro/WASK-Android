@@ -1,6 +1,8 @@
 package com.naccoro.wask.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Switch;
@@ -23,7 +25,7 @@ public class SettingActivity extends AppCompatActivity
     //푸시 알람
     private TextView pushAlertLabel;
     //포그라운드 서비스 알람
-    private Switch alertVisibleSwitch;
+    private SwitchCompat alertVisibleSwitch;
 
     private WaskToolbar toolbar;
 
