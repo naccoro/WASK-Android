@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.PeriodPresenter;
 import com.naccoro.wask.ui.calendar.CalendarActivity;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity
     ImageView emotionImageView;
     TextView cardMessageTextView;
     TextView usePeriodTextView;
-    TextView usePeriodMessageTextView;
+    PeriodPresenter usePeriodMessageTextView;
     TextView changeButton;
     WaskToolbar toolbar;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         emotionImageView = findViewById(R.id.imageview_emotion);
         cardMessageTextView = findViewById(R.id.textview_card_message);
         usePeriodTextView = findViewById(R.id.textview_use_period);
-        usePeriodMessageTextView = findViewById(R.id.textview_use_period_message);
+        usePeriodMessageTextView = findViewById(R.id.periodpresenter_use_period_message);
         changeButton = findViewById(R.id.button_change);
         toolbar = findViewById(R.id.wasktoolbar_main);
 
@@ -67,18 +68,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showReplaceToast() {
-        Toast.makeText(this.getApplicationContext(), "교체되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(), R.string.toast_replacement, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void enableReplaceButton() {
-        changeButton.setText("교체하기");
+        changeButton.setText(R.string.main_change_button);
         changeButton.setBackgroundTintList(null);
     }
 
     @Override
     public void disableReplaceButton() {
-        changeButton.setText("교체 취소");
+        changeButton.setText(R.string.main_cancel_replacement);
         changeButton.setBackgroundTintList(getResources().getColorStateList(R.color.dividerGray, null));
     }
 
@@ -135,9 +136,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showCancelDialog() {
         new WaskDialogBuilder()
-                .setMessage(getString(R.string.dialog_cancelreplacement))
-                .addHorizontalButton("취소", (dialog, view) -> dialog.dismiss())
-                .addHorizontalButton("확인", ((dialog, view) -> {
+                .setMessage(getString(R.string.dialog_cancel_replacement))
+                .addHorizontalButton(getString(R.string.dialog_cancel), (dialog, view) -> dialog.dismiss())
+                .addHorizontalButton(getString(R.string.dialog_ok), ((dialog, view) -> {
                     presenter.cancelChanging(MainActivity.this);
                     dialog.dismiss();
                 }))
@@ -152,8 +153,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void changeUsePeriodMessage() {
+    public void changeUsePeriodMessage(int period) {
         usePeriodTextView.setVisibility(View.VISIBLE);
-        usePeriodMessageTextView.setText(R.string.main_use_period_message);
+        usePeriodMessageTextView.setPeriod(period);
     }
 }

@@ -46,8 +46,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textview_replacementcyclealert_body"
+            <com.naccoro.wask.customview.PeriodPresenter
+                android:id="@+id/periodpresenter_replacementcyclealert_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_settingchild_bottom"
@@ -55,6 +55,7 @@
                 android:lineSpacingExtra="6sp"
                 android:textColor="@color/waskAccentFont"
                 android:textSize="@dimen/textsize_setting_body"
+                app:type="replacement_cycle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textview_replacementcyclealert_title"
                 app:layout_constraintTop_toBottomOf="@+id/textview_replacementcyclealert_title"
@@ -85,8 +86,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textview_replacelater_body"
+            <com.naccoro.wask.customview.PeriodPresenter
+                android:id="@+id/periodpresenter_replacelater_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_settingchild_bottom"
@@ -94,6 +95,7 @@
                 android:lineSpacingExtra="6sp"
                 android:textColor="@color/waskAccentFont"
                 android:textSize="@dimen/textsize_setting_body"
+                app:type="snooze_reminder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textview_replacelater_title"
                 app:layout_constraintTop_toBottomOf="@+id/textview_replacelater_title"
