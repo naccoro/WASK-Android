@@ -11,6 +11,8 @@ import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.notification.ServiceUtil;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.preferences.SharedPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 
 public class SettingActivity extends AppCompatActivity
@@ -43,7 +45,7 @@ public class SettingActivity extends AppCompatActivity
         init();
 
         //start()함수를 호출하여 초기 설정값을 불러옴
-        presenter.start();
+        presenter.start(this);
 
         //영구 알림 스위치 리스너 초기화
         initSwitchListener();
@@ -122,19 +124,19 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_push_alert))
                 .addVerticalButton(getString(R.string.setting_push_alert_sound), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_sound));
+                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.SOUND);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_vibration), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_vibration));
+                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.VIBRATION);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_all), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_all));
+                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.ALL);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_none), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_none));
+                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.NONE);
                     dialog.dismiss();
                 })
                 .build()

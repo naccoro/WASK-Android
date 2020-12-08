@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ALERT_TYPE">
+        <item>@string/setting_push_alert_sound</item>
+        <item>@string/setting_push_alert_vibration</item>
+        <item>@string/setting_push_alert_all</item>
+        <item>@string/setting_push_alert_none</item>
+    </string-array>
+</resources>

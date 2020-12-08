@@ -56,22 +56,16 @@ public class SettingPreferenceManager {
      * SOUND : 소리, VIBRATION : 진동, ALL : 소리+진동, NONE : 없음
      */
     public enum SettingPushAlertType {
-        SOUND(0, "소리"), VIBRATION(1, "진동"), ALL(2, "소리+진동"), NONE(3, "없음");
+        SOUND(0), VIBRATION(1), ALL(2), NONE(3);
 
-        private int typeIndex;
-        private String typeValue;
+        private final int typeIndex;
 
-        SettingPushAlertType(int index, String value) {
+        SettingPushAlertType(int index) {
             this.typeIndex = index;
-            this.typeValue = value;
         }
 
         public int getTypeIndex() {
             return typeIndex;
-        }
-
-        public String getTypeValue() {
-            return typeValue;
         }
 
         /**
@@ -89,28 +83,6 @@ public class SettingPreferenceManager {
                     return SettingPreferenceManager.SettingPushAlertType.VIBRATION;
 
                 case 2:
-                    return SettingPreferenceManager.SettingPushAlertType.ALL;
-
-                default:
-                    return SettingPreferenceManager.SettingPushAlertType.NONE;
-            }
-        }
-
-        /**
-         * enum class인 SettngPushAlertType을 value 매개변수로 구하는 함수
-         *
-         * @param value : 구하고자 하는 value
-         * @return : 구한 SettingPushAlertType 객체
-         */
-        public static SettingPreferenceManager.SettingPushAlertType getPushAlertTypeWithValue(String value) {
-            switch (value) {
-                case "소리":
-                    return SettingPreferenceManager.SettingPushAlertType.SOUND;
-
-                case "진동":
-                    return SettingPreferenceManager.SettingPushAlertType.VIBRATION;
-
-                case "소리+진동":
                     return SettingPreferenceManager.SettingPushAlertType.ALL;
 
                 default:
