@@ -147,9 +147,6 @@ public class SettingPresenter implements SettingContract.Presenter {
     @Override
     public void changeLanguage(Context context, SettingPreferenceManager.SettingLanguage language) {
         SettingPreferenceManager.setLanguage(language);
-        settingView.showLanguageLabel(getLanguageString(context, language.getLanguageIndex()));
-
-        LanguageUtil.changeLocale(context, language.getLanguageIndex());
         settingView.refresh();
     }
 
