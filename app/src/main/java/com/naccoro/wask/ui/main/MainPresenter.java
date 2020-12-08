@@ -19,8 +19,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     private ReplacementHistoryRepository replacementHistoryRepository;
 
-    private boolean isNoData = true;
-
     MainContract.View mainView;
 
     MainPresenter(MainContract.View mainView, ReplacementHistoryRepository replacementHistoryRepository) {
@@ -44,14 +42,13 @@ public class MainPresenter implements MainContract.Presenter {
             mainView.showNoReplaceData();
             mainView.enableReplaceButton();
         } else if (period > 1) {
-
-            checkIsFirstReplacement();
+            setUsingPeriodMessage(period);
             WaskApplication.isChanged = false;
             mainView.showBadMainView();
             mainView.enableReplaceButton();
         } else {
             //교체한 당일
-            checkIsFirstReplacement();
+            setUsingPeriodMessage(period);
             WaskApplication.isChanged = true;
             mainView.showGoodMainView();
             mainView.disableReplaceButton();
@@ -59,13 +56,10 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     /**
-     * 첫 번째 교체인지 확인 후 멘트 변경
+     * 교체 일자에 따른 사용 메시지 변경
      */
-    private void checkIsFirstReplacement() {
-        if (isNoData) {
-            mainView.changeUsePeriodMessage();
-            isNoData = false;
-        }
+    private void setUsingPeriodMessage(int period) {
+        mainView.changeUsePeriodMessage(period);
     }
 
     @Override
@@ -85,7 +79,7 @@ public class MainPresenter implements MainContract.Presenter {
     public void changeMask(Context context) {
 
         if (!WaskApplication.isChanged) {
-            checkIsFirstReplacement();
+//            checkIsFirstReplacement(getMaskPeriod());
 
             replacementHistoryRepository.insertToday(new ReplacementHistoryRepository.InsertHistoryCallback() {
                 @Override
@@ -166,7 +160,6 @@ public class MainPresenter implements MainContract.Presenter {
         int lastReplacement = replacementHistoryRepository.getLastReplacement();
         if (lastReplacement == -1) {
             //교체 기록이 없을 경우
-            isNoData = true;
             return 0;
         }
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;

@@ -25,7 +25,7 @@ public interface MainContract {
 
         void showNoReplaceData();
 
-        void changeUsePeriodMessage();
+        void changeUsePeriodMessage(int period);
     }
 
     interface Presenter {

@@ -17,6 +17,7 @@ import com.naccoro.wask.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 /**
@@ -33,6 +34,8 @@ import java.util.GregorianCalendar;
  */
 public class WheelDatePicker extends NestedScrollView implements WheelSnapScrollListener.OnSnapPositionChangeListener {
 
+    private LinearLayout rootView;
+
     private WheelRecyclerView yearRecyclerView;
     private WheelRecyclerView monthRecyclerView;
     private WheelRecyclerView dayRecyclerView;
@@ -43,50 +46,43 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
     float recyclerHeight = 0f;
 
     public WheelDatePicker(Context context) {
-        super(context);
-        init(context);
+        this(context, null, 0);
     }
 
     public WheelDatePicker(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
+       this(context, attrs, 0);
     }
 
     public WheelDatePicker(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        initView(context);
+
+        initLanguageType(context);
     }
 
-    private void init(Context context) {
+    private void initView(Context context) {
 
         //사용자가 Nested ScrollView의 뷰 끝에서 스크롤을 시도할 시 번지는 효과 제거
         this.setOverScrollMode(OVER_SCROLL_NEVER);
 
         //RecyclerView 3개를 넣기위한 LinearLayout을 생성, weight로 동일한 비율의 뷰를 정렬하기에 편안
-        LinearLayout parent = new LinearLayout(context);
-        parent.setOrientation(LinearLayout.HORIZONTAL);
-        parent.setGravity(Gravity.CENTER);
-        parent.setWeightSum(3);
+        rootView = new LinearLayout(context);
+        rootView.setOrientation(LinearLayout.HORIZONTAL);
+        rootView.setGravity(Gravity.CENTER);
+        rootView.setWeightSum(3);
         NestedScrollView.LayoutParams rootParams = (NestedScrollView.LayoutParams) getLayoutParams();
         if (rootParams == null) {
             rootParams = new NestedScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             rootParams.leftMargin = (int) getResources().getDimension(R.dimen.margin_datepicker_layout);
             rootParams.rightMargin = (int) getResources().getDimension(R.dimen.margin_datepicker_layout);
         }
-        this.addView(parent, rootParams);
+        this.addView(rootView, rootParams);
 
         yearRecyclerView = new WheelRecyclerView(context);
         monthRecyclerView = new WheelRecyclerView(context);
         dayRecyclerView = new WheelRecyclerView(context);
 
         recyclerHeight = yearRecyclerView.getMaxHeight();
-
-        //3개의 recyclerView를 동일한 크기로 정렬하기 위해 weight 값을 1로 설정
-        LinearLayout.LayoutParams parentParams = new LinearLayout.LayoutParams(0, (int) recyclerHeight, 1);
-
-        parent.addView(yearRecyclerView, parentParams);
-        parent.addView(monthRecyclerView, parentParams);
-        parent.addView(dayRecyclerView, parentParams);
 
         //각각 RecyclerView의 Date Type 지정
         yearRecyclerView.setRecyclerViewType(WheelRecyclerView.WheelRecyclerViewType.YEAR);
@@ -100,6 +96,37 @@ public class WheelDatePicker extends NestedScrollView implements WheelSnapScroll
                 WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
         dayRecyclerView.attachSnapHelperWithListener(new LinearSnapHelper(),
                 WheelSnapScrollListener.Behavior.NOTIFY_ON_SCROLL, this);
+    }
+
+    public void initLanguageType(Context context) {
+        Locale locale = context.getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+
+        if (language.equals("en")) {
+            setEnglishWheelType();
+        } else {
+            setKoreaWheelType();
+        }
+    }
+
+    private void setKoreaWheelType() {
+        rootView.removeAllViews();
+        //3개의 recyclerView를 동일한 크기로 정렬하기 위해 weight 값을 1로 설정
+        LinearLayout.LayoutParams parentParams = new LinearLayout.LayoutParams(0, (int) recyclerHeight, 1);
+
+        rootView.addView(yearRecyclerView, parentParams);
+        rootView.addView(monthRecyclerView, parentParams);
+        rootView.addView(dayRecyclerView, parentParams);
+    }
+
+    private void setEnglishWheelType() {
+        rootView.removeAllViews();
+        //3개의 recyclerView를 동일한 크기로 정렬하기 위해 weight 값을 1로 설정
+        LinearLayout.LayoutParams parentParams = new LinearLayout.LayoutParams(0, (int) recyclerHeight, 1);
+
+        rootView.addView(monthRecyclerView, parentParams);
+        rootView.addView(dayRecyclerView, parentParams);
+        rootView.addView(yearRecyclerView, parentParams);
     }
 
 

@@ -5,6 +5,16 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/period_prefix_snooze"
+        android:textColor="@color/waskGrayFont"
+        android:textSize="@dimen/textsize_dialogreplacementcycle_body"
+        app:layout_constraintEnd_toStartOf="@id/wheelrecycler_replacelater"
+        app:layout_constraintTop_toTopOf="@id/wheelrecycler_replacelater"
+        app:layout_constraintBottom_toBottomOf="@id/wheelrecycler_replacelater"/>
+
     <com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView
         android:id="@+id/wheelrecycler_replacelater"
         android:layout_width="0dp"
@@ -21,7 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_replacelater"
+        android:text="@string/period_suffix_snooze"
         android:textColor="@color/waskGrayFont"
         android:textSize="@dimen/textsize_dialogreplacementcycle_body"
         app:layout_constraintBottom_toBottomOf="@+id/wheelrecycler_replacelater"

@@ -1,5 +1,8 @@
 package com.naccoro.wask.preferences;
 
+import com.naccoro.wask.R;
+import com.naccoro.wask.WaskApplication;
+
 /**
  * SharedPreference의 사용을 도와줌 (Setting값)
  * getter, setter 사용
@@ -57,7 +60,7 @@ public class SettingPreferenceManager {
      */
     public enum SettingPushAlertType {
         SOUND(0), VIBRATION(1), ALL(2), NONE(3);
-
+      
         private final int typeIndex;
 
         SettingPushAlertType(int index) {

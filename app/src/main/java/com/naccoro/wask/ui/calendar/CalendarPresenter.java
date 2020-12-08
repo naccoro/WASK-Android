@@ -1,6 +1,5 @@
 package com.naccoro.wask.ui.calendar;
 
-import com.naccoro.wask.ui.calendar.CalendarActivity.Date;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 
 public class CalendarPresenter implements CalendarContract.Presenter {
@@ -30,7 +29,6 @@ public class CalendarPresenter implements CalendarContract.Presenter {
     @Override
     public void clickChangeDateButton(Date selectDate) {
         changeCalendarList(selectDate);
-        changeCalendarDateTextView(selectDate);
     }
 
     /**
@@ -40,19 +38,7 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      */
     @Override
     public void changeCalendarList(Date selectDate) {
-
         calendarModel.updateCalendarList(selectDate, dateList -> calendarView.initCalendarList(dateList));
-    }
-
-    /**
-     * 0000년 00월 표시
-     *
-     * @param selectDate
-     */
-    @Override
-    public void changeCalendarDateTextView(Date selectDate) {
-        int month = selectDate.getMonth() + 1;
-        calendarView.showCalendarDateTextView(month);
     }
 
     /**

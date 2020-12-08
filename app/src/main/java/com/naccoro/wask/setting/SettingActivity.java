@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.PeriodPresenter;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
@@ -19,9 +20,9 @@ public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
 
     //마스크 교체 주기
-    private TextView replacementCycleAlertLabel;
+    private PeriodPresenter replacementCycleAlertLabel;
     //나중에 교체하기
-    private TextView replaceLaterLabel;
+    private PeriodPresenter replaceLaterLabel;
     //푸시 알람
     private TextView pushAlertLabel;
     //포그라운드 서비스 알람
@@ -52,8 +53,8 @@ public class SettingActivity extends AppCompatActivity
     }
 
     private void init() {
-        replacementCycleAlertLabel = findViewById(R.id.textview_replacementcyclealert_body);
-        replaceLaterLabel = findViewById(R.id.textview_replacelater_body);
+        replacementCycleAlertLabel = findViewById(R.id.periodpresenter_replacementcyclealert_body);
+        replaceLaterLabel = findViewById(R.id.periodpresenter_replacelater_body);
         pushAlertLabel = findViewById(R.id.textview_pushalert_body);
         toolbar = findViewById(R.id.wasktoolbar_setting);
 
@@ -146,13 +147,13 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void showReplacementCycleValue(int cycleValue) {
         periodReplacementCycle = cycleValue;
-        replacementCycleAlertLabel.setText(cycleValue + "일");
+        replacementCycleAlertLabel.setPeriod(cycleValue);
     }
 
     @Override
     public void showReplaceLaterValue(int laterValue) {
         periodReplaceLater = laterValue;
-        replaceLaterLabel.setText(laterValue + "일");
+        replaceLaterLabel.setPeriod(laterValue);
     }
 
     @Override
