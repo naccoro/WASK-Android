@@ -1,7 +1,9 @@
 package com.naccoro.wask.setting;
 
 import android.content.Context;
+import android.content.res.Configuration;
 
+import com.naccoro.wask.R;
 import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
@@ -9,6 +11,8 @@ import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
 import com.naccoro.wask.utils.NotificationUtil;
+
+import java.util.Locale;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithValue;
@@ -22,7 +26,7 @@ public class SettingPresenter implements SettingContract.Presenter {
     }
 
     @Override
-    public void start() {
+    public void start(Context context) {
         int replaceCycleValue = SettingPreferenceManager.getReplaceCycle();
         settingView.showReplacementCycleValue(replaceCycleValue);
 
@@ -32,6 +36,9 @@ public class SettingPresenter implements SettingContract.Presenter {
         int pushAlertIndex = SettingPreferenceManager.getPushAlert();
         SettingPreferenceManager.SettingPushAlertType pushAlertType = getPushAlertTypeWithIndex(pushAlertIndex);
         settingView.showPushAlertValue(pushAlertType.getTypeValue());
+
+        int languageIndex = SettingPreferenceManager.getLanguage();
+        settingView.showLanguageLabel(getLanguageString(context, languageIndex));
 
         boolean isShowNotificationBar = SettingPreferenceManager.getIsShowNotificationBar();
         settingView.setAlertVisibleSwitchValue(isShowNotificationBar);
@@ -55,6 +62,11 @@ public class SettingPresenter implements SettingContract.Presenter {
     @Override
     public void clickPushAlert() {
         settingView.showPushAlertDialog();
+    }
+
+    @Override
+    public void clickLanguage() {
+        settingView.showLanguageDialog();
     }
 
     /**
@@ -134,6 +146,17 @@ public class SettingPresenter implements SettingContract.Presenter {
         settingView.showReplaceLaterValue(laterValue);
     }
 
+    @Override
+    public void changeLanguage(Context context, SettingPreferenceManager.SettingLanguage language) {
+        SettingPreferenceManager.setLanguage(language);
+        settingView.showLanguageLabel(getLanguageString(context, language.getLanguageIndex()));
+
+        Locale locale = new Locale(getLanguageIdentifier(context, language.getLanguageIndex()));
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+        context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
+
     /**
      * 마스크 착용일 설정하는 함수
      * */
@@ -145,5 +168,13 @@ public class SettingPresenter implements SettingContract.Presenter {
             return 0;
         }
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
+    }
+
+    private String getLanguageString(Context context, int languageIndex) {
+        return context.getResources().getStringArray(R.array.LANGUASE)[languageIndex];
+    }
+
+    private String getLanguageIdentifier(Context context, int languageIndex) {
+        return context.getResources().getStringArray(R.array.LANGUASE_IDENTIFIER)[languageIndex];
     }
 }

@@ -2,6 +2,8 @@ package com.naccoro.wask.setting;
 
 import android.content.Context;
 
+import com.naccoro.wask.preferences.SettingPreferenceManager;
+
 public interface SettingContract {
     interface View {
         void showReplacementCycleDialog();
@@ -18,6 +20,10 @@ public interface SettingContract {
 
         void showForegroundAlert(int maskPeriod);
 
+        void showLanguageDialog();
+
+        void showLanguageLabel(String language);
+
         void dismissForegroundAlert();
 
         void setAlertVisibleSwitchValue(boolean isChecked);
@@ -26,7 +32,7 @@ public interface SettingContract {
     }
 
     interface Presenter {
-        void start();
+        void start(Context context);
 
         void clickHomeButton();
 
@@ -36,6 +42,8 @@ public interface SettingContract {
 
         void clickPushAlert();
 
+        void clickLanguage();
+
         void changeAlertVisibleSwitch(Context context, boolean isChecked);
 
         void changePushAlertValue(Context context, String value);
@@ -43,5 +51,7 @@ public interface SettingContract {
         void changeReplacementCycleValue(Context context, int cycleValue);
 
         void changeReplaceLaterValue(Context context, int laterValue);
+
+        void changeLanguage(Context context, SettingPreferenceManager.SettingLanguage language);
     }
 }

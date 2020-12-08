@@ -11,6 +11,7 @@ import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.notification.ServiceUtil;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 
 public class SettingActivity extends AppCompatActivity
@@ -22,6 +23,8 @@ public class SettingActivity extends AppCompatActivity
     private TextView replaceLaterLabel;
     //푸시 알람
     private TextView pushAlertLabel;
+    //언어 선택
+    private TextView languageLabel;
     //포그라운드 서비스 알람
     private Switch alertVisibleSwitch;
 
@@ -43,7 +46,7 @@ public class SettingActivity extends AppCompatActivity
         init();
 
         //start()함수를 호출하여 초기 설정값을 불러옴
-        presenter.start();
+        presenter.start(this);
 
         //영구 알림 스위치 리스너 초기화
         initSwitchListener();
@@ -53,6 +56,7 @@ public class SettingActivity extends AppCompatActivity
         replacementCycleAlertLabel = findViewById(R.id.textview_replacementcyclealert_body);
         replaceLaterLabel = findViewById(R.id.textview_replacelater_body);
         pushAlertLabel = findViewById(R.id.textview_pushalert_body);
+        languageLabel = findViewById(R.id.textview_langause_body);
         toolbar = findViewById(R.id.wasktoolbar_setting);
 
         findViewById(R.id.constraintlayout_replacementcyclealert).setOnClickListener(this);
@@ -60,6 +64,8 @@ public class SettingActivity extends AppCompatActivity
         findViewById(R.id.constraintlayout_replacelater).setOnClickListener(this);
 
         findViewById(R.id.constraintlayout_pushalert).setOnClickListener(this);
+
+        findViewById(R.id.constraintlayout_langause).setOnClickListener(this);
 
         alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
@@ -170,6 +176,30 @@ public class SettingActivity extends AppCompatActivity
 
         AlarmUtil.setForegroundAlarm(this);
     }
+    @Override
+    public void showLanguageDialog() {
+        new WaskDialogBuilder()
+                .setTitle(getString(R.string.setting_language))
+                .addVerticalButton(getString(R.string.language_default), (dialog, view) -> {
+                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.DEFAULT);
+                    dialog.dismiss();
+                })
+                .addVerticalButton(getString(R.string.language_korean), ((dialog, view) -> {
+                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.KOREAN);
+                    dialog.dismiss();
+                }))
+                .addVerticalButton(getString(R.string.language_english), ((dialog, view) -> {
+                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.ENGLISH);
+                    dialog.dismiss();
+                }))
+                .build()
+                .show(getSupportFragmentManager(), "language");
+    }
+
+    @Override
+    public void showLanguageLabel(String language) {
+        languageLabel.setText(language);
+    }
 
     /**
      * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 Off 했을 때
@@ -203,6 +233,9 @@ public class SettingActivity extends AppCompatActivity
 
             case R.id.constraintlayout_pushalert:
                 presenter.clickPushAlert();
+
+            case R.id.constraintlayout_langause:
+                presenter.clickLanguage();
         }
     }
 }
