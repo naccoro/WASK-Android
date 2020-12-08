@@ -1,10 +1,13 @@
 package com.naccoro.wask.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
+
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
@@ -176,6 +179,7 @@ public class SettingActivity extends AppCompatActivity
 
         AlarmUtil.setForegroundAlarm(this);
     }
+
     @Override
     public void showLanguageDialog() {
         new WaskDialogBuilder()
@@ -218,6 +222,15 @@ public class SettingActivity extends AppCompatActivity
     public void finishSettingView() {
         finish();
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
+    }
+
+    @Override
+    public void refresh() {
+        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        finish();
+        startActivity(intent);
     }
 
     @Override

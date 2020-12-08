@@ -10,6 +10,7 @@ import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
+import com.naccoro.wask.utils.LanguageUtil;
 import com.naccoro.wask.utils.NotificationUtil;
 
 import java.util.Locale;
@@ -151,10 +152,8 @@ public class SettingPresenter implements SettingContract.Presenter {
         SettingPreferenceManager.setLanguage(language);
         settingView.showLanguageLabel(getLanguageString(context, language.getLanguageIndex()));
 
-        Locale locale = new Locale(getLanguageIdentifier(context, language.getLanguageIndex()));
-        Configuration configuration = context.getResources().getConfiguration();
-        configuration.setLocale(locale);
-        context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+        LanguageUtil.changeLocale(context, getLanguageIdentifier(context, language.getLanguageIndex()));
+        settingView.refresh();
     }
 
     /**

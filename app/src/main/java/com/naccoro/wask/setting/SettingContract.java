@@ -29,6 +29,8 @@ public interface SettingContract {
         void setAlertVisibleSwitchValue(boolean isChecked);
 
         void finishSettingView();
+
+        void refresh();
     }
 
     interface Presenter {
