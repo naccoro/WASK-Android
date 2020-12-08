@@ -23,6 +23,8 @@ public interface SettingContract {
         void setAlertVisibleSwitchValue(boolean isChecked);
 
         void finishSettingView();
+
+        void showSnoozeInfoDialog();
     }
 
     interface Presenter {

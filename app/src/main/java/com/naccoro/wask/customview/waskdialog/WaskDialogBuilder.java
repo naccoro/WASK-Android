@@ -14,6 +14,7 @@ import java.util.List;
 public class WaskDialogBuilder {
 
     private String title;
+    private boolean titleDivider;
     private String message;
     private int contentRes = -1;
     private WaskDialog.ContentViewCallback contentCallback;
@@ -25,7 +26,7 @@ public class WaskDialogBuilder {
      * @return 옵션이 적용된 WaskDialog 객체
      */
     public WaskDialog build() {
-        return new WaskDialog(title, message, contentRes, contentCallback, verticalButtons, horizontalButtons);
+        return new WaskDialog(title, titleDivider, message, contentRes, contentCallback, verticalButtons, horizontalButtons);
     }
 
     /**
@@ -34,7 +35,18 @@ public class WaskDialogBuilder {
      * @return 메서드 체이닝을 위한 자기 자신을 리턴
      */
     public WaskDialogBuilder setTitle(String title) {
+        return setTitle(title, false);
+    }
+
+    /**
+     * 다이얼로그의 타이틀을 적용
+     * @param title 적용할 타이틀 문자열
+     * @param titleDivider 타이틀 아래에 구분선을 넣을것인가
+     * @return 메서드 체이닝을 위한 자기 자신을 리턴
+     */
+    public WaskDialogBuilder setTitle(String title, boolean titleDivider) {
         this.title = title;
+        this.titleDivider = titleDivider;
         return this;
     }
 

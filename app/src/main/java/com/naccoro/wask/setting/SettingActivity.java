@@ -5,8 +5,8 @@ import androidx.appcompat.widget.SwitchCompat;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.TextView;
+
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
@@ -62,6 +62,8 @@ public class SettingActivity extends AppCompatActivity
         findViewById(R.id.constraintlayout_replacelater).setOnClickListener(this);
 
         findViewById(R.id.constraintlayout_pushalert).setOnClickListener(this);
+
+        findViewById(R.id.imagebutton_replacelater_info).setOnClickListener(this);
 
         alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
@@ -193,6 +195,16 @@ public class SettingActivity extends AppCompatActivity
     }
 
     @Override
+    public void showSnoozeInfoDialog() {
+        new WaskDialogBuilder()
+                .setTitle("나중에 교체하기", true)
+                .setContent(R.layout.layout_snooze_info)
+                .addVerticalButton("확인", (dialog, view) -> dialog.dismiss())
+                .build()
+                .show(getSupportFragmentManager(), "snooze_info");
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.constraintlayout_replacementcyclealert:
@@ -205,6 +217,11 @@ public class SettingActivity extends AppCompatActivity
 
             case R.id.constraintlayout_pushalert:
                 presenter.clickPushAlert();
+                break;
+
+            case R.id.imagebutton_replacelater_info:
+                showSnoozeInfoDialog();
+                break;
         }
     }
 }
