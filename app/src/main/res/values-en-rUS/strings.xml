@@ -75,7 +75,8 @@
     <string name="wheel_month"></string>
     <string name="wheel_day"></string>
 
-    <string name="notification_alert">You\'ve been wearing your mask for %d days</string>
+    <string name="notification_alert_singular">You\'ve been wearing your mask for %d day</string>
+    <string name="notification_alert_plural">You\'ve been wearing your mask for %d days</string>
 
     <string name="period_prefix_snooze">in&#160;</string>
     <string name="period_prefix_cycle">Every&#160;</string>
