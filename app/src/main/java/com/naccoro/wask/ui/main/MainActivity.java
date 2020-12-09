@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
             case R.id.button_change:
                 //교체하기 로직
-                presenter.changeMask(this);
+                presenter.changeMask();
                 break;
         }
     }
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity
                 .setMessage(getString(R.string.dialog_cancel_replacement))
                 .addHorizontalButton(getString(R.string.dialog_cancel), (dialog, view) -> dialog.dismiss())
                 .addHorizontalButton(getString(R.string.dialog_ok), ((dialog, view) -> {
-                    presenter.cancelChanging(MainActivity.this);
+                    presenter.cancelChanging();
                     dialog.dismiss();
                 }))
                 .build()

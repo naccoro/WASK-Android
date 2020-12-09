@@ -76,7 +76,7 @@ public class MainPresenter implements MainContract.Presenter {
      * 사용자가 교체하기 버튼을 누를 경우 호출되는 함수
      */
     @Override
-    public void changeMask(Context context) {
+    public void changeMask() {
 
         if (!WaskApplication.isChanged) {
 //            checkIsFirstReplacement(getMaskPeriod());
@@ -90,7 +90,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                     start();
 
-                    setMaskReplaceNotification(context);
+                    setMaskReplaceNotification(WaskApplication.getApplication());
                 }
 
                 @Override
@@ -107,14 +107,14 @@ public class MainPresenter implements MainContract.Presenter {
      * 교체 취소 다이얼로그에서 확인을 눌렀을 때 호출되는 함수
      */
     @Override
-    public void cancelChanging(Context context) {
+    public void cancelChanging() {
         replacementHistoryRepository.deleteToday();
         WaskApplication.isChanged = false;
 
         //메인화면 갱신
         start();
 
-        setMaskReplaceNotification(context);
+        setMaskReplaceNotification(WaskApplication.getApplication());
     }
 
     /**

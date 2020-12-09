@@ -36,9 +36,9 @@ public interface MainContract {
 
         void clickCalendarButton();
 
-        void changeMask(Context context);
+        void changeMask();
 
-        void cancelChanging(Context context);
+        void cancelChanging();
 
     }
 

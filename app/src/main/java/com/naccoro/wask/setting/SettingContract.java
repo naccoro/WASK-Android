@@ -30,7 +30,7 @@ public interface SettingContract {
     }
 
     interface Presenter {
-        void start(Context context);
+        void start();
 
         void clickHomeButton();
 
@@ -40,12 +40,12 @@ public interface SettingContract {
 
         void clickPushAlert();
 
-        void changeAlertVisibleSwitch(Context context, boolean isChecked);
+        void changeAlertVisibleSwitch(boolean isChecked);
 
-        void changePushAlertValue(Context context, SettingPreferenceManager.SettingPushAlertType value);
+        void changePushAlertValue(SettingPreferenceManager.SettingPushAlertType value);
 
-        void changeReplacementCycleValue(Context context, int cycleValue);
+        void changeReplacementCycleValue(int cycleValue);
 
-        void changeReplaceLaterValue(Context context, int laterValue);
+        void changeReplaceLaterValue(int laterValue);
     }
 }

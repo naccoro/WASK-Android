@@ -48,7 +48,7 @@ public class SettingActivity extends AppCompatActivity
         init();
 
         //start()함수를 호출하여 초기 설정값을 불러옴
-        presenter.start(this);
+        presenter.start();
 
         //영구 알림 스위치 리스너 초기화
         initSwitchListener();
@@ -76,7 +76,7 @@ public class SettingActivity extends AppCompatActivity
 
     private void initSwitchListener() {
         alertVisibleSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked));
+                presenter.changeAlertVisibleSwitch(isChecked));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
-                    presenter.changeReplacementCycleValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
+                    presenter.changeReplacementCycleValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -117,7 +117,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
-                    presenter.changeReplaceLaterValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
+                    presenter.changeReplaceLaterValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -129,19 +129,19 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_push_alert))
                 .addVerticalButton(getString(R.string.setting_push_alert_sound), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.SOUND);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.SOUND);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_vibration), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.VIBRATION);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.VIBRATION);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_all), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.ALL);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.ALL);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_none), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.NONE);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.NONE);
                     dialog.dismiss();
                 })
                 .build()
