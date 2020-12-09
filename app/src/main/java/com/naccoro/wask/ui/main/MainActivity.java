@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.start(this);
+        presenter.start();
     }
 
     @Override
