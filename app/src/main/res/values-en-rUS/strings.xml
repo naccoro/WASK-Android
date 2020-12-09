@@ -71,6 +71,21 @@
         <item>Dec</item>
     </string-array>
 
+    <string-array name="date_full_month_name">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
     <string name="wheel_year"></string>
     <string name="wheel_month"></string>
     <string name="wheel_day"></string>
