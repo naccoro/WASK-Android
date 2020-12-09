@@ -101,6 +101,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/textview_replacelater_title"
                 tools:text="1일" />
 
+            <ImageButton
+                android:id="@+id/imagebutton_replacelater_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_information"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toTopOf="@id/textview_replacelater_title"
+                app:layout_constraintBottom_toBottomOf="@id/textview_replacelater_title"
+                app:layout_constraintStart_toEndOf="@+id/textview_replacelater_title"
+                android:padding="@dimen/padding_settinginfo"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -168,12 +179,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_foregroundalert"
                 style="@style/SwitchThumb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_settingchild_top"
+                android:layout_marginEnd="@dimen/margin_settingchild_top"
                 android:track="@drawable/selector_foregroundalert_switch"
                 app:layout_constraintBottom_toBottomOf="@+id/textview_foregroundalert_title"
                 app:layout_constraintEnd_toEndOf="parent"
