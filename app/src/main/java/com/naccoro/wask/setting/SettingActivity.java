@@ -237,9 +237,9 @@ public class SettingActivity extends AppCompatActivity
 
     public void showSnoozeInfoDialog() {
         new WaskDialogBuilder()
-                .setTitle("나중에 교체하기", true)
+                .setTitle(getString(R.string.setting_replace_later), true)
                 .setContent(R.layout.layout_snooze_info)
-                .addVerticalButton("확인", (dialog, view) -> dialog.dismiss())
+                .addVerticalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> dialog.dismiss())
                 .build()
                 .show(getSupportFragmentManager(), "snooze_info");
     }

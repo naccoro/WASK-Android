@@ -12,6 +12,7 @@
     <string name="setting_push_alert_all">Sound &amp; Vibration</string>
     <string name="setting_push_alert_none">Silence</string>
     <string name="setting_language">Language</string>
+    <string name="setting_language_label">Language</string>
     <string name="setting_snooze_info">If you decide that It\'s okay to postpone the replacement, you can delay replacement by touching "Snooze" button.\nPlease select how many days you would like to postpone the notification</string>
 
     <string name="main_card_good">Use one mask a day</string>
