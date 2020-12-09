@@ -30,7 +30,7 @@ public class MainPresenter implements MainContract.Presenter {
      * MainView에서 보여줘야 할 Data를 가져오는 함수
      */
     @Override
-    public void start() {
+    public void start(Context context) {
         int period;
 
         period = getMaskPeriod();
@@ -53,6 +53,8 @@ public class MainPresenter implements MainContract.Presenter {
             mainView.showGoodMainView();
             mainView.disableReplaceButton();
         }
+
+        ServiceUtil.initForegroundService(context, period);
     }
 
     /**
@@ -88,7 +90,7 @@ public class MainPresenter implements MainContract.Presenter {
                     mainView.enableReplaceButton();
                     WaskApplication.isChanged = true;
 
-                    start();
+                    start(context);
 
                     setMaskReplaceNotification(context);
                 }
@@ -112,7 +114,7 @@ public class MainPresenter implements MainContract.Presenter {
         WaskApplication.isChanged = false;
 
         //메인화면 갱신
-        start();
+        start(context);
 
         setMaskReplaceNotification(context);
     }

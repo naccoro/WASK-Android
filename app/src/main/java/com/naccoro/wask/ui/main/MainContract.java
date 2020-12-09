@@ -30,7 +30,7 @@ public interface MainContract {
 
     interface Presenter {
 
-        void start();
+        void start(Context context);
 
         void clickSettingButton();
 
