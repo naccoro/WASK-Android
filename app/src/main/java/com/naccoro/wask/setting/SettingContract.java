@@ -31,6 +31,8 @@ public interface SettingContract {
         void finishSettingView();
 
         void refresh();
+
+        void showSnoozeInfoDialog();
     }
 
     interface Presenter {
@@ -48,7 +50,7 @@ public interface SettingContract {
 
         void changeAlertVisibleSwitch(Context context, boolean isChecked);
 
-        void changePushAlertValue(Context context, String value);
+        void changePushAlertValue(Context context, SettingPreferenceManager.SettingPushAlertType value);
 
         void changeReplacementCycleValue(Context context, int cycleValue);
 

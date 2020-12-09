@@ -22,6 +22,9 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.naccoro.wask.R;
 import com.naccoro.wask.utils.MetricsUtil;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * centerPosition의 item의 크기를 가장 크게
  * 가운데에서 벗어날 수록 item의 크기가 작아지는 RecyclerView이다.
@@ -40,9 +43,9 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
     private final int SELECTED_LABEL_PADDING = 5;
     private final int NON_SELECTED_LABEL_PADDING = 2;
 
-    //picker에 표시할 년도의 범위를 2000년도~2030년도로 설정 (변경가능)
-    public static final int START_YEAR_VALUE = 2000;
-    public static final int END_YEAR_VALUE = 2030;
+    //picker에 표시할 년도의 범위를 2000년도~2050년도로 설정 (변경가능)
+    public static int START_YEAR_VALUE = 2000;
+    public static int END_YEAR_VALUE = 2050;
 
     //picker에 표시되는 월의 범위를 1(고정)~12월로 설정
     public static final int END_MONTH_VALUE = 12;
@@ -68,21 +71,29 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
 
 
     public WheelRecyclerView(@NonNull Context context) {
-        super(context);
-        init(context);
+       this(context, null, 0);
     }
 
     public WheelRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
+       this(context, attrs, 0);
     }
 
     public WheelRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+
+        initYearRange();
+
+        initView(context);
     }
 
-    private void init(Context context) {
+    private void initYearRange() {
+        Calendar calendar = Calendar.getInstance();
+
+        START_YEAR_VALUE = calendar.get(Calendar.YEAR) - 20;
+        END_YEAR_VALUE = calendar.get(Calendar.YEAR) + 20;
+    }
+
+    private void initView(Context context) {
         this.context = context;
         this.setItemAnimator(null);
 
@@ -202,8 +213,15 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         int initPosition = position - startDateValue;
         LinearLayoutManager manager = (LinearLayoutManager) WheelRecyclerView.this.getLayoutManager();
         if (manager != null) {
+
+            WheelRecyclerView.this.post(new Runnable() {
+                @Override
+                public void run() {
+                    manager.scrollToPositionWithOffset(initPosition, 0);
+                }
+            });
+
             WheelRecyclerView.this.setCenterPosition(initPosition + WheelRecyclerView.this.adapter.getEmptySpace());
-            manager.scrollToPositionWithOffset(initPosition, 0);
         }
     }
 
@@ -418,15 +436,17 @@ public class WheelRecyclerView extends RecyclerView implements WheelSnapScrollLi
         }
 
         private String getYearString(int year) {
-            return year + "년";
+            return year + getContext().getString(R.string.wheel_year);
         }
 
         private String getMonthString(int month) {
-            return month + "월";
+            String[] monthData = getContext().getResources().getStringArray(R.array.datepicker_shortmonth);
+
+            return  monthData[month - 1] + getContext().getString(R.string.wheel_month);
         }
 
         private String getDayString(int day) {
-            return day + "일";
+            return day + getContext().getString(R.string.wheel_day);
         }
 
         class WheelViewHolder extends RecyclerView.ViewHolder {

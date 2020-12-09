@@ -13,7 +13,6 @@ import com.naccoro.wask.utils.LanguageUtil;
 import com.naccoro.wask.utils.NotificationUtil;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
-import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithValue;
 
 public class SettingPresenter implements SettingContract.Presenter {
 
@@ -32,11 +31,10 @@ public class SettingPresenter implements SettingContract.Presenter {
         settingView.showReplaceLaterValue(replaceLaterValue);
 
         int pushAlertIndex = SettingPreferenceManager.getPushAlert();
-        SettingPreferenceManager.SettingPushAlertType pushAlertType = getPushAlertTypeWithIndex(pushAlertIndex);
-        settingView.showPushAlertValue(pushAlertType.getTypeValue());
+        settingView.showPushAlertValue(getPushAlertTypeString(context, pushAlertIndex));
 
         int languageIndex = SettingPreferenceManager.getLanguage();
-        settingView.showLanguageLabel(getLanguageString(context, languageIndex));
+        settingView.showLanguageLabel(LanguageUtil.getLanguageString(context, languageIndex));
 
         boolean isShowNotificationBar = SettingPreferenceManager.getIsShowNotificationBar();
         settingView.setAlertVisibleSwitchValue(isShowNotificationBar);
@@ -94,11 +92,11 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param value: 사용자가 설정한 값  e.g 소리, 진동, 소리+진동, 없음
      */
     @Override
-    public void changePushAlertValue(Context context, String value) {
+    public void changePushAlertValue(Context context, SettingPreferenceManager.SettingPushAlertType value) {
         int oldValue = SettingPreferenceManager.getPushAlert();
+        int newValue = value.getTypeIndex();
 
-        SettingPreferenceManager.SettingPushAlertType pushAlertType = getPushAlertTypeWithValue(value);
-        SettingPreferenceManager.setPushAlert(pushAlertType.getTypeIndex());
+        SettingPreferenceManager.setPushAlert(newValue);
 
         MockDatabase.MockNotificationData pushAlertData = MockDatabase.getReplacementCycleData(context);
 
@@ -107,7 +105,8 @@ public class SettingPresenter implements SettingContract.Presenter {
         //새롭게 변경된 설정 적용하여 channel 생성
         NotificationUtil.createNotificationChannel(context, pushAlertData);
 
-        settingView.showPushAlertValue(value);
+        //설정 값에 대응하는 문자열을 보여주기
+        settingView.showPushAlertValue(getPushAlertTypeString(context,newValue));
     }
 
     /**
@@ -163,7 +162,8 @@ public class SettingPresenter implements SettingContract.Presenter {
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;
     }
 
-    private String getLanguageString(Context context, int languageIndex) {
-        return context.getResources().getStringArray(R.array.LANGUASE)[languageIndex];
+    //StringArray에서 인덱스에 해당하는 푸시 알림 방식 문자열을 불러오기
+    private String getPushAlertTypeString(Context context, int index) {
+        return context.getResources().getStringArray(R.array.ALERT_TYPE)[index];
     }
 }

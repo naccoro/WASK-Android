@@ -33,6 +33,7 @@ public class WaskDialog extends DialogFragment {
     private static final String TAG = "WaskDialog";
 
     private String title;
+    private boolean titleDivider;
     private String message;
     private int contentRes = -1;
     private List<WaskDialogButton> verticalButtons;
@@ -46,10 +47,11 @@ public class WaskDialog extends DialogFragment {
     private View contentView;
     private ContentViewCallback contentCallback;
 
-    public WaskDialog(String title, String message, @LayoutRes int contentRes, ContentViewCallback contentCallback, List<WaskDialogButton> verticalButtons,
+    public WaskDialog(String title, boolean titleDivider, String message, @LayoutRes int contentRes, ContentViewCallback contentCallback, List<WaskDialogButton> verticalButtons,
                       List<WaskDialogButton> horizontalButtons) {
         super();
         this.title = title;
+        this.titleDivider = titleDivider;
         this.message = message;
         this.contentRes = contentRes;
         this.contentCallback = contentCallback;
@@ -93,6 +95,10 @@ public class WaskDialog extends DialogFragment {
         //타이틀과 메시지 초기화
         initTextView(textViewDialogTitle, title);
         initTextView(textViewDialogMessage, message);
+
+        if (titleDivider) {
+            view.findViewById(R.id.view_dialog_titledivider).setVisibility(View.VISIBLE);
+        }
 
         //컨텐츠 적용
         if (contentRes != -1) {

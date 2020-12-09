@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">WASK</string>
+
+    <string name="setting_title">Setting</string>
+    <string name="setting_replacement_cycle">Mask Replacement Reminder</string>
+    <string name="setting_replace_later">Snooze Reminder</string>
+    <string name="setting_push_alert">Push Alert</string>
+    <string name="setting_foreground_alert">Add widget to notification bar</string>
+    <string name="setting_dialog_ok">OK</string>
+    <string name="setting_push_alert_sound">Sound</string>
+    <string name="setting_push_alert_vibration">Vibration</string>
+    <string name="setting_push_alert_all">Sound &amp; Vibration</string>
+    <string name="setting_push_alert_none">Silence</string>
+    <string name="setting_language">Language</string>
+    <string name="setting_snooze_info">If you decide that It\'s okay to postpone the replacement, you can delay replacement by touching "Snooze" button.\nPlease select how many days you would like to postpone the notification</string>
+
+    <string name="main_card_good">Use one mask a day</string>
+    <string name="main_card_bad">Time to change your mask!</string>
+    <string name="period_suffix_current_using">days used</string>
+    <string name="main_use_period_message_no_replacement">No data</string>
+    <string name="main_change_button">Change</string>
+    <string name="main_cancel_replacement">Cancel</string>
+
+    <string name="dialog_replacementcycle"> days</string>
+    <string name="dialog_replacelater">days later</string>
+    <string name="dialog_cancel_replacement">Are you sure to cancel?</string>
+    <string name="dialog_cancel">No</string>
+    <string name="dialog_ok">Yes</string>
+
+    <string name="notificationchannel_push_name">Notification for replacement the mask</string>
+    <string name="notificationchannel_push_description">Get notifications when it\'s time to replace the mask. You may not receive the notifications if the setting is changed.</string>
+    <string name="notificationchannel_pushsound_id">wask_push_sound</string>
+    <string name="notificationchannel_pushvibration_id">wask_push_vibration</string>
+    <string name="notificationchannel_pushall_id">wask_push_all</string>
+    <string name="notificationchannel_pushnone_id">wask_push_none</string>
+
+    <string name="notification_replacementcycle_text">Time to change your mask!</string>
+    <string name="notification_replacementcycle_ok">Replace</string>
+    <string name="notification_replacementcycle_later">Later</string>
+
+    <string name="notification_replacelater_text">Did you replace the mask?</string>
+    <string name="notification_replacelater_ok">Yes</string>
+    <string name="notification_replacelater_x">Not yet</string>
+    <string name="notification_foreground_action">Open WASK</string>
+
+    <string name="toast_replacement">Well done! You have changed your mask!</string>
+
+    <string name="calendar_year">.</string>
+    <string name="calendar_month"></string>
+    <string name="calendar_history_of_replacement">History</string>
+    <string name="calendar_edit_mode">Edit</string>
+    <string name="calendar_sunday">sun</string>
+    <string name="calendar_monday">mon</string>
+    <string name="calendar_tuesday">tue</string>
+    <string name="calendar_wednesday">wed</string>
+    <string name="calendar_thursday">thu</string>
+    <string name="calendar_friday">fri</string>
+    <string name="calendar_saturday">sat</string>
+
+    <string-array name="datepicker_shortmonth">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
+
+    <string name="wheel_year"></string>
+    <string name="wheel_month"></string>
+    <string name="wheel_day"></string>
+
+    <string name="notification_alert">You\'ve been wearing your mask for %d days</string>
+
+    <string name="period_prefix_snooze">in&#160;</string>
+    <string name="period_prefix_cycle">Every&#160;</string>
+    <string name="period_suffix_singular">&#160;day</string>
+    <string name="period_suffix_plural">&#160;days</string>
+    <string name="period_suffix_used">&#160;used</string>
+    <string name="period_suffix_cycle">@string/period_suffix_plural</string>
+    <string name="period_suffix_snooze">@string/period_suffix_plural</string>
+
+    <string name="language_default">Default</string>
+    <string name="language_korean">한국어</string>
+    <string name="language_english">English</string>
+
+</resources>

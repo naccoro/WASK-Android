@@ -33,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_calendar_textview_left"
             android:layout_marginTop="@dimen/margin_calendar_textview_vertical"
-            android:text="마스크 교체 기록"
+            android:text="@string/calendar_history_of_replacement"
             android:textColor="@color/waskGrayFont"
             android:textSize="17dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/constraintlayout_changedate"
+            app:layout_constraintBottom_toTopOf="@+id/datepresenter_changedate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/constraintlayout_content" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_calendar_textviewmodify_right"
-            android:text="수정모드"
+            android:text="@string/calendar_edit_mode"
             android:textColor="@color/colorDatePickerNoSelectedLabel"
             android:textSize="12dp"
             android:textStyle="bold"
@@ -65,40 +65,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/textview_calendar_title" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintlayout_changedate"
+        <com.naccoro.wask.customview.DatePresenter
+            android:id="@+id/datepresenter_changedate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:foreground="?android:selectableItemBackground"
             android:paddingVertical="@dimen/padding_calendar_changebutton"
             android:paddingEnd="@dimen/padding_calendar_changebutton"
-            android:layout_marginLeft="@dimen/margin_calendar_textview_left"
+            android:layout_marginStart="@dimen/margin_calendar_textview_left"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_calendar_title" >
-
-            <TextView
-                android:id="@+id/textview_calendar_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0000년 0월"
-                android:textColor="@color/waskGrayFont"
-                android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <ImageView
-                android:id="@+id/imageView_calendar_changedate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_calendar_changedate"
-                android:padding="@dimen/padding_calendar_changebutton"
-                app:layout_constraintStart_toEndOf="@id/textview_calendar_date"
-                app:layout_constraintTop_toTopOf="@id/textview_calendar_date"
-                app:layout_constraintBottom_toBottomOf="@id/textview_calendar_date" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textview_calendar_title"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -109,7 +84,7 @@
             android:layout_marginTop="@dimen/margin_week_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_changedate">
+            app:layout_constraintTop_toBottomOf="@+id/datepresenter_changedate">
 
             <TextView
                 android:id="@+id/textview_sunday"
@@ -117,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="일"
+                android:text="@string/calendar_sunday"
                 android:textColor="@color/waskRed"
                 android:textSize="@dimen/textsize_calendar_content" />
 
@@ -127,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="월"
+                android:text="@string/calendar_monday"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
@@ -137,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="화"
+                android:text="@string/calendar_tuesday"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
@@ -147,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="수"
+                android:text="@string/calendar_wednesday"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
@@ -157,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="목"
+                android:text="@string/calendar_thursday"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
@@ -167,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="금"
+                android:text="@string/calendar_friday"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 
@@ -177,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="토"
+                android:text="@string/calendar_saturday"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_calendar_content" />
 

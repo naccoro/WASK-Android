@@ -15,19 +15,28 @@
             android:id="@+id/linearlayout_dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/linearlayout_dialog_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/linearlayout_dialog_content"
             app:layout_constraintVertical_chainStyle="packed">
 
             <TextView
                 android:id="@+id/textview_dialog_title"
+                style="@style/WaskDialogText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="다이얼로그 제목이 들어갈 공간"
-                style="@style/WaskDialogText"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:text="다이얼로그 제목이 들어갈 공간" />
+
+            <View
+                android:id="@+id/view_dialog_titledivider"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/margin_dialog_title_divider_top"
+                android:layout_height="1dp"
+                android:background="@color/dividerGray"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -36,21 +45,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearlayout_dialog_title"
+            app:layout_constraintBottom_toTopOf="@id/linearlayout_dialog_buttons"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/linearlayout_dialog_buttons">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearlayout_dialog_title">
 
             <TextView
                 android:id="@+id/textview_dialog_message"
+                style="@style/WaskDialogText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="다이얼로그의 메시지가 들어갈 공간"
-                style="@style/WaskDialogText"
-                android:textFontWeight="400"
                 android:layout_gravity="center"
                 android:layout_marginTop="56dp"
-                android:layout_marginBottom="56dp"/>
+                android:layout_marginBottom="56dp"
+                android:text="다이얼로그의 메시지가 들어갈 공간"
+                android:textFontWeight="400" />
 
         </LinearLayout>
 

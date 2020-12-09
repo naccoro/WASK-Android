@@ -15,6 +15,10 @@ public class LanguageUtil {
         changeLocale(context, SettingPreferenceManager.getLanguage());
     }
 
+    public static String getLanguageString(Context context, int languageIndex) {
+        return context.getResources().getStringArray(R.array.LANGUASE)[languageIndex];
+    }
+
     private static void changeLocale(Context context, int languageIndex) {
         Locale locale;
         String localeIdentifier = getLanguageIdentifier(context, languageIndex);
