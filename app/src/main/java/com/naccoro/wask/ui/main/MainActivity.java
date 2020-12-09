@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     MainPresenter presenter;
 
     ImageView emotionImageView;
+    ImageView peopleImageView;
     TextView cardMessageTextView;
     TextView usePeriodTextView;
     PeriodPresenter usePeriodMessageTextView;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initView() {
         emotionImageView = findViewById(R.id.imageview_emotion);
+        peopleImageView = findViewById(R.id.imageview_people);
         cardMessageTextView = findViewById(R.id.textview_card_message);
         usePeriodTextView = findViewById(R.id.textview_use_period);
         usePeriodMessageTextView = findViewById(R.id.periodpresenter_use_period_message);
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showGoodMainView() {
         emotionImageView.setImageResource(R.drawable.ic_good);
+        peopleImageView.setImageResource(R.drawable.ic_main_blue);
 
         int textColor = getColor(R.color.waskBlue);
         String message = getString(R.string.main_card_good);
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showBadMainView() {
         emotionImageView.setImageResource(R.drawable.ic_bad);
+        peopleImageView.setImageResource(R.drawable.ic_main_red);
 
         int textColor = getColor(R.color.waskRed);
         String message = getString(R.string.main_card_bad);
