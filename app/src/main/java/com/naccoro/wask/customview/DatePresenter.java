@@ -36,9 +36,7 @@ public class DatePresenter extends LinearLayout {
     private TextView monthText;
     private ImageView arrowImage;
     private Date date;
-
-    private DateFormatSymbols dateFormatSymbols;
-
+    
     public DatePresenter(Context context) {
         super(context);
         init();
@@ -163,10 +161,7 @@ public class DatePresenter extends LinearLayout {
 
     //영어인 경우, 월의 이름(November, December 등) 가져오기
     private String getMonthName(int month) {
-        if (dateFormatSymbols == null) {
-            dateFormatSymbols = new DateFormatSymbols();
-        }
-        return dateFormatSymbols.getMonths()[month];
+        return getResources().getStringArray(R.array.date_full_month_name)[month];
     }
 
     /**
