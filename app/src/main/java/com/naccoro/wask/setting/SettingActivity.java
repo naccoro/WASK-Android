@@ -257,6 +257,7 @@ public class SettingActivity extends AppCompatActivity
 
             case R.id.constraintlayout_pushalert:
                 presenter.clickPushAlert();
+                break;
 
             case R.id.constraintlayout_langause:
                 presenter.clickLanguage();
