@@ -3,6 +3,7 @@ package com.naccoro.wask.ui.main;
 import android.util.Log;
 
 import com.naccoro.wask.WaskApplication;
+import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.DateUtils;

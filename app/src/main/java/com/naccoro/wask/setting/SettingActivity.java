@@ -18,6 +18,7 @@ import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.utils.AlarmUtil;
+import com.naccoro.wask.utils.LanguageUtil;
 import com.naccoro.wask.utils.NotificationUtil;
 
 public class SettingActivity extends AppCompatActivity
@@ -276,6 +277,11 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public String getPushAlertTypeString(int index) {
         return getResources().getStringArray(R.array.ALERT_TYPE)[index];
+    }
+
+    @Override
+    public String getLanguageString(int languageIndex) {
+        return LanguageUtil.getLanguageString(this, languageIndex);
     }
 
     @Override

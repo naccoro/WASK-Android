@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
-import com.naccoro.wask.ui.splash.SplashActivity;
 
 import java.util.Locale;
 

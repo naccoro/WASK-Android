@@ -3,7 +3,6 @@ package com.naccoro.wask.setting;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.DateUtils;
-import com.naccoro.wask.utils.LanguageUtil;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
 
@@ -29,7 +28,7 @@ public class SettingPresenter implements SettingContract.Presenter {
         settingView.showPushAlertValue(getPushAlertTypeString(pushAlertIndex));
 
         int languageIndex = SettingPreferenceManager.getLanguage();
-        settingView.showLanguageLabel(LanguageUtil.getLanguageString(languageIndex));
+        settingView.showLanguageLabel(settingView.getLanguageString(languageIndex));
 
         boolean isShowNotificationBar = SettingPreferenceManager.getIsShowNotificationBar();
         settingView.setAlertVisibleSwitchValue(isShowNotificationBar);

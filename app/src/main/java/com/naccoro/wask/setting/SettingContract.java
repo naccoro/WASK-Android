@@ -39,6 +39,8 @@ public interface SettingContract {
         void refreshAlarmInSnooze();
 
         String getPushAlertTypeString(int index);
+
+        String getLanguageString(int languageIndex);
     }
 
     interface Presenter {
@@ -52,8 +54,6 @@ public interface SettingContract {
 
         void clickPushAlert();
 
-        void changeAlertVisibleSwitch(boolean isChecked);
-
         void clickLanguage();
 
         void changeAlertVisibleSwitch(boolean isChecked);
@@ -61,8 +61,6 @@ public interface SettingContract {
         void changePushAlertValue(SettingPreferenceManager.SettingPushAlertType value);
 
         void changeReplacementCycleValue(int cycleValue);
-
-        void changeReplaceLaterValue(int laterValue);
 
         void changeReplaceLaterValue(int laterValue);
 
