@@ -154,12 +154,51 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_langause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_pushalert">
+
+            <TextView
+                android:id="@+id/textview_langause_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_setting_left"
+                android:layout_marginTop="@dimen/margin_settingchild_top"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="8sp"
+                android:text="@string/setting_language_label"
+                android:textColor="@color/waskGrayFont"
+                android:textSize="@dimen/textsize_setting_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_langause_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_settingchild_bottom"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="6sp"
+                android:textColor="@color/waskAccentFont"
+                android:textSize="@dimen/textsize_setting_body"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_langause_title"
+                app:layout_constraintTop_toBottomOf="@+id/textview_langause_title"
+                tools:text="한국어" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintlayout_foregroundalert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_pushalert">
+            app:layout_constraintTop_toBottomOf="@+id/constraintlayout_langause">
 
             <TextView
                 android:id="@+id/textview_foregroundalert_title"

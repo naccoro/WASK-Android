@@ -18,11 +18,17 @@ public interface SettingContract {
 
         void showForegroundAlert(int maskPeriod);
 
+        void showLanguageDialog();
+
+        void showLanguageLabel(String language);
+
         void dismissForegroundAlert();
 
         void setAlertVisibleSwitchValue(boolean isChecked);
 
         void finishSettingView();
+
+        void refresh();
 
         void showSnoozeInfoDialog();
 
@@ -48,10 +54,18 @@ public interface SettingContract {
 
         void changeAlertVisibleSwitch(boolean isChecked);
 
+        void clickLanguage();
+
+        void changeAlertVisibleSwitch(boolean isChecked);
+
         void changePushAlertValue(SettingPreferenceManager.SettingPushAlertType value);
 
         void changeReplacementCycleValue(int cycleValue);
 
         void changeReplaceLaterValue(int laterValue);
+
+        void changeReplaceLaterValue(int laterValue);
+
+        void changeLanguage(SettingPreferenceManager.SettingLanguage language);
     }
 }
