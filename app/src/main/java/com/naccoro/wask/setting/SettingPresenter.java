@@ -9,6 +9,7 @@ import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
 import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
+import com.naccoro.wask.utils.LanguageUtil;
 import com.naccoro.wask.utils.NotificationUtil;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
@@ -32,6 +33,9 @@ public class SettingPresenter implements SettingContract.Presenter {
         int pushAlertIndex = SettingPreferenceManager.getPushAlert();
         settingView.showPushAlertValue(getPushAlertTypeString(context, pushAlertIndex));
 
+        int languageIndex = SettingPreferenceManager.getLanguage();
+        settingView.showLanguageLabel(LanguageUtil.getLanguageString(context, languageIndex));
+
         boolean isShowNotificationBar = SettingPreferenceManager.getIsShowNotificationBar();
         settingView.setAlertVisibleSwitchValue(isShowNotificationBar);
     }
@@ -54,6 +58,11 @@ public class SettingPresenter implements SettingContract.Presenter {
     @Override
     public void clickPushAlert() {
         settingView.showPushAlertDialog();
+    }
+
+    @Override
+    public void clickLanguage() {
+        settingView.showLanguageDialog();
     }
 
     /**
@@ -132,6 +141,12 @@ public class SettingPresenter implements SettingContract.Presenter {
         }
 
         settingView.showReplaceLaterValue(laterValue);
+    }
+
+    @Override
+    public void changeLanguage(Context context, SettingPreferenceManager.SettingLanguage language) {
+        SettingPreferenceManager.setLanguage(language);
+        settingView.refresh();
     }
 
     /**

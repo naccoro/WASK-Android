@@ -20,11 +20,17 @@ public interface SettingContract {
 
         void showForegroundAlert(int maskPeriod);
 
+        void showLanguageDialog();
+
+        void showLanguageLabel(String language);
+
         void dismissForegroundAlert();
 
         void setAlertVisibleSwitchValue(boolean isChecked);
 
         void finishSettingView();
+
+        void refresh();
 
         void showSnoozeInfoDialog();
     }
@@ -40,6 +46,8 @@ public interface SettingContract {
 
         void clickPushAlert();
 
+        void clickLanguage();
+
         void changeAlertVisibleSwitch(Context context, boolean isChecked);
 
         void changePushAlertValue(Context context, SettingPreferenceManager.SettingPushAlertType value);
@@ -47,5 +55,7 @@ public interface SettingContract {
         void changeReplacementCycleValue(Context context, int cycleValue);
 
         void changeReplaceLaterValue(Context context, int laterValue);
+
+        void changeLanguage(Context context, SettingPreferenceManager.SettingLanguage language);
     }
 }

@@ -2,7 +2,7 @@ package com.naccoro.wask.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -15,7 +15,6 @@ import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
-import com.naccoro.wask.preferences.SharedPreferenceManager;
 import com.naccoro.wask.utils.AlarmUtil;
 
 public class SettingActivity extends AppCompatActivity
@@ -27,6 +26,8 @@ public class SettingActivity extends AppCompatActivity
     private PeriodPresenter replaceLaterLabel;
     //푸시 알람
     private TextView pushAlertLabel;
+    //언어 선택
+    private TextView languageLabel;
     //포그라운드 서비스 알람
     private SwitchCompat alertVisibleSwitch;
 
@@ -58,6 +59,7 @@ public class SettingActivity extends AppCompatActivity
         replacementCycleAlertLabel = findViewById(R.id.periodpresenter_replacementcyclealert_body);
         replaceLaterLabel = findViewById(R.id.periodpresenter_replacelater_body);
         pushAlertLabel = findViewById(R.id.textview_pushalert_body);
+        languageLabel = findViewById(R.id.textview_langause_body);
         toolbar = findViewById(R.id.wasktoolbar_setting);
 
         findViewById(R.id.constraintlayout_replacementcyclealert).setOnClickListener(this);
@@ -65,6 +67,8 @@ public class SettingActivity extends AppCompatActivity
         findViewById(R.id.constraintlayout_replacelater).setOnClickListener(this);
 
         findViewById(R.id.constraintlayout_pushalert).setOnClickListener(this);
+
+        findViewById(R.id.constraintlayout_langause).setOnClickListener(this);
 
         findViewById(R.id.imagebutton_replacelater_info).setOnClickListener(this);
 
@@ -178,6 +182,31 @@ public class SettingActivity extends AppCompatActivity
         AlarmUtil.setForegroundAlarm(this);
     }
 
+    @Override
+    public void showLanguageDialog() {
+        new WaskDialogBuilder()
+                .setTitle(getString(R.string.setting_language))
+                .addVerticalButton(getString(R.string.language_default), (dialog, view) -> {
+                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.DEFAULT);
+                    dialog.dismiss();
+                })
+                .addVerticalButton(getString(R.string.language_korean), ((dialog, view) -> {
+                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.KOREAN);
+                    dialog.dismiss();
+                }))
+                .addVerticalButton(getString(R.string.language_english), ((dialog, view) -> {
+                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.ENGLISH);
+                    dialog.dismiss();
+                }))
+                .build()
+                .show(getSupportFragmentManager(), "language");
+    }
+
+    @Override
+    public void showLanguageLabel(String language) {
+        languageLabel.setText(language);
+    }
+
     /**
      * 사용자가 마스크 사용 일자 알림바 ( foreground ) 스위치를 Off 했을 때
      */
@@ -198,11 +227,19 @@ public class SettingActivity extends AppCompatActivity
     }
 
     @Override
+    public void refresh() {
+        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        finish();
+        startActivity(intent);
+    }
+
     public void showSnoozeInfoDialog() {
         new WaskDialogBuilder()
-                .setTitle("나중에 교체하기", true)
+                .setTitle(getString(R.string.setting_replace_later), true)
                 .setContent(R.layout.layout_snooze_info)
-                .addVerticalButton("확인", (dialog, view) -> dialog.dismiss())
+                .addVerticalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> dialog.dismiss())
                 .build()
                 .show(getSupportFragmentManager(), "snooze_info");
     }
@@ -220,6 +257,10 @@ public class SettingActivity extends AppCompatActivity
 
             case R.id.constraintlayout_pushalert:
                 presenter.clickPushAlert();
+                break;
+
+            case R.id.constraintlayout_langause:
+                presenter.clickLanguage();
                 break;
 
             case R.id.imagebutton_replacelater_info:
