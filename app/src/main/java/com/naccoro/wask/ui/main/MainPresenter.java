@@ -53,6 +53,8 @@ public class MainPresenter implements MainContract.Presenter {
             mainView.showGoodMainView();
             mainView.disableReplaceButton();
         }
+
+        ServiceUtil.initForegroundService(WaskApplication.getApplication(), period);
     }
 
     /**
