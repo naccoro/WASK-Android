@@ -8,15 +8,19 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.customview.PeriodPresenter;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.preferences.SharedPreferenceManager;
+import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.utils.AlarmUtil;
+import com.naccoro.wask.utils.NotificationUtil;
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
@@ -43,7 +47,7 @@ public class SettingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        presenter = new SettingPresenter(this);
+        presenter = new SettingPresenter(this, Injection.replacementHistoryRepository(this));
 
         init();
 
@@ -205,6 +209,37 @@ public class SettingActivity extends AppCompatActivity
                 .addVerticalButton("확인", (dialog, view) -> dialog.dismiss())
                 .build()
                 .show(getSupportFragmentManager(), "snooze_info");
+    }
+
+    @Override
+    public void updateNotificationChanel(SettingPreferenceManager.SettingPushAlertType pushAlertType) {
+        MockDatabase.MockNotificationData pushAlertData = MockDatabase.getReplacementCycleData(this);
+
+        //기존 Channel 삭제
+        NotificationUtil.deleteNotificationChannel(this, pushAlertType);
+        //새롭게 변경된 설정 적용하여 channel 생성
+        NotificationUtil.createNotificationChannel(this, pushAlertData);
+    }
+
+    @Override
+    public void refreshAlarm() {
+        //Alarm 다시 설정
+        AlarmUtil.cancelReplacementCycleAlarm(this);
+        AlarmUtil.setReplacementCycleAlarm(this);
+    }
+
+    @Override
+    public void refreshAlarmInSnooze() {
+        //나중에 교체하기 알람 중이었다면 재설정
+        if (AlarmUtil.isLaterAlarmExist(this)) {
+            AlarmUtil.cancelReplaceLaterAlarm(this);
+            AlarmUtil.setReplacementLaterAlarm(this, true);
+        }
+    }
+
+    @Override
+    public String getPushAlertTypeString(int index) {
+        return getResources().getStringArray(R.array.ALERT_TYPE)[index];
     }
 
     @Override

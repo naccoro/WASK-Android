@@ -1,17 +1,11 @@
 package com.naccoro.wask.ui.main;
 
-
-import android.content.Context;
-
-import com.naccoro.wask.WaskApplication;
-import com.naccoro.wask.notification.ServiceUtil;
-import com.naccoro.wask.preferences.SettingPreferenceManager;
-import com.naccoro.wask.utils.AlarmUtil;
-import com.naccoro.wask.utils.DateUtils;
-
 import android.util.Log;
 
+import com.naccoro.wask.WaskApplication;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
+import com.naccoro.wask.utils.DateUtils;
 
 public class MainPresenter implements MainContract.Presenter {
 
@@ -90,7 +84,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                     start();
 
-                    setMaskReplaceNotification(WaskApplication.getApplication());
+                    setMaskReplaceNotification();
                 }
 
                 @Override
@@ -114,41 +108,24 @@ public class MainPresenter implements MainContract.Presenter {
         //메인화면 갱신
         start();
 
-        setMaskReplaceNotification(WaskApplication.getApplication());
+        setMaskReplaceNotification();
     }
 
     /**
      * Foreground  변경점을 반영한다.
      */
-    private void showForegroundNotification(Context context) {
-
+    public void showForegroundNotification() {
         if (SettingPreferenceManager.getIsShowNotificationBar()) {
             int period = getMaskPeriod();
-            if (period > 0) {
-                ServiceUtil.showForegroundService(context, period);
-                AlarmUtil.setForegroundAlarm(context);
-            } else {
-                ServiceUtil.dismissForegroundService(context);
-                AlarmUtil.cancelForegroundAlarm(context);
-            }
+            mainView.showForegroundNotification(period);
         }
     }
 
     /**
      * 등록되어 있는 알람을 종료하고 새로운 교체하기 알람을 등록한다.
      */
-    private void setMaskReplaceNotification(Context context) {
-        //기본 교체하기 알람이 있었다면 제거
-        if (AlarmUtil.isCycleAlarmExist(context)) {
-            AlarmUtil.cancelReplacementCycleAlarm(context);
-
-        //나중에 교체하기 알림 중이었다면 제거
-        } else if (AlarmUtil.isLaterAlarmExist(context)) {
-            AlarmUtil.cancelReplaceLaterAlarm(context);
-        }
-
-        showForegroundNotification(context);
-        AlarmUtil.setReplacementCycleAlarm(context);
+    private void setMaskReplaceNotification() {
+        mainView.setMaskReplaceNotification();
     }
 
     /**

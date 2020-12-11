@@ -1,7 +1,5 @@
 package com.naccoro.wask.setting;
 
-import android.content.Context;
-
 import com.naccoro.wask.preferences.SettingPreferenceManager;
 
 public interface SettingContract {
@@ -27,6 +25,14 @@ public interface SettingContract {
         void finishSettingView();
 
         void showSnoozeInfoDialog();
+
+        void updateNotificationChanel(SettingPreferenceManager.SettingPushAlertType pushAlertTypeWithIndex);
+
+        void refreshAlarm();
+
+        void refreshAlarmInSnooze();
+
+        String getPushAlertTypeString(int index);
     }
 
     interface Presenter {
