@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.customview.PeriodPresenter;
+import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.ui.calendar.CalendarActivity;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
 import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.setting.SettingActivity;
+import com.naccoro.wask.utils.AlarmUtil;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener, MainContract.View {
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
             case R.id.button_change:
                 //교체하기 로직
-                presenter.changeMask(this);
+                presenter.changeMask();
                 break;
         }
     }
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity
                 .setMessage(getString(R.string.dialog_cancel_replacement))
                 .addHorizontalButton(getString(R.string.dialog_cancel), (dialog, view) -> dialog.dismiss())
                 .addHorizontalButton(getString(R.string.dialog_ok), ((dialog, view) -> {
-                    presenter.cancelChanging(MainActivity.this);
+                    presenter.cancelChanging();
                     dialog.dismiss();
                 }))
                 .build()
@@ -160,5 +162,31 @@ public class MainActivity extends AppCompatActivity
     public void changeUsePeriodMessage(int period) {
         usePeriodTextView.setVisibility(View.VISIBLE);
         usePeriodMessageTextView.setPeriod(period);
+    }
+
+    @Override
+    public void setMaskReplaceNotification() {
+        //기본 교체하기 알람이 있었다면 제거
+        if (AlarmUtil.isCycleAlarmExist(this)) {
+            AlarmUtil.cancelReplacementCycleAlarm(this);
+
+            //나중에 교체하기 알림 중이었다면 제거
+        } else if (AlarmUtil.isLaterAlarmExist(this)) {
+            AlarmUtil.cancelReplaceLaterAlarm(this);
+        }
+
+        presenter.showForegroundNotification();
+        AlarmUtil.setReplacementCycleAlarm(this);
+    }
+
+    @Override
+    public void showForegroundNotification(int period) {
+        if (period > 0) {
+            ServiceUtil.showForegroundService(this, period);
+            AlarmUtil.setForegroundAlarm(this);
+        } else {
+            ServiceUtil.dismissForegroundService(this);
+            AlarmUtil.cancelForegroundAlarm(this);
+        }
     }
 }

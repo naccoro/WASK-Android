@@ -13,9 +13,13 @@ import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.utils.AlarmUtil;
+import com.naccoro.wask.utils.LanguageUtil;
+import com.naccoro.wask.utils.NotificationUtil;
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
@@ -44,12 +48,12 @@ public class SettingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        presenter = new SettingPresenter(this);
+        presenter = new SettingPresenter(this, Injection.replacementHistoryRepository(this));
 
         init();
 
         //start()함수를 호출하여 초기 설정값을 불러옴
-        presenter.start(this);
+        presenter.start();
 
         //영구 알림 스위치 리스너 초기화
         initSwitchListener();
@@ -80,7 +84,7 @@ public class SettingActivity extends AppCompatActivity
 
     private void initSwitchListener() {
         alertVisibleSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked));
+                presenter.changeAlertVisibleSwitch(isChecked));
     }
 
     @Override
@@ -98,7 +102,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
-                    presenter.changeReplacementCycleValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
+                    presenter.changeReplacementCycleValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -121,7 +125,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
-                    presenter.changeReplaceLaterValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
+                    presenter.changeReplaceLaterValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -133,19 +137,19 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_push_alert))
                 .addVerticalButton(getString(R.string.setting_push_alert_sound), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.SOUND);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.SOUND);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_vibration), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.VIBRATION);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.VIBRATION);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_all), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.ALL);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.ALL);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_none), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, SettingPreferenceManager.SettingPushAlertType.NONE);
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.NONE);
                     dialog.dismiss();
                 })
                 .build()
@@ -187,15 +191,15 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_language))
                 .addVerticalButton(getString(R.string.language_default), (dialog, view) -> {
-                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.DEFAULT);
+                    presenter.changeLanguage(SettingPreferenceManager.SettingLanguage.DEFAULT);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.language_korean), ((dialog, view) -> {
-                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.KOREAN);
+                    presenter.changeLanguage(SettingPreferenceManager.SettingLanguage.KOREAN);
                     dialog.dismiss();
                 }))
                 .addVerticalButton(getString(R.string.language_english), ((dialog, view) -> {
-                    presenter.changeLanguage(this, SettingPreferenceManager.SettingLanguage.ENGLISH);
+                    presenter.changeLanguage(SettingPreferenceManager.SettingLanguage.ENGLISH);
                     dialog.dismiss();
                 }))
                 .build()
@@ -242,6 +246,42 @@ public class SettingActivity extends AppCompatActivity
                 .addVerticalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> dialog.dismiss())
                 .build()
                 .show(getSupportFragmentManager(), "snooze_info");
+    }
+
+    @Override
+    public void updateNotificationChanel(SettingPreferenceManager.SettingPushAlertType pushAlertType) {
+        MockDatabase.MockNotificationData pushAlertData = MockDatabase.getReplacementCycleData(this);
+
+        //기존 Channel 삭제
+        NotificationUtil.deleteNotificationChannel(this, pushAlertType);
+        //새롭게 변경된 설정 적용하여 channel 생성
+        NotificationUtil.createNotificationChannel(this, pushAlertData);
+    }
+
+    @Override
+    public void refreshAlarm() {
+        //Alarm 다시 설정
+        AlarmUtil.cancelReplacementCycleAlarm(this);
+        AlarmUtil.setReplacementCycleAlarm(this);
+    }
+
+    @Override
+    public void refreshAlarmInSnooze() {
+        //나중에 교체하기 알람 중이었다면 재설정
+        if (AlarmUtil.isLaterAlarmExist(this)) {
+            AlarmUtil.cancelReplaceLaterAlarm(this);
+            AlarmUtil.setReplacementLaterAlarm(this, true);
+        }
+    }
+
+    @Override
+    public String getPushAlertTypeString(int index) {
+        return getResources().getStringArray(R.array.ALERT_TYPE)[index];
+    }
+
+    @Override
+    public String getLanguageString(int languageIndex) {
+        return LanguageUtil.getLanguageString(this, languageIndex);
     }
 
     @Override

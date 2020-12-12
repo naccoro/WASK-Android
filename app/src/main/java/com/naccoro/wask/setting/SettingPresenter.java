@@ -1,29 +1,23 @@
 package com.naccoro.wask.setting;
 
-import android.content.Context;
-
-import com.naccoro.wask.R;
-import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
-import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
-import com.naccoro.wask.utils.AlarmUtil;
 import com.naccoro.wask.utils.DateUtils;
-import com.naccoro.wask.utils.LanguageUtil;
-import com.naccoro.wask.utils.NotificationUtil;
 
 import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
 
 public class SettingPresenter implements SettingContract.Presenter {
 
     SettingContract.View settingView;
+    ReplacementHistoryRepository repository;
 
-    SettingPresenter(SettingContract.View settingView) {
+    SettingPresenter(SettingContract.View settingView, ReplacementHistoryRepository replacementHistoryRepository) {
         this.settingView = settingView;
+        this.repository = replacementHistoryRepository;
     }
 
     @Override
-    public void start(Context context) {
+    public void start() {
         int replaceCycleValue = SettingPreferenceManager.getReplaceCycle();
         settingView.showReplacementCycleValue(replaceCycleValue);
 
@@ -31,10 +25,10 @@ public class SettingPresenter implements SettingContract.Presenter {
         settingView.showReplaceLaterValue(replaceLaterValue);
 
         int pushAlertIndex = SettingPreferenceManager.getPushAlert();
-        settingView.showPushAlertValue(getPushAlertTypeString(context, pushAlertIndex));
+        settingView.showPushAlertValue(getPushAlertTypeString(pushAlertIndex));
 
         int languageIndex = SettingPreferenceManager.getLanguage();
-        settingView.showLanguageLabel(LanguageUtil.getLanguageString(context, languageIndex));
+        settingView.showLanguageLabel(settingView.getLanguageString(languageIndex));
 
         boolean isShowNotificationBar = SettingPreferenceManager.getIsShowNotificationBar();
         settingView.setAlertVisibleSwitchValue(isShowNotificationBar);
@@ -71,14 +65,14 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param isChecked : 변경된 값
      */
     @Override
-    public void changeAlertVisibleSwitch(Context context, boolean isChecked) {
+    public void changeAlertVisibleSwitch(boolean isChecked) {
         SettingPreferenceManager.setIsShowNotificationBar(isChecked);
         if (isChecked) {
-            int period = getMaskPeriod(context);
+            int period = getMaskPeriod();
 
             //교체일자가 없다면 실행하지 말것
             if (period > 0) {
-                settingView.showForegroundAlert(getMaskPeriod(context));
+                settingView.showForegroundAlert(getMaskPeriod());
             }
         }
         else {
@@ -92,21 +86,16 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param value: 사용자가 설정한 값  e.g 소리, 진동, 소리+진동, 없음
      */
     @Override
-    public void changePushAlertValue(Context context, SettingPreferenceManager.SettingPushAlertType value) {
+    public void changePushAlertValue(SettingPreferenceManager.SettingPushAlertType value) {
         int oldValue = SettingPreferenceManager.getPushAlert();
         int newValue = value.getTypeIndex();
 
         SettingPreferenceManager.setPushAlert(newValue);
 
-        MockDatabase.MockNotificationData pushAlertData = MockDatabase.getReplacementCycleData(context);
-
-        //기존 Channel 삭제
-        NotificationUtil.deleteNotificationChannel(context, getPushAlertTypeWithIndex(oldValue));
-        //새롭게 변경된 설정 적용하여 channel 생성
-        NotificationUtil.createNotificationChannel(context, pushAlertData);
+        settingView.updateNotificationChanel(getPushAlertTypeWithIndex(oldValue));
 
         //설정 값에 대응하는 문자열을 보여주기
-        settingView.showPushAlertValue(getPushAlertTypeString(context,newValue));
+        settingView.showPushAlertValue(getPushAlertTypeString(newValue));
     }
 
     /**
@@ -115,13 +104,9 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param cycleValue : 교체 주기
      */
     @Override
-    public void changeReplacementCycleValue(Context context, int cycleValue) {
+    public void changeReplacementCycleValue(int cycleValue) {
         SettingPreferenceManager.setReplaceCycle(cycleValue);
-
-        //Alarm 다시 설정
-        AlarmUtil.cancelReplacementCycleAlarm(context);
-        AlarmUtil.setReplacementCycleAlarm(context);
-
+        settingView.refreshAlarm();
         settingView.showReplacementCycleValue(cycleValue);
     }
 
@@ -131,20 +116,14 @@ public class SettingPresenter implements SettingContract.Presenter {
      * @param laterValue : 나중에 교체 주기
      */
     @Override
-    public void changeReplaceLaterValue(Context context, int laterValue) {
+    public void changeReplaceLaterValue(int laterValue) {
         SettingPreferenceManager.setDelayCycle(laterValue);
-
-        //나중에 교체하기 알람 중이었다면 재설정
-        if (AlarmUtil.isLaterAlarmExist(context)) {
-            AlarmUtil.cancelReplaceLaterAlarm(context);
-            AlarmUtil.setReplacementLaterAlarm(context, true);
-        }
-
+        settingView.refreshAlarmInSnooze();
         settingView.showReplaceLaterValue(laterValue);
     }
 
     @Override
-    public void changeLanguage(Context context, SettingPreferenceManager.SettingLanguage language) {
+    public void changeLanguage(SettingPreferenceManager.SettingLanguage language) {
         SettingPreferenceManager.setLanguage(language);
         settingView.refresh();
     }
@@ -152,9 +131,8 @@ public class SettingPresenter implements SettingContract.Presenter {
     /**
      * 마스크 착용일 설정하는 함수
      * */
-    private int getMaskPeriod(Context context) {
-        ReplacementHistoryRepository replacementHistoryRepository = Injection.replacementHistoryRepository(context);
-        int lastReplacement = replacementHistoryRepository.getLastReplacement();
+    private int getMaskPeriod() {
+        int lastReplacement = repository.getLastReplacement();
         if (lastReplacement == -1) {
             //교체 기록이 없을 경우
             return 0;
@@ -163,7 +141,7 @@ public class SettingPresenter implements SettingContract.Presenter {
     }
 
     //StringArray에서 인덱스에 해당하는 푸시 알림 방식 문자열을 불러오기
-    private String getPushAlertTypeString(Context context, int index) {
-        return context.getResources().getStringArray(R.array.ALERT_TYPE)[index];
+    private String getPushAlertTypeString(int index) {
+        return settingView.getPushAlertTypeString(index);
     }
 }
