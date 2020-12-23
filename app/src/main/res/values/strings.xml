@@ -95,6 +95,13 @@
     <string name="notification_alert_singular">마스크를 %d일 째 사용중입니다</string>
     <string name="notification_alert_plural">@string/notification_alert_singular</string>
 
+
+    <string name="notification_alert_singular_kr" translatable="false">마스크를 %d일 째 사용중입니다</string>
+
+    <string name="notification_alert_singular_en" translatable="false">You\'ve been wearing your mask for %d day</string>
+    <string name="notification_alert_plural_en" translatable="false">You\'ve been wearing your mask for %d days</string>
+
+
     <string name="period_prefix_snooze"></string>
     <string name="period_prefix_cycle"></string>
     <string name="period_suffix_singular"></string>

@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.naccoro.wask.R;
 import com.naccoro.wask.WaskApplication;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.ui.main.MainActivity;
 
 public class WaskService extends Service {
@@ -52,10 +53,27 @@ public class WaskService extends Service {
         RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.notification_foreground);
         contentView.setImageViewResource(R.id.imageview_notification_logo, R.drawable.ic_notification_logo);
         String content;
-        if (maskPeriod == 1) {
-            content = String.format(getString(R.string.notification_alert_singular), maskPeriod);
-        } else {
-            content = String.format(getString(R.string.notification_alert_plural), maskPeriod);
+        //Todo: Service 내에서는 getString이 설정된 Locale에 따라가지 않고 디바이스 설정을 무조건 따라감.
+        //Todo: 우선 배포를 위해 아래와 같이 언어 설정 값에 따라 명시적으로 문자열을 강제 변경하였으나 개선이 필요.
+        switch (SettingPreferenceManager.getLanguage()) {
+            default: //Default
+                if (maskPeriod == 1) {
+                    content = String.format(getString(R.string.notification_alert_singular), maskPeriod);
+                } else {
+                    content = String.format(getString(R.string.notification_alert_plural), maskPeriod);
+                }
+                break;
+            case 1: //Korean
+                content = String.format(getString(R.string.notification_alert_singular_kr), maskPeriod);
+                break;
+
+            case 2: //English
+                if (maskPeriod == 1) {
+                    content = String.format(getString(R.string.notification_alert_singular_en), maskPeriod);
+                } else {
+                    content = String.format(getString(R.string.notification_alert_plural_en), maskPeriod);
+                }
+                break;
         }
         contentView.setTextViewText(R.id.textview_notification_content, content);
 

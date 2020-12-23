@@ -232,6 +232,7 @@ public class SettingActivity extends AppCompatActivity
 
     @Override
     public void refresh() {
+        ServiceUtil.dismissForegroundService(this);
         Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
