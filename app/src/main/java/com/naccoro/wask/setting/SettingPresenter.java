@@ -27,9 +27,6 @@ public class SettingPresenter implements SettingContract.Presenter {
         int pushAlertIndex = SettingPreferenceManager.getPushAlert();
         settingView.showPushAlertValue(getPushAlertTypeString(pushAlertIndex));
 
-        int languageIndex = SettingPreferenceManager.getLanguage();
-        settingView.showLanguageLabel(settingView.getLanguageString(languageIndex));
-
         boolean isShowNotificationBar = SettingPreferenceManager.getIsShowNotificationBar();
         settingView.setAlertVisibleSwitchValue(isShowNotificationBar);
     }
@@ -52,11 +49,6 @@ public class SettingPresenter implements SettingContract.Presenter {
     @Override
     public void clickPushAlert() {
         settingView.showPushAlertDialog();
-    }
-
-    @Override
-    public void clickLanguage() {
-        settingView.showLanguageDialog();
     }
 
     /**
@@ -120,12 +112,6 @@ public class SettingPresenter implements SettingContract.Presenter {
         SettingPreferenceManager.setDelayCycle(laterValue);
         settingView.refreshAlarmInSnooze();
         settingView.showReplaceLaterValue(laterValue);
-    }
-
-    @Override
-    public void changeLanguage(SettingPreferenceManager.SettingLanguage language) {
-        SettingPreferenceManager.setLanguage(language);
-        settingView.refresh();
     }
 
     /**
