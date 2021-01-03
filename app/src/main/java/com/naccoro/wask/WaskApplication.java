@@ -18,12 +18,13 @@ public class WaskApplication extends Application {
 
     public static boolean isChanged;
 
+    private static Application application;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         init();
-
 
         createPushNotificationChannel();
 
@@ -32,6 +33,7 @@ public class WaskApplication extends Application {
 
     private void init() {
         SharedPreferenceManager.getInstance().initInstance(getApplicationContext());
+        application = this;
     }
 
     /**
@@ -62,5 +64,9 @@ public class WaskApplication extends Application {
         MockDatabase.MockNotificationData pushNotificationData = MockDatabase.getReplacementCycleData(this);
 
         NotificationUtil.createNotificationChannel(this, pushNotificationData);
+    }
+
+    public static Application getApplication() {
+        return application;
     }
 }

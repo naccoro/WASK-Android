@@ -51,7 +51,13 @@ public class WaskService extends Service {
         //2. 커스텀한 뷰를 가져온다.
         RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.notification_foreground);
         contentView.setImageViewResource(R.id.imageview_notification_logo, R.drawable.ic_notification_logo);
-        contentView.setTextViewText(R.id.textview_notification_content, String.format("마스크를 %d일 째 사용중입니다.", maskPeriod));
+        String content;
+        if (maskPeriod == 1) {
+            content = String.format(getString(R.string.notification_alert_singular), maskPeriod);
+        } else {
+            content = String.format(getString(R.string.notification_alert_plural), maskPeriod);
+        }
+        contentView.setTextViewText(R.id.textview_notification_content, content);
 
         // 노티피케이션 관련 변수
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)

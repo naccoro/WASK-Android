@@ -1,7 +1,5 @@
 package com.naccoro.wask.ui.main;
 
-import android.content.Context;
-
 public interface MainContract {
 
     interface View {
@@ -25,7 +23,11 @@ public interface MainContract {
 
         void showNoReplaceData();
 
-        void changeUsePeriodMessage();
+        void changeUsePeriodMessage(int period);
+
+        void setMaskReplaceNotification();
+
+        void showForegroundNotification(int period);
     }
 
     interface Presenter {
@@ -36,10 +38,11 @@ public interface MainContract {
 
         void clickCalendarButton();
 
-        void changeMask(Context context);
+        void changeMask();
 
-        void cancelChanging(Context context);
+        void cancelChanging();
 
+        void showForegroundNotification();
     }
 
 }

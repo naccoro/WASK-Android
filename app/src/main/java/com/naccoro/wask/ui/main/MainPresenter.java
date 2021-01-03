@@ -1,25 +1,18 @@
 package com.naccoro.wask.ui.main;
 
-
-import android.content.Context;
+import android.util.Log;
 
 import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.preferences.SettingPreferenceManager;
-import com.naccoro.wask.utils.AlarmUtil;
-import com.naccoro.wask.utils.DateUtils;
-
-import android.util.Log;
-
 import com.naccoro.wask.replacement.repository.ReplacementHistoryRepository;
+import com.naccoro.wask.utils.DateUtils;
 
 public class MainPresenter implements MainContract.Presenter {
 
     private static final String TAG = "MainPresenter";
 
     private ReplacementHistoryRepository replacementHistoryRepository;
-
-    private boolean isNoData = true;
 
     MainContract.View mainView;
 
@@ -44,28 +37,26 @@ public class MainPresenter implements MainContract.Presenter {
             mainView.showNoReplaceData();
             mainView.enableReplaceButton();
         } else if (period > 1) {
-
-            checkIsFirstReplacement();
+            setUsingPeriodMessage(period);
             WaskApplication.isChanged = false;
             mainView.showBadMainView();
             mainView.enableReplaceButton();
         } else {
             //교체한 당일
-            checkIsFirstReplacement();
+            setUsingPeriodMessage(period);
             WaskApplication.isChanged = true;
             mainView.showGoodMainView();
             mainView.disableReplaceButton();
         }
+
+        ServiceUtil.initForegroundService(WaskApplication.getApplication(), period);
     }
 
     /**
-     * 첫 번째 교체인지 확인 후 멘트 변경
+     * 교체 일자에 따른 사용 메시지 변경
      */
-    private void checkIsFirstReplacement() {
-        if (isNoData) {
-            mainView.changeUsePeriodMessage();
-            isNoData = false;
-        }
+    private void setUsingPeriodMessage(int period) {
+        mainView.changeUsePeriodMessage(period);
     }
 
     @Override
@@ -82,10 +73,10 @@ public class MainPresenter implements MainContract.Presenter {
      * 사용자가 교체하기 버튼을 누를 경우 호출되는 함수
      */
     @Override
-    public void changeMask(Context context) {
+    public void changeMask() {
 
         if (!WaskApplication.isChanged) {
-            checkIsFirstReplacement();
+//            checkIsFirstReplacement(getMaskPeriod());
 
             replacementHistoryRepository.insertToday(new ReplacementHistoryRepository.InsertHistoryCallback() {
                 @Override
@@ -96,7 +87,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                     start();
 
-                    setMaskReplaceNotification(context);
+                    setMaskReplaceNotification();
                 }
 
                 @Override
@@ -113,48 +104,31 @@ public class MainPresenter implements MainContract.Presenter {
      * 교체 취소 다이얼로그에서 확인을 눌렀을 때 호출되는 함수
      */
     @Override
-    public void cancelChanging(Context context) {
+    public void cancelChanging() {
         replacementHistoryRepository.deleteToday();
         WaskApplication.isChanged = false;
 
         //메인화면 갱신
         start();
 
-        setMaskReplaceNotification(context);
+        setMaskReplaceNotification();
     }
 
     /**
      * Foreground  변경점을 반영한다.
      */
-    private void showForegroundNotification(Context context) {
-
+    public void showForegroundNotification() {
         if (SettingPreferenceManager.getIsShowNotificationBar()) {
             int period = getMaskPeriod();
-            if (period > 0) {
-                ServiceUtil.showForegroundService(context, period);
-                AlarmUtil.setForegroundAlarm(context);
-            } else {
-                ServiceUtil.dismissForegroundService(context);
-                AlarmUtil.cancelForegroundAlarm(context);
-            }
+            mainView.showForegroundNotification(period);
         }
     }
 
     /**
      * 등록되어 있는 알람을 종료하고 새로운 교체하기 알람을 등록한다.
      */
-    private void setMaskReplaceNotification(Context context) {
-        //기본 교체하기 알람이 있었다면 제거
-        if (AlarmUtil.isCycleAlarmExist(context)) {
-            AlarmUtil.cancelReplacementCycleAlarm(context);
-
-        //나중에 교체하기 알림 중이었다면 제거
-        } else if (AlarmUtil.isLaterAlarmExist(context)) {
-            AlarmUtil.cancelReplaceLaterAlarm(context);
-        }
-
-        showForegroundNotification(context);
-        AlarmUtil.setReplacementCycleAlarm(context);
+    private void setMaskReplaceNotification() {
+        mainView.setMaskReplaceNotification();
     }
 
     /**
@@ -166,7 +140,6 @@ public class MainPresenter implements MainContract.Presenter {
         int lastReplacement = replacementHistoryRepository.getLastReplacement();
         if (lastReplacement == -1) {
             //교체 기록이 없을 경우
-            isNoData = true;
             return 0;
         }
         return DateUtils.calculateDateGapWithToday(lastReplacement) + 1;

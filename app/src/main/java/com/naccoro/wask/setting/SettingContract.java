@@ -1,6 +1,6 @@
 package com.naccoro.wask.setting;
 
-import android.content.Context;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
 
 public interface SettingContract {
     interface View {
@@ -23,6 +23,17 @@ public interface SettingContract {
         void setAlertVisibleSwitchValue(boolean isChecked);
 
         void finishSettingView();
+
+        void showSnoozeInfoDialog();
+
+        void updateNotificationChanel(SettingPreferenceManager.SettingPushAlertType pushAlertTypeWithIndex);
+
+        void refreshAlarm();
+
+        void refreshAlarmInSnooze();
+
+        String getPushAlertTypeString(int index);
+
     }
 
     interface Presenter {
@@ -36,12 +47,12 @@ public interface SettingContract {
 
         void clickPushAlert();
 
-        void changeAlertVisibleSwitch(Context context, boolean isChecked);
+        void changeAlertVisibleSwitch(boolean isChecked);
 
-        void changePushAlertValue(Context context, String value);
+        void changePushAlertValue(SettingPreferenceManager.SettingPushAlertType value);
 
-        void changeReplacementCycleValue(Context context, int cycleValue);
+        void changeReplacementCycleValue(int cycleValue);
 
-        void changeReplaceLaterValue(Context context, int laterValue);
+        void changeReplaceLaterValue(int laterValue);
     }
 }

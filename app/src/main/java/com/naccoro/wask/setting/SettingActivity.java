@@ -1,29 +1,36 @@
 package com.naccoro.wask.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.TextView;
+
 import com.naccoro.wask.R;
+import com.naccoro.wask.customview.PeriodPresenter;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.wheel.WheelRecyclerView;
 import com.naccoro.wask.customview.waskdialog.WaskDialog;
 import com.naccoro.wask.customview.waskdialog.WaskDialogBuilder;
+import com.naccoro.wask.mock.MockDatabase;
 import com.naccoro.wask.notification.ServiceUtil;
+import com.naccoro.wask.preferences.SettingPreferenceManager;
+import com.naccoro.wask.replacement.model.Injection;
 import com.naccoro.wask.utils.AlarmUtil;
+import com.naccoro.wask.utils.NotificationUtil;
 
 public class SettingActivity extends AppCompatActivity
         implements SettingContract.View, View.OnClickListener {
 
     //마스크 교체 주기
-    private TextView replacementCycleAlertLabel;
+    private PeriodPresenter replacementCycleAlertLabel;
     //나중에 교체하기
-    private TextView replaceLaterLabel;
+    private PeriodPresenter replaceLaterLabel;
     //푸시 알람
     private TextView pushAlertLabel;
+
     //포그라운드 서비스 알람
-    private Switch alertVisibleSwitch;
+    private SwitchCompat alertVisibleSwitch;
 
     private WaskToolbar toolbar;
 
@@ -38,7 +45,7 @@ public class SettingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        presenter = new SettingPresenter(this);
+        presenter = new SettingPresenter(this, Injection.replacementHistoryRepository(this));
 
         init();
 
@@ -50,8 +57,8 @@ public class SettingActivity extends AppCompatActivity
     }
 
     private void init() {
-        replacementCycleAlertLabel = findViewById(R.id.textview_replacementcyclealert_body);
-        replaceLaterLabel = findViewById(R.id.textview_replacelater_body);
+        replacementCycleAlertLabel = findViewById(R.id.periodpresenter_replacementcyclealert_body);
+        replaceLaterLabel = findViewById(R.id.periodpresenter_replacelater_body);
         pushAlertLabel = findViewById(R.id.textview_pushalert_body);
         toolbar = findViewById(R.id.wasktoolbar_setting);
 
@@ -61,6 +68,8 @@ public class SettingActivity extends AppCompatActivity
 
         findViewById(R.id.constraintlayout_pushalert).setOnClickListener(this);
 
+        findViewById(R.id.imagebutton_replacelater_info).setOnClickListener(this);
+
         alertVisibleSwitch = findViewById(R.id.switch_foregroundalert);
 
         toolbar.setBackButton(() -> presenter.clickHomeButton());
@@ -69,7 +78,7 @@ public class SettingActivity extends AppCompatActivity
 
     private void initSwitchListener() {
         alertVisibleSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                presenter.changeAlertVisibleSwitch(SettingActivity.this, isChecked));
+                presenter.changeAlertVisibleSwitch(isChecked));
     }
 
     @Override
@@ -87,7 +96,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacementcycle);
-                    presenter.changeReplacementCycleValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
+                    presenter.changeReplacementCycleValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -110,7 +119,7 @@ public class SettingActivity extends AppCompatActivity
                 .addHorizontalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> {
                     //이후 wheelPicker value로 대체
                     WheelRecyclerView wheelRecyclerView = view.findViewById(R.id.wheelrecycler_replacelater);
-                    presenter.changeReplaceLaterValue(SettingActivity.this, wheelRecyclerView.getWheelValue());
+                    presenter.changeReplaceLaterValue(wheelRecyclerView.getWheelValue());
                     dialog.dismiss();
                 })
                 .build()
@@ -122,19 +131,19 @@ public class SettingActivity extends AppCompatActivity
         new WaskDialogBuilder()
                 .setTitle(getString(R.string.setting_push_alert))
                 .addVerticalButton(getString(R.string.setting_push_alert_sound), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_sound));
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.SOUND);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_vibration), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_vibration));
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.VIBRATION);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_all), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_all));
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.ALL);
                     dialog.dismiss();
                 })
                 .addVerticalButton(getString(R.string.setting_push_alert_none), (dialog, view) -> {
-                    presenter.changePushAlertValue(this, getString(R.string.setting_push_alert_none));
+                    presenter.changePushAlertValue(SettingPreferenceManager.SettingPushAlertType.NONE);
                     dialog.dismiss();
                 })
                 .build()
@@ -144,13 +153,13 @@ public class SettingActivity extends AppCompatActivity
     @Override
     public void showReplacementCycleValue(int cycleValue) {
         periodReplacementCycle = cycleValue;
-        replacementCycleAlertLabel.setText(cycleValue + "일");
+        replacementCycleAlertLabel.setPeriod(cycleValue);
     }
 
     @Override
     public void showReplaceLaterValue(int laterValue) {
         periodReplaceLater = laterValue;
-        replaceLaterLabel.setText(laterValue + "일");
+        replaceLaterLabel.setPeriod(laterValue);
     }
 
     @Override
@@ -190,6 +199,46 @@ public class SettingActivity extends AppCompatActivity
         overridePendingTransition(R.anim.slide_activity_fadein, R.anim.slide_activity_fadeout);
     }
 
+    public void showSnoozeInfoDialog() {
+        new WaskDialogBuilder()
+                .setTitle(getString(R.string.setting_replace_later), true)
+                .setContent(R.layout.layout_snooze_info)
+                .addVerticalButton(getString(R.string.setting_dialog_ok), (dialog, view) -> dialog.dismiss())
+                .build()
+                .show(getSupportFragmentManager(), "snooze_info");
+    }
+
+    @Override
+    public void updateNotificationChanel(SettingPreferenceManager.SettingPushAlertType pushAlertType) {
+        MockDatabase.MockNotificationData pushAlertData = MockDatabase.getReplacementCycleData(this);
+
+        //기존 Channel 삭제
+        NotificationUtil.deleteNotificationChannel(this, pushAlertType);
+        //새롭게 변경된 설정 적용하여 channel 생성
+        NotificationUtil.createNotificationChannel(this, pushAlertData);
+    }
+
+    @Override
+    public void refreshAlarm() {
+        //Alarm 다시 설정
+        AlarmUtil.cancelReplacementCycleAlarm(this);
+        AlarmUtil.setReplacementCycleAlarm(this);
+    }
+
+    @Override
+    public void refreshAlarmInSnooze() {
+        //나중에 교체하기 알람 중이었다면 재설정
+        if (AlarmUtil.isLaterAlarmExist(this)) {
+            AlarmUtil.cancelReplaceLaterAlarm(this);
+            AlarmUtil.setReplacementLaterAlarm(this, true);
+        }
+    }
+
+    @Override
+    public String getPushAlertTypeString(int index) {
+        return getResources().getStringArray(R.array.ALERT_TYPE)[index];
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -203,6 +252,11 @@ public class SettingActivity extends AppCompatActivity
 
             case R.id.constraintlayout_pushalert:
                 presenter.clickPushAlert();
+                break;
+
+            case R.id.imagebutton_replacelater_info:
+                showSnoozeInfoDialog();
+                break;
         }
     }
 }

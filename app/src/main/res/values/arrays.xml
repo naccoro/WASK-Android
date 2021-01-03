@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="LANGUASE">
+        <item>@string/language_default</item>
+        <item>@string/language_korean</item>
+        <item>@string/language_english</item>
+    </string-array>
+
+    <string-array name="LANGUASE_IDENTIFIER">
+        <item></item>
+        <item>ko</item>
+        <item>en</item>
+    </string-array>
+</resources>
