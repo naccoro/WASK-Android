@@ -1,15 +1,4 @@
 <img src="https://user-images.githubusercontent.com/57310034/103475952-091aa700-4df5-11eb-88bb-bdce0c03b105.png"/>
-<p float="left">
-<img alt="living_together_screenshot_1"  width="150" src="https://user-images.githubusercontent.com/57310034/103475965-1e8fd100-4df5-11eb-8bc0-f3eba804bee1.png"/>
-
-<img alt="living_together_screenshot_2"  width="150" src="https://user-images.githubusercontent.com/57310034/103475964-1df73a80-4df5-11eb-9d17-96ae0f4e54fe.png"/>
-
-<img alt="living_together_screenshot_3"  width="150" src="https://user-images.githubusercontent.com/57310034/103475963-1d5ea400-4df5-11eb-8e2e-d100e52057fe.png"/>
-
-<img alt="living_together_screenshot_4"  width="150" src="https://user-images.githubusercontent.com/57310034/103475962-1cc60d80-4df5-11eb-8b74-7680aea8a22e.png"/>
-
-<img alt="living_together_screenshot_5"  width="150" src="https://user-images.githubusercontent.com/57310034/103475961-1afc4a00-4df5-11eb-83e4-441225dd3ced.png"/>
-</P>
 
 [![GooglePlayStore](https://img.shields.io/badge/GooglePlayStore-v1.2.0-green)](https://play.google.com/store/apps/details?id=com.naccoro.wask&hl=ko)  
 <br>
