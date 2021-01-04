@@ -22,3 +22,9 @@
 - Architecture : `MVP`
 - Database : `Room`
 - Technical tag : `CustomView`, `Language`, `Glide`
+
+## 기여
+
+- 개발 : [SEONGGYU96](https://github.com/SEONGGYU96),  [euzl](https://github.com/euzl), [Gomyo](https://github.com/Gomyo), [
+jaeryo2357](https://github.com/jaeryo2357)
+- 디자인 : [Lee Yeongjin](https://www.behance.net/yeongjinlee)
