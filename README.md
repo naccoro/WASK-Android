@@ -21,7 +21,7 @@
 
 - Architecture : `MVP`
 - Database : `Room`
-- Technical tag : `CustomView`, `Language`, `Glide`
+- Technical tag : `CustomView`, `CustomNotification`, `AlarmManager`, `ForegroundService`, `Language`, `Glide`
 
 ## 기여
 
