@@ -1,7 +1,10 @@
 <img src="https://user-images.githubusercontent.com/57310034/103475952-091aa700-4df5-11eb-88bb-bdce0c03b105.png"/>
 
-[![GooglePlayStore](https://img.shields.io/badge/GooglePlayStore-v1.2.0-green)](https://play.google.com/store/apps/details?id=com.naccoro.wask&hl=ko)  
+[![Release](https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=green&url=https%3A%2F%2Fplayshields.herokuapp.com%2Fplay%3Fi%3Dcom.naccoro.wask%26l%3DPlayStore%26m%3D%24version)](https://play.google.com/store/apps/details?id=com.naccoro.wask&hl=ko)
 <br>
+
+# WASK
+**W**hen did you change your **MASK**?  
 
 안드로이드 마스크 교체 주기 알람 어플리케이션  
 
@@ -10,7 +13,7 @@
 
 ## 설치
 
-[GooglePlayStore](https://play.google.com/store/apps/details?id=com.naccoro.wask&hl=ko)에서 다운받을 수 있습니다.  
+<a href='https://play.google.com/store/apps/details?id=com.naccoro.wask&hl=ko&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='200'/></a>  
 최소 요구 안드로이드 버전 : 23+  
 지원 언어 : 한국어, 영어
 
