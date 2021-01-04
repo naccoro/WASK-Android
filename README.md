@@ -21,6 +21,7 @@
 
 - Architecture : `MVP`
 - Database : `Room`
+- Convention : [Convention Rules](https://github.com/naccoro/WASK-Android/wiki/WaskConvention)
 - Technical tag : `CustomView`, `CustomNotification`, `AlarmManager`, `ForegroundService`, `Language`, `Glide`
 
 ## 기여
