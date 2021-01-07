@@ -30,4 +30,4 @@
 jaeryo2357](https://github.com/jaeryo2357)
 - 디자인 : [Lee Yeongjin](https://www.behance.net/yeongjinlee)
 - 언어 번역
-  - 영어 : Hyun Jie Jung
+  - 영어 : [Hyun Jie Jung](https://www.linkedin.com/in/junghyunjie/)
