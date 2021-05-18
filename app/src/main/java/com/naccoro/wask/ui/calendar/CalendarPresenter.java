@@ -47,8 +47,8 @@ public class CalendarPresenter implements CalendarContract.Presenter {
      * @param isChecked
      */
     @Override
-    public void changeModifyMode(boolean isChecked, CalendarAdapter calendarAdapter) {
-        calendarAdapter.setModifyMode(isChecked);
+    public void changeModifyMode(boolean isChecked, DayAdapter dayAdapter) {
+        dayAdapter.setModifyMode(isChecked);
         calendarView.showModifyModeTextView(isChecked);
     }
 

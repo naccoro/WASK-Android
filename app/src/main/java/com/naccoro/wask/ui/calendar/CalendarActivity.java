@@ -27,7 +27,7 @@ public class CalendarActivity extends AppCompatActivity
     TextView modifyModeTextView;
 
     RecyclerView recyclerView;
-    CalendarAdapter calendarAdapter;
+    DayAdapter dayAdapter;
     GridLayoutManager gridLayoutManager;
 
     WaskToolbar toolbar;
@@ -35,7 +35,7 @@ public class CalendarActivity extends AppCompatActivity
     Date selectDate; // DatePicker로 선택된 날짜
 
     // 화면에 표시되는 달력 데이터 저장 (저번달 짜투리 + 이번달(1~30) + 다음달 조금)
-    ArrayList<CalendarItem> dateList = new ArrayList<CalendarItem>();
+    ArrayList<DayItem> dayItems = new ArrayList<DayItem>();
 
     private CalendarPresenter presenter;
 
@@ -60,7 +60,7 @@ public class CalendarActivity extends AppCompatActivity
         changeDatePresenter.setOnClickListener(this);
 
         // 스위치 모드 변경
-        modifyModeSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> presenter.changeModifyMode(isChecked, calendarAdapter));
+        modifyModeSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> presenter.changeModifyMode(isChecked, dayAdapter));
 
         // calendar 관련 설정
         initSelectDate();
@@ -68,9 +68,9 @@ public class CalendarActivity extends AppCompatActivity
         presenter.changeCalendarList(selectDate);
 
         // 리사이클러뷰 초기화
-        calendarAdapter = new CalendarAdapter(CalendarActivity.this, dateList, Injection.replacementHistoryRepository(getApplicationContext()), selectDate);
+        dayAdapter = new DayAdapter(CalendarActivity.this, dayItems, Injection.replacementHistoryRepository(getApplicationContext()), selectDate);
         gridLayoutManager = new GridLayoutManager(this, 7);
-        recyclerView.setAdapter(calendarAdapter);
+        recyclerView.setAdapter(dayAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         toolbar.setBackButton(() -> presenter.clickBackButton());
@@ -87,11 +87,11 @@ public class CalendarActivity extends AppCompatActivity
     /**
      * 화면에 표시되는 달력 데이터 초기화
      *
-     * @param calendarItems model에서 만들어진 달력 데이터
+     * @param dayItems model에서 만들어진 달력 데이터
      */
     @Override
-    public void initCalendarList(ArrayList<CalendarItem> calendarItems) {
-        dateList = calendarItems;
+    public void initCalendarList(ArrayList<DayItem> dayItems) {
+        this.dayItems = dayItems;
     }
 
     /**
@@ -117,7 +117,7 @@ public class CalendarActivity extends AppCompatActivity
                         setOnDateChangedListener((year, month, day) -> {
                             selectDate.setDate(year, month, day);
                             presenter.clickChangeDateButton(selectDate);
-                            calendarAdapter.setCalendarList(dateList);
+                            dayAdapter.setCalendarList(dayItems);
                             showCalendarDateTextView();
                         })
                         .setDate(selectDate.getYear(), selectDate.getMonth(), selectDate.getDay())

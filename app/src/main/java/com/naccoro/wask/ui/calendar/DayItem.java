@@ -5,13 +5,13 @@ import java.util.GregorianCalendar;
 /**
  * 캘린더에 표시되는 '일(Day)'이 하나씩 들어가는 객체
  */
-public class CalendarItem {
+public class DayItem {
     private boolean isChangeMask; // 마스크 교체했는지
     private boolean isCurrentMonth; // 이번달인지
 
     private GregorianCalendar date; // 날짜 데이터
 
-    public CalendarItem(boolean isChangeMask, boolean isCurrentMonth, GregorianCalendar date) {
+    public DayItem(boolean isChangeMask, boolean isCurrentMonth, GregorianCalendar date) {
         this.isChangeMask = isChangeMask;
         this.isCurrentMonth = isCurrentMonth;
         this.date = date;

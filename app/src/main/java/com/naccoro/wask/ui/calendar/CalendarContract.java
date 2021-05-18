@@ -6,7 +6,7 @@ public interface CalendarContract {
     interface View {
         void finishCalendarView();
         void showCalendarDateTextView();
-        void initCalendarList(ArrayList<CalendarItem> calendarItems);
+        void initCalendarList(ArrayList<DayItem> dayItems);
         void showModifyModeTextView(boolean isChecked);
     }
 
@@ -14,6 +14,6 @@ public interface CalendarContract {
         void clickBackButton();
         void clickChangeDateButton(Date selectDate);
         void changeCalendarList(Date selectDate);
-        void changeModifyMode(boolean isChecked, CalendarAdapter calendarAdapter);
+        void changeModifyMode(boolean isChecked, DayAdapter dayAdapter);
     }
 }

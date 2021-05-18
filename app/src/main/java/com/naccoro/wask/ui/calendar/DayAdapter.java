@@ -24,20 +24,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static com.naccoro.wask.R.*;
 
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
+public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
     private static final String TAG = "CalendarAdapter";
     private Context context;
-    private ArrayList<CalendarItem> calendarList;
+    private ArrayList<DayItem> dayItems;
     private boolean isModifyMode;
 
     private static Date today;
     private ReplacementHistoryRepository replacementHistoryRepository;
 
-    public CalendarAdapter(Context context, ArrayList<CalendarItem> calendarList,
-                           ReplacementHistoryRepository replacementHistoryRepository, Date selectDate) {
+    public DayAdapter(Context context, ArrayList<DayItem> dayItems,
+                      ReplacementHistoryRepository replacementHistoryRepository, Date selectDate) {
         this.context = context;
-        this.calendarList = calendarList;
+        this.dayItems = dayItems;
         this.replacementHistoryRepository = replacementHistoryRepository;
         this.setToday(selectDate);
     }
@@ -46,8 +46,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         today = new Date(date.getYear(), date.getMonth(), date.getDay());
     }
 
-    public void setCalendarList(ArrayList<CalendarItem> calendarList) {
-        this.calendarList = calendarList;
+    public void setCalendarList(ArrayList<DayItem> dayItems) {
+        this.dayItems = dayItems;
         notifyDataSetChanged();
     }
 
@@ -65,12 +65,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      */
     @NonNull
     @Override
-    public CalendarAdapter.CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(layout.calendar_item, parent, false);
-        CalendarAdapter.CalendarViewHolder viewHolder = new CalendarAdapter.CalendarViewHolder(view);
+        View view = inflater.inflate(layout.date_item, parent, false);
+        DayViewHolder viewHolder = new DayViewHolder(view);
 
         return viewHolder;
     }
@@ -78,71 +78,71 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     /**
      * position에 해당하는 data를 view holder에 넣기
      *
-     * @param calendarViewHolder
+     * @param dayViewHolder
      * @param position
      */
     @Override
-    public void onBindViewHolder(@NonNull CalendarViewHolder calendarViewHolder, int position) {
+    public void onBindViewHolder(@NonNull DayViewHolder dayViewHolder, int position) {
 
-        CalendarItem item = calendarList.get(position);
-        calendarViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH) + "");
+        DayItem item = dayItems.get(position);
+        dayViewHolder.dateTextView.setText(item.getDate().get(Calendar.DAY_OF_MONTH) + "");
 
         // 수정모드 설정
         if (isModifyMode) {
-            calendarViewHolder.itemView.setOnClickListener(view -> onDayClick(calendarViewHolder, item, position));
+            dayViewHolder.itemView.setOnClickListener(view -> onDayClick(dayViewHolder, item, position));
         }
 
-        decorateItem(calendarViewHolder, item, position);
+        decorateItem(dayViewHolder, item, position);
     }
 
     /**
      * 아이템(각 날짜) 꾸미기
      *
-     * @param calendarViewHolder
+     * @param dayViewHolder
      * @param item
      * @param position
      */
-    private void decorateItem(CalendarViewHolder calendarViewHolder, CalendarItem item, int position) {
+    private void decorateItem(DayViewHolder dayViewHolder, DayItem item, int position) {
 
-        View itemView = calendarViewHolder.getItemView();
+        View itemView = dayViewHolder.getItemView();
 
         // 날짜(Day) 부분
         if (today.isSameDate(item.getDate())) {
             // 오늘이면 동그라미 표시
-            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
-            calendarViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
+            dayViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
+            dayViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
         } else if (position % 7 == 0) {
             // 일요일은 빨간날
-            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.waskRed));
-            calendarViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
+            dayViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.waskRed));
+            dayViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
         } else {
-            calendarViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
-            calendarViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
+            dayViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.black));
+            dayViewHolder.dateBackgroundImageView.setVisibility(View.GONE);
         }
 
         //지난 달과 다음 달의 날짜는 흐리게
         if (!item.isCurrentMonth()) {
-            calendarViewHolder.dateTextView.setAlpha(0.4f);
+            dayViewHolder.dateTextView.setAlpha(0.4f);
         } else {
-            calendarViewHolder.dateTextView.setAlpha(1.0f);
+            dayViewHolder.dateTextView.setAlpha(1.0f);
         }
 
         // 마스크 교체한 날 표시
         if (item.isChangeMask()) {
-            calendarViewHolder.changeImageView.setVisibility(View.VISIBLE);
+            dayViewHolder.changeImageView.setVisibility(View.VISIBLE);
         } else {
-            calendarViewHolder.changeImageView.setVisibility(View.INVISIBLE);
+            dayViewHolder.changeImageView.setVisibility(View.INVISIBLE);
         }
     }
 
     /**
      * 날짜를 클릭했을 때 마스크교체여부가 바뀐다. (DB에도 바로 반영)
      *
-     * @param calendarViewHolder
+     * @param dayViewHolder
      * @param item
      * @param position           select 로 저장하기 위함
      */
-    private void onDayClick(CalendarViewHolder calendarViewHolder, CalendarItem item, int position) {
+    private void onDayClick(DayViewHolder dayViewHolder, DayItem item, int position) {
 
         GregorianCalendar clickItem = item.getDate();
 
@@ -159,14 +159,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         if (item.isChangeMask()) {
             item.setChangeMask(false);
             replacementHistoryRepository.delete(DateUtils.getDateFromGregorianCalendar(item.getDate()));
-            calendarViewHolder.changeImageView.setVisibility(View.GONE);
+            dayViewHolder.changeImageView.setVisibility(View.GONE);
             updateMaskAlarm(context);
         } else {
             item.setChangeMask(true);
             replacementHistoryRepository.insert(DateUtils.getDateFromGregorianCalendar(item.getDate()), new ReplacementHistoryRepository.InsertHistoryCallback() {
                 @Override
                 public void onSuccess() {
-                    calendarViewHolder.changeImageView.setVisibility(View.VISIBLE);
+                    dayViewHolder.changeImageView.setVisibility(View.VISIBLE);
                     updateMaskAlarm(context);
                 }
 
@@ -230,8 +230,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      */
     @Override
     public int getItemCount() {
-        if (calendarList != null) {
-            return calendarList.size();
+        if (dayItems != null) {
+            return dayItems.size();
         }
         return 0;
     }
@@ -239,13 +239,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     /**
      * calendar view holder
      */
-    public class CalendarViewHolder extends RecyclerView.ViewHolder {
+    public class DayViewHolder extends RecyclerView.ViewHolder {
         private TextView dateTextView;
         private ImageView dateBackgroundImageView;
         private ImageView changeImageView;
         private View itemView;
 
-        public CalendarViewHolder(@NonNull View itemView) {
+        public DayViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
 
