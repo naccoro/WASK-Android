@@ -11,6 +11,7 @@ import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.replacement.model.Injection;
 
+import java.time.Month;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -18,6 +19,7 @@ import java.util.GregorianCalendar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class CalendarActivity extends AppCompatActivity
         implements View.OnClickListener, CalendarContract.View {
@@ -26,9 +28,10 @@ public class CalendarActivity extends AppCompatActivity
     Switch modifyModeSwitch;
     TextView modifyModeTextView;
 
-    RecyclerView recyclerView;
     DayAdapter dayAdapter;
-    GridLayoutManager gridLayoutManager;
+
+    MonthAdapter monthAdapter;
+    ViewPager2 viewPager;
 
     WaskToolbar toolbar;
 
@@ -53,7 +56,7 @@ public class CalendarActivity extends AppCompatActivity
         changeDatePresenter = findViewById(R.id.datepresenter_changedate);
         modifyModeSwitch = findViewById(R.id.switch_calendar_modify);
         modifyModeTextView = findViewById(R.id.textview_calendar_modify);
-        recyclerView = findViewById(R.id.recyclerview_calender);
+        viewPager = findViewById(R.id.viewpager_calendar);
 
         toolbar = findViewById(R.id.wasktoolbar_calendar);
 
@@ -66,12 +69,15 @@ public class CalendarActivity extends AppCompatActivity
         initSelectDate();
         changeDatePresenter.setDate(selectDate);
         presenter.changeCalendarList(selectDate);
-
-        // 리사이클러뷰 초기화
-        dayAdapter = new DayAdapter(CalendarActivity.this, dayItems, Injection.replacementHistoryRepository(getApplicationContext()), selectDate);
-        gridLayoutManager = new GridLayoutManager(this, 7);
-        recyclerView.setAdapter(dayAdapter);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        monthAdapter = new MonthAdapter(this, selectDate);
+        viewPager.setAdapter(monthAdapter);
+//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+//                presenter.swipeCalendar(positionOffset);
+//            }
+//        });
 
         toolbar.setBackButton(() -> presenter.clickBackButton());
     }

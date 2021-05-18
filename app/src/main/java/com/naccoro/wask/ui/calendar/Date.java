@@ -1,12 +1,14 @@
 package com.naccoro.wask.ui.calendar;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  * SelectDate를 저장하기 위한 클래스 (year, month, day 저장)
  */
-public class Date {
+@SuppressWarnings("serial")
+public class Date implements Serializable {
     private int year;
     private int month;
     private int day;

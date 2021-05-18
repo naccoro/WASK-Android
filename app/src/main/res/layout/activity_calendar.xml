@@ -158,19 +158,15 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_calender"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_calendar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:overScrollMode="never"
-            android:scrollbars="none"
             android:layout_marginTop="@dimen/margin_calendarrecyclerview_top"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
