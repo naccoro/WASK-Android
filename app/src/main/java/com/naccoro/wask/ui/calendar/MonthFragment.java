@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.naccoro.wask.R;
-import com.naccoro.wask.customview.DatePresenter;
 import com.naccoro.wask.replacement.model.Injection;
 
 import java.util.ArrayList;
@@ -20,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MonthFragment extends Fragment {
+    CalendarModel calendarModel;
 
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
@@ -27,7 +26,7 @@ public class MonthFragment extends Fragment {
 
     Context context;
 
-    ArrayList<DayItem> dayItems = new ArrayList<>(); // 이번달 데이터
+    ArrayList<DayItem> dayItems = new ArrayList<>();
 
     /**
      * 안전하게 activity의 context 저장.
@@ -37,6 +36,12 @@ public class MonthFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        calendarModel = new CalendarModel(Injection.replacementHistoryRepository(context));
     }
 
     @Nullable
@@ -51,6 +56,7 @@ public class MonthFragment extends Fragment {
     private void init(View view) {
         Bundle args = getArguments();
         Date selectDate = (Date)args.getSerializable("date");
+        calendarModel.updateCalendarList(selectDate, dateList -> initCalendarList(dateList));
         recyclerView = view.findViewById(R.id.recyclerview_calender);
         dayAdapter = new DayAdapter(context, dayItems, Injection.replacementHistoryRepository(context), selectDate);
         gridLayoutManager = new GridLayoutManager(context, 7);
@@ -59,6 +65,5 @@ public class MonthFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) { }
+    public void initCalendarList(ArrayList<DayItem> dayItems) { this.dayItems = dayItems; }
 }

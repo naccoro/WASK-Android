@@ -37,9 +37,6 @@ public class CalendarActivity extends AppCompatActivity
 
     Date selectDate; // DatePicker로 선택된 날짜
 
-    // 화면에 표시되는 달력 데이터 저장 (저번달 짜투리 + 이번달(1~30) + 다음달 조금)
-    ArrayList<DayItem> dayItems = new ArrayList<DayItem>();
-
     private CalendarPresenter presenter;
 
     @Override
@@ -68,17 +65,8 @@ public class CalendarActivity extends AppCompatActivity
         // calendar 관련 설정
         initSelectDate();
         changeDatePresenter.setDate(selectDate);
-        presenter.changeCalendarList(selectDate);
         monthAdapter = new MonthAdapter(this, selectDate);
         viewPager.setAdapter(monthAdapter);
-//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-//                presenter.swipeCalendar(positionOffset);
-//            }
-//        });
-
         toolbar.setBackButton(() -> presenter.clickBackButton());
     }
 
@@ -88,16 +76,6 @@ public class CalendarActivity extends AppCompatActivity
     private void initSelectDate() {
         GregorianCalendar cal = new GregorianCalendar();
         selectDate = new Date(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
-    }
-
-    /**
-     * 화면에 표시되는 달력 데이터 초기화
-     *
-     * @param dayItems model에서 만들어진 달력 데이터
-     */
-    @Override
-    public void initCalendarList(ArrayList<DayItem> dayItems) {
-        this.dayItems = dayItems;
     }
 
     /**
@@ -123,7 +101,7 @@ public class CalendarActivity extends AppCompatActivity
                         setOnDateChangedListener((year, month, day) -> {
                             selectDate.setDate(year, month, day);
                             presenter.clickChangeDateButton(selectDate);
-                            dayAdapter.setCalendarList(dayItems);
+                            // TODO: 5/28/21 viewPager position change
                             showCalendarDateTextView();
                         })
                         .setDate(selectDate.getYear(), selectDate.getMonth(), selectDate.getDay())
