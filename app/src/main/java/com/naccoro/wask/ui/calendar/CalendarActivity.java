@@ -67,6 +67,14 @@ public class CalendarActivity extends AppCompatActivity
         changeDatePresenter.setDate(selectDate);
         monthAdapter = new MonthAdapter(this, selectDate);
         viewPager.setAdapter(monthAdapter);
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+            }
+        });
+
         toolbar.setBackButton(() -> presenter.clickBackButton());
     }
 
@@ -101,7 +109,8 @@ public class CalendarActivity extends AppCompatActivity
                         setOnDateChangedListener((year, month, day) -> {
                             selectDate.setDate(year, month, day);
                             presenter.clickChangeDateButton(selectDate);
-                            // TODO: 5/28/21 viewPager position change
+                            monthAdapter.setDate(selectDate);
+                            viewPager.setAdapter(monthAdapter);
                             showCalendarDateTextView();
                         })
                         .setDate(selectDate.getYear(), selectDate.getMonth(), selectDate.getDay())
