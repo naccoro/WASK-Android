@@ -61,4 +61,24 @@ public class Date implements Serializable {
         }
         return true;
     }
+
+    public void setNextMonth() {
+        if (getMonth() != 11) {
+            setMonth(month+1);
+        }
+        else {
+            setMonth(0);
+            setYear(year+1);
+        }
+    }
+
+    public void setPrevMonth() {
+        if (getMonth() != 0) {
+            setMonth(month-1);
+        }
+        else {
+            setMonth(11);
+            setYear(year-1);
+        }
+    }
 }

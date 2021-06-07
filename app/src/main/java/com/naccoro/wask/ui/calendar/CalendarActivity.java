@@ -128,6 +128,12 @@ public class CalendarActivity extends AppCompatActivity
     }
 
     @Override
+    public void showCalendarViewPager(Date selectDate) {
+        monthAdapter.setDate(selectDate);
+        viewPager.setAdapter(monthAdapter);
+    }
+
+    @Override
     public void finishCalendarView() {
         finish();
     }

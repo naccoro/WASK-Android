@@ -4,6 +4,7 @@ public interface CalendarContract {
     interface View {
         void finishCalendarView();
         void showCalendarDateTextView();
+        void showCalendarViewPager(Date selectDate);
         void showModifyModeTextView(boolean isChecked);
     }
 

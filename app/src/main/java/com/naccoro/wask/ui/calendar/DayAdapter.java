@@ -29,15 +29,24 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
     private static final String TAG = "CalendarAdapter";
     private Context context;
     private ArrayList<DayItem> dayItems;
+    private int height;
     private boolean isModifyMode;
 
     private static Date today;
     private ReplacementHistoryRepository replacementHistoryRepository;
 
+    /**
+     * @param context
+     * @param dayItems 달력에 표시할 일자들을 담은 list
+     * @param replacementHistoryRepository 교체 기록
+     * @param selectDate 달력에서 선택된 날짜
+     * @param height 각 아이템이(칸)의 높이.
+     */
     public DayAdapter(Context context, ArrayList<DayItem> dayItems,
-                      ReplacementHistoryRepository replacementHistoryRepository, Date selectDate) {
+                      ReplacementHistoryRepository replacementHistoryRepository, Date selectDate, int height) {
         this.context = context;
         this.dayItems = dayItems;
+        this.height = height;
         this.replacementHistoryRepository = replacementHistoryRepository;
         this.setToday(selectDate);
     }
@@ -70,8 +79,9 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(layout.date_item, parent, false);
-        DayViewHolder viewHolder = new DayViewHolder(view);
+        view.getLayoutParams().height = this.height;
 
+        DayViewHolder viewHolder = new DayViewHolder(view);
         return viewHolder;
     }
 

@@ -14,7 +14,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_main_logo" />
+        app:srcCompat="@drawable/ic_main_logo" >
+
+    </com.naccoro.wask.customview.WaskToolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintlayout_content"
@@ -27,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wasktoolbar_calendar">
 
-    <TextView
+        <TextView
             android:id="@+id/textview_calendar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,22 +71,23 @@
             android:id="@+id/datepresenter_changedate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_calendar_textview_left"
             android:paddingVertical="@dimen/padding_calendar_changebutton"
             android:paddingEnd="@dimen/padding_calendar_changebutton"
-            android:layout_marginStart="@dimen/margin_calendar_textview_left"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_calendar_title"/>
+            app:layout_constraintTop_toBottomOf="@+id/textview_calendar_title" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/margin_week_top"
+            android:layout_marginBottom="@dimen/margin_calendarrecyclerview_top"
+            app:layout_constraintBottom_toTopOf="@id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/datepresenter_changedate">
+            app:layout_constraintTop_toBottomOf="@+id/datepresenter_changedate"
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/textview_sunday"
@@ -158,15 +161,22 @@
 
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_calendar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_calendarrecyclerview_top"
+            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@id/guideline2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

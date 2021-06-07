@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.replacement.model.Injection;
 
 import java.util.ArrayList;
@@ -58,12 +59,22 @@ public class MonthFragment extends Fragment {
         Date selectDate = (Date)args.getSerializable("date");
         calendarModel.updateCalendarList(selectDate, dateList -> initCalendarList(dateList));
         recyclerView = view.findViewById(R.id.recyclerview_calender);
-        dayAdapter = new DayAdapter(context, dayItems, Injection.replacementHistoryRepository(context), selectDate);
+
+        dayAdapter = new DayAdapter(context, dayItems, Injection.replacementHistoryRepository(context), selectDate, getCalendarItemHeight());
         gridLayoutManager = new GridLayoutManager(context, 7);
-        // TODO: 5/18/21 아이템 개수에 맞춰 높이 설정하기
         recyclerView.setAdapter(dayAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
     }
 
     public void initCalendarList(ArrayList<DayItem> dayItems) { this.dayItems = dayItems; }
+
+    /**
+     * 캘린더의 각 item의 높이를 구해서 반환함. (해당 달의 시작 요일에 따라 해당 주의 개수가 달라지기 때문)
+     * @return Height of calendar item
+     */
+    private int getCalendarItemHeight() {
+        // TODO: 6/8/21 네비게이션바를 제외한 레이아웃의 크기를 구하지 못해서 '0.76' 으로 하드코딩한 모습.. (원래의도 : 화면크기*0.8)
+        int itemHeight = (int)((context.getResources().getDisplayMetrics().heightPixels - WaskApplication.toolbarHeight) * 0.72 / (dayItems.size()/7));
+        return itemHeight;
+    }
 }

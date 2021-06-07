@@ -9,8 +9,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class MonthAdapter extends FragmentStateAdapter {
     Date selectDate;
+
     public MonthAdapter(@NonNull FragmentActivity fragmentActivity, Date date) {
         super(fragmentActivity);
+        setDate(date);
+    }
+
+    public void setDate(Date date) {
         this.selectDate = date;
     }
 
@@ -26,6 +31,6 @@ public class MonthAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 100;
+        return 50;
     }
 }

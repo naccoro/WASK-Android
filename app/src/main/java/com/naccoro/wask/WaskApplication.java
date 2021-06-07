@@ -18,6 +18,8 @@ public class WaskApplication extends Application {
 
     public static boolean isChanged;
 
+    public static int toolbarHeight;
+
     private static Application application;
 
     @Override

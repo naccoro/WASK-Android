@@ -134,12 +134,12 @@ public class CalendarModel {
      * @param calendar  오늘의 year, month가 저장된 달력객체
      * @param startDayOfWeek    이번달의 시작 요일
      * @param lastDayOfMonth    이번달의 마지막 날짜
-     * nextMonthDay를 구하기 위함. (필요한 다음 달 날짜의 개수)
+     * 파라미터 : nextMonthDay를 구하기 위함. (필요한 다음 달 날짜의 개수 % 7)
      */
     private void updateNextMonth(ArrayList<DayItem> dayItems, GregorianCalendar calendar, int startDayOfWeek, int lastDayOfMonth) {
         boolean isChangedMask;
 
-        int nextMonthDay = 42 - startDayOfWeek - lastDayOfMonth;
+        int nextMonthDay = (42 - startDayOfWeek - lastDayOfMonth) % 7;
         for (int j = 1; j <= nextMonthDay; j++) {
             GregorianCalendar item = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, j);
             isChangedMask = replacementHistories.contains(DateUtils.getDateFromGregorianCalendar(item));

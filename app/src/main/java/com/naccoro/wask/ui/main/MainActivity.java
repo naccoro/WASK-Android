@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.customview.PeriodPresenter;
 import com.naccoro.wask.notification.ServiceUtil;
 import com.naccoro.wask.ui.calendar.CalendarActivity;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar.setLeftButton(R.drawable.ic_setting, () -> presenter.clickSettingButton());
         toolbar.setRightButton(R.drawable.ic_calendar, () -> presenter.clickCalendarButton());
+        WaskApplication.toolbarHeight = toolbar.getHeight();
     }
 
     @Override
