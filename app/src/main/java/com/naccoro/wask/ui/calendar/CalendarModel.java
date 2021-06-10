@@ -157,15 +157,11 @@ public class CalendarModel {
             selectDate.setNextMonth();
         } else if (prevPosition > position){
             selectDate.setPrevMonth();
-        } else { // 변화없음
-            return;
         }
         prevPosition = position;
 
         callback.onSelectDateLoaded(selectDate);
     }
-
-    public void setPrevPosition(int position) {prevPosition = position;}
 
     interface LoadCalendarDateCallback {
         void onCalendarDateLoaded(ArrayList<DayItem> dateList);

@@ -1,13 +1,11 @@
 package com.naccoro.wask.ui.calendar;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
-import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.customview.DatePresenter;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
@@ -52,38 +50,22 @@ public class CalendarActivity extends AppCompatActivity
         modifyModeSwitch = findViewById(R.id.switch_calendar_modify);
         modifyModeTextView = findViewById(R.id.textview_calendar_modify);
         viewPager = findViewById(R.id.viewpager_calendar);
-
         toolbar = findViewById(R.id.wasktoolbar_calendar);
 
         changeDatePresenter.setOnClickListener(this);
-
-        // 스위치 모드 변경
         modifyModeSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> presenter.changeModifyMode(isChecked, dayAdapter));
+        initCalendar();
+        toolbar.setBackButton(() -> presenter.clickBackButton());
+    }
 
-        // calendar 관련 설정
+    /**
+     * 달력 설정
+     */
+    private void initCalendar() {
         initSelectDate();
         monthAdapter = new MonthAdapter(this);
         presenter.setCalendar(selectDate);
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                int currentItem = viewPager.getCurrentItem();
-                if (currentItem == 0) {
-                    viewPager.setCurrentItem(WaskApplication.CALENDAR_MAX_SIZE-1, false);
-                } else if (currentItem == WaskApplication.CALENDAR_MAX_SIZE) {
-                    viewPager.setCurrentItem(1, false);
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                presenter.scrolledPage(selectDate, position);
-            }
-        });
-
-        toolbar.setBackButton(() -> presenter.clickBackButton());
+        viewPager.setCurrentItem(monthAdapter.START_POSITION, false);
     }
 
     /**
@@ -136,7 +118,6 @@ public class CalendarActivity extends AppCompatActivity
     public void showCalendarViewPager(Date selectDate) {
         monthAdapter.setDate(selectDate);
         viewPager.setAdapter(monthAdapter);
-        viewPager.setCurrentItem((int)(WaskApplication.CALENDAR_MAX_SIZE/2), false); // 시작위치설정(캘린더 가로크기의 반)
     }
 
     @Override

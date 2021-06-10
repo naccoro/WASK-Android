@@ -56,18 +56,23 @@ public class MonthFragment extends Fragment {
     }
 
     private void init(View view) {
+        updateDayItems();
+        recyclerView = view.findViewById(R.id.recyclerview_calender);
+        dayAdapter = new DayAdapter(context, dayItems, Injection.replacementHistoryRepository(context), selectDate, getCalendarItemHeight());
+        gridLayoutManager = new GridLayoutManager(context, 7);
+        recyclerView.setAdapter(dayAdapter);
+        recyclerView.setLayoutManager(gridLayoutManager);
+    }
+
+    /**
+     * selectDate에 맞춰 dayItems 설정
+     */
+    private void updateDayItems() {
         Bundle args = getArguments();
         selectDate = (Date)args.getSerializable("date");
         int position = args.getInt("position");
         calendarModel.updateDateByPosition(selectDate, position, date -> selectDate = date);
         calendarModel.updateCalendarList(selectDate, dateList -> initCalendarList(dateList));
-
-        recyclerView = view.findViewById(R.id.recyclerview_calender);
-
-        dayAdapter = new DayAdapter(context, dayItems, Injection.replacementHistoryRepository(context), selectDate, getCalendarItemHeight());
-        gridLayoutManager = new GridLayoutManager(context, 7);
-        recyclerView.setAdapter(dayAdapter);
-        recyclerView.setLayoutManager(gridLayoutManager);
     }
 
     public void initCalendarList(ArrayList<DayItem> dayItems) { this.dayItems = dayItems; }

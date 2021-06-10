@@ -55,11 +55,6 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         today = new Date(date.getYear(), date.getMonth(), date.getDay());
     }
 
-    public void setCalendarList(ArrayList<DayItem> dayItems) {
-        this.dayItems = dayItems;
-        notifyDataSetChanged();
-    }
-
     public void setModifyMode(boolean isModifyMode) {
         this.isModifyMode = isModifyMode;
         notifyDataSetChanged();
