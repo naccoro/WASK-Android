@@ -10,7 +10,7 @@ public interface CalendarContract {
 
     interface Presenter {
         void clickBackButton();
-        void changeCalendar(Date selectDate);
+        void setCalendar(Date selectDate);
         void scrolledPage(Date selectDate, int position);
         void changeModifyMode(boolean isChecked, DayAdapter dayAdapter);
     }
