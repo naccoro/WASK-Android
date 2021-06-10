@@ -1,24 +1,22 @@
 package com.naccoro.wask.ui.calendar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.naccoro.wask.R;
+import com.naccoro.wask.WaskApplication;
 import com.naccoro.wask.customview.DatePresenter;
 import com.naccoro.wask.customview.WaskToolbar;
 import com.naccoro.wask.customview.datepicker.DatePickerDialogFragment;
 import com.naccoro.wask.replacement.model.Injection;
 
-import java.time.Month;
 import java.util.Calendar;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class CalendarActivity extends AppCompatActivity
@@ -64,14 +62,26 @@ public class CalendarActivity extends AppCompatActivity
 
         // calendar 관련 설정
         initSelectDate();
-        changeDatePresenter.setDate(selectDate);
-        monthAdapter = new MonthAdapter(this, selectDate);
-        viewPager.setAdapter(monthAdapter);
+        monthAdapter = new MonthAdapter(this);
+        presenter.changeCalendar(selectDate);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                int currentItem = viewPager.getCurrentItem();
+                Log.d("onPageScrolled", "current Item : " + currentItem);
+//                Log.d("Calendar", "current Position : " + position);
+                if (currentItem == 0) {
+                    viewPager.setCurrentItem(WaskApplication.CALENDAR_MAX_SIZE-1, false);
+                } else if (currentItem == WaskApplication.CALENDAR_MAX_SIZE) {
+                    viewPager.setCurrentItem(1, false);
+                }
+            }
+
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-
+                Log.d("onPageSelected", "current Position : " + position);
             }
         });
 
@@ -108,10 +118,7 @@ public class CalendarActivity extends AppCompatActivity
                 DatePickerDialogFragment.newInstance().
                         setOnDateChangedListener((year, month, day) -> {
                             selectDate.setDate(year, month, day);
-                            presenter.clickChangeDateButton(selectDate);
-                            monthAdapter.setDate(selectDate);
-                            viewPager.setAdapter(monthAdapter);
-                            showCalendarDateTextView();
+                            presenter.changeCalendar(selectDate);
                         })
                         .setDate(selectDate.getYear(), selectDate.getMonth(), selectDate.getDay())
                         .show(getSupportFragmentManager(), "dialog");
@@ -131,6 +138,7 @@ public class CalendarActivity extends AppCompatActivity
     public void showCalendarViewPager(Date selectDate) {
         monthAdapter.setDate(selectDate);
         viewPager.setAdapter(monthAdapter);
+        viewPager.setCurrentItem((int)(WaskApplication.CALENDAR_MAX_SIZE/2), false); // 시작위치설정(캘린더 가로크기의 반)
     }
 
     @Override

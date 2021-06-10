@@ -21,14 +21,16 @@ public class CalendarPresenter implements CalendarContract.Presenter {
     }
 
     /**
+     * 캘린더(날짜버튼, 달력 viewPager) contents 변경
      * 1. calendar list 갱신 (selectDate 기준으로)
-     * 2. 화면 갱신
+     * 2. 화면 갱신 (날짜버튼, 달력 viewPager)
      *
      * @param selectDate
      */
     @Override
-    public void clickChangeDateButton(Date selectDate) {
-        changeCalendarList(selectDate);
+    public void changeCalendar(Date selectDate) {
+        calendarView.showCalendarViewPager(selectDate);
+        calendarView.showCalendarDateTextView();
     }
 
     /**

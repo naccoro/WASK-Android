@@ -2,6 +2,8 @@ package com.naccoro.wask.ui.calendar;
 
 import android.os.Bundle;
 
+import com.naccoro.wask.WaskApplication;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -10,9 +12,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 public class MonthAdapter extends FragmentStateAdapter {
     Date selectDate;
 
-    public MonthAdapter(@NonNull FragmentActivity fragmentActivity, Date date) {
+    public MonthAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        setDate(date);
     }
 
     public void setDate(Date date) {
@@ -31,6 +32,6 @@ public class MonthAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 50;
+        return WaskApplication.CALENDAR_MAX_SIZE+1;
     }
 }

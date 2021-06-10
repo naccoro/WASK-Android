@@ -20,6 +20,8 @@ public class WaskApplication extends Application {
 
     public static int toolbarHeight;
 
+    public static final int CALENDAR_MAX_SIZE = 100;
+
     private static Application application;
 
     @Override
