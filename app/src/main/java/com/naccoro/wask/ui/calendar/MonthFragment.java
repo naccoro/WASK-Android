@@ -78,8 +78,7 @@ public class MonthFragment extends Fragment {
     public void initCalendarList(ArrayList<DayItem> dayItems) { this.dayItems = dayItems; }
 
     /**
-     * 캘린더의 각 item의 높이를 구해서 반환함. (해당 달의 시작 요일에 따라 해당 주의 개수가 달라지기 때문)
-     * @return Height of calendar item
+     * @return 적당한 캘린더의 item의 높이
      */
     private int getCalendarItemHeight() {
         // TODO: 6/8/21 네비게이션바를 제외한 레이아웃의 크기를 구하지 못해서 '0.76' 으로 하드코딩한 모습.. (원래의도 : 화면크기*0.8)

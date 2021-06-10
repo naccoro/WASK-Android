@@ -114,6 +114,10 @@ public class CalendarActivity extends AppCompatActivity
         changeDatePresenter.setDate(selectDate);
     }
 
+    /**
+     * viewPager에 달력 표시
+     * @param selectDate
+     */
     @Override
     public void showCalendarViewPager(Date selectDate) {
         monthAdapter.setDate(selectDate);

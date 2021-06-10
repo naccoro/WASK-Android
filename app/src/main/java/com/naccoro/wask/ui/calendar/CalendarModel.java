@@ -16,7 +16,7 @@ public class CalendarModel {
     private static final String TAG = "CalendarModel";
 
     private Date selectDate;
-    private int prevPosition;
+    private int prevPosition; // 이전 position 저장
 
     private int cachingMonth;
 
@@ -67,6 +67,9 @@ public class CalendarModel {
         }
     }
 
+    /**
+     * @return (이전+현재+다음) 달력 데이터
+     */
     private ArrayList<DayItem> updateCalendarList() {
         ArrayList<DayItem> dayItems = new ArrayList<>();
         dayItems.clear();
@@ -150,6 +153,14 @@ public class CalendarModel {
         }
     }
 
+    /**
+     * viewPager에서 swipe로 인한 position 변화에 따라 Date 변경 (prevPosition 활용)
+     * - position 커지면 다음 달, 작아지면 이전 달로 이동
+     * - prevPosition이 설정되어있지 않으면, position으로 초기화 됨.
+     * @param currentDate 기존에 선택된 날짜 (스와이프 이전)
+     * @param position 현재 위치 (스와이프 후)
+     * @param callback 변경된 날짜를 반영하기 위한 콜백
+     */
     public void updateDateByPosition(Date currentDate, int position, LoadSelectDateCallback callback) {
         this.selectDate = currentDate;
 
