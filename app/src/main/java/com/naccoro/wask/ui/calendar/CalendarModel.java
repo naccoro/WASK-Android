@@ -16,6 +16,7 @@ public class CalendarModel {
     private static final String TAG = "CalendarModel";
 
     private Date selectDate;
+    private int prevPosition;
 
     private int cachingMonth;
 
@@ -25,6 +26,7 @@ public class CalendarModel {
 
     public CalendarModel(ReplacementHistoryRepository replacementHistoryRepository) {
         this.replacementHistoryRepository = replacementHistoryRepository;
+        this.prevPosition = 0;
     }
 
     /**
@@ -148,7 +150,28 @@ public class CalendarModel {
         }
     }
 
+    public void updateDateByPosition(Date currentDate, int position, LoadSelectDateCallback callback) {
+        this.selectDate = currentDate;
+
+        if (prevPosition < position) {
+            selectDate.setNextMonth();
+        } else if (prevPosition > position){
+            selectDate.setPrevMonth();
+        } else { // 변화없음
+            return;
+        }
+        prevPosition = position;
+
+        callback.onSelectDateLoaded(selectDate);
+    }
+
+    public void setPrevPosition(int position) {prevPosition = position;}
+
     interface LoadCalendarDateCallback {
         void onCalendarDateLoaded(ArrayList<DayItem> dateList);
+    }
+
+    interface LoadSelectDateCallback {
+        void onSelectDateLoaded(Date date);
     }
 }

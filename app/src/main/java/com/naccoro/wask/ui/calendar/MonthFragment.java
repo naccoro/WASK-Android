@@ -27,6 +27,7 @@ public class MonthFragment extends Fragment {
 
     Context context;
 
+    Date selectDate;
     ArrayList<DayItem> dayItems = new ArrayList<>();
 
     /**
@@ -56,8 +57,11 @@ public class MonthFragment extends Fragment {
 
     private void init(View view) {
         Bundle args = getArguments();
-        Date selectDate = (Date)args.getSerializable("date");
+        selectDate = (Date)args.getSerializable("date");
+        int position = args.getInt("position");
+        calendarModel.updateDateByPosition(selectDate, position, date -> selectDate = date);
         calendarModel.updateCalendarList(selectDate, dateList -> initCalendarList(dateList));
+
         recyclerView = view.findViewById(R.id.recyclerview_calender);
 
         dayAdapter = new DayAdapter(context, dayItems, Injection.replacementHistoryRepository(context), selectDate, getCalendarItemHeight());
