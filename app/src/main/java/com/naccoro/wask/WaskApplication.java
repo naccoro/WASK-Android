@@ -6,11 +6,9 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 import com.naccoro.wask.mock.MockDatabase;
-import com.naccoro.wask.preferences.SettingPreferenceManager;
 import com.naccoro.wask.preferences.SharedPreferenceManager;
+import com.naccoro.wask.utils.DateUtils;
 import com.naccoro.wask.utils.NotificationUtil;
-
-import static com.naccoro.wask.preferences.SettingPreferenceManager.SettingPushAlertType.getPushAlertTypeWithIndex;
 
 public class WaskApplication extends Application {
 
@@ -21,6 +19,8 @@ public class WaskApplication extends Application {
     public static int toolbarHeight;
 
     private static Application application;
+
+    public static final int today = DateUtils.getToday();
 
     @Override
     public void onCreate() {

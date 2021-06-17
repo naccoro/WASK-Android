@@ -113,7 +113,7 @@ public class DateUtils {
      * @param date 연도 정보를 조회할 YYYYMMDD 정수
      * @return int 타입의 연도
      */
-    private static int getYear(int date) {
+    public static int getYear(int date) {
         return getParsedDate(DateType.YEAR, date);
     }
 
@@ -133,7 +133,7 @@ public class DateUtils {
      * @param date "일" 정보를 조회할 YYYYMMDD 정수
      * @return int 타입의 일
      */
-    private static int getDay(int date) {
+    public static int getDay(int date) {
         return getParsedDate(DateType.DAY, date);
     }
 

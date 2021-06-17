@@ -72,6 +72,7 @@ public class CalendarActivity extends AppCompatActivity
      * selectDate를 앱 실행 날짜로 초기화
      */
     private void initSelectDate() {
+        // TODO: 6/17/21 DateUtils를 활용하도록 바꾸자.
         GregorianCalendar cal = new GregorianCalendar();
         selectDate = new Date(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
     }

@@ -32,7 +32,6 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
     private int height;
     private boolean isModifyMode;
 
-    private static Date today;
     private ReplacementHistoryRepository replacementHistoryRepository;
 
     /**
@@ -48,11 +47,6 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         this.dayItems = dayItems;
         this.height = height;
         this.replacementHistoryRepository = replacementHistoryRepository;
-        this.setToday(selectDate);
-    }
-
-    public void setToday(Date date) {
-        today = new Date(date.getYear(), date.getMonth(), date.getDay());
     }
 
     public void setModifyMode(boolean isModifyMode) {
@@ -112,7 +106,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         View itemView = dayViewHolder.getItemView();
 
         // 날짜(Day) 부분
-        if (today.isSameDate(item.getDate())) {
+        if (WaskApplication.today == DateUtils.getDateFromGregorianCalendar(item.getDate())) {
             // 오늘이면 동그라미 표시
             dayViewHolder.dateTextView.setTextColor(itemView.getContext().getColor(color.white));
             dayViewHolder.dateBackgroundImageView.setVisibility(View.VISIBLE);
@@ -152,11 +146,11 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         GregorianCalendar clickItem = item.getDate();
 
         // 미래는 마스크 교체여부 변경 제한
-        if (clickItem.get(Calendar.YEAR) > today.getYear()) {
+        if (clickItem.get(Calendar.YEAR) > DateUtils.getYear(WaskApplication.today)) {
             return;
-        } else if (clickItem.get(Calendar.MONTH) > today.getMonth()) {
+        } else if (clickItem.get(Calendar.MONTH) + 1 > DateUtils.getMonth(WaskApplication.today)) {
             return;
-        } else if ((clickItem.get(Calendar.MONTH) == today.getMonth()) && (clickItem.get(Calendar.DATE) > today.getDay())) {
+        } else if ((clickItem.get(Calendar.MONTH) + 1 == DateUtils.getMonth(WaskApplication.today)) && (clickItem.get(Calendar.DATE) > DateUtils.getDay(WaskApplication.today))) {
             return;
         }
 
