@@ -98,9 +98,11 @@ public class CalendarModel {
      *
      * @param dayItems  데이터의 리스트
      * @param calendar  오늘의 year, month가 저장된 달력객체
-     * @param startDayOfWeek    이번달의 시작 요일 -> 필요한 지난 달의 개수를 알 수 있다.
+     * @param startDayOfWeek    이번달의 시작 요일 -> 필요한 지난 달의 개수를 알 수 있다. (7개가 필요하면 생략)
      */
     private void updateLastMonth(ArrayList<DayItem> dayItems, GregorianCalendar calendar, int startDayOfWeek) {
+        if (startDayOfWeek == 7) return;
+
         boolean isChangedMask;
         Calendar prevCalendar = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) - 1, 1);
         int lastDayOfPreMonth = prevCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
