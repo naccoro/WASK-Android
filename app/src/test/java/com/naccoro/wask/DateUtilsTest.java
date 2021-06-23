@@ -2,6 +2,7 @@ package com.naccoro.wask;
 
 import com.naccoro.wask.utils.DateUtils;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -26,6 +27,7 @@ public class DateUtilsTest {
     }
 
     @Test
+    @Ignore
     public void getTodayString_isCorrect() {
         assertThat(DateUtils.getToday(), is(20200813));
     }
@@ -38,6 +40,7 @@ public class DateUtilsTest {
     }
 
     @Test
+    @Ignore
     public void calculateDateGapWithToday_isCorrect() {
         assertThat(DateUtils.calculateDateGapWithToday(20200813), is(1));
         assertThat(DateUtils.calculateDateGapWithToday(20200809), is(5));
