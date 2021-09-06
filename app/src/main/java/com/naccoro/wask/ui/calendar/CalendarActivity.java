@@ -65,7 +65,6 @@ public class CalendarActivity extends AppCompatActivity
         initSelectDate();
         monthAdapter = new MonthAdapter(this);
         presenter.setCalendar(selectDate);
-        viewPager.setCurrentItem(monthAdapter.START_POSITION, false);
     }
 
     /**
@@ -123,6 +122,7 @@ public class CalendarActivity extends AppCompatActivity
     public void showCalendarViewPager(Date selectDate) {
         monthAdapter.setDate(selectDate);
         viewPager.setAdapter(monthAdapter);
+        viewPager.setCurrentItem(monthAdapter.START_POSITION, false);
     }
 
     @Override
