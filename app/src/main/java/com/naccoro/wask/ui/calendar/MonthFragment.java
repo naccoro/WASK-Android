@@ -43,7 +43,7 @@ public class MonthFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        calendarModel = new CalendarModel(Injection.replacementHistoryRepository(context));
+        calendarModel = CalendarModel.getInstance(Injection.replacementHistoryRepository(context));
     }
 
     @Nullable

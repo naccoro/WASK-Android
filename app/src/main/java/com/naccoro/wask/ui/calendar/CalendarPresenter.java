@@ -9,7 +9,7 @@ public class CalendarPresenter implements CalendarContract.Presenter {
 
     CalendarPresenter(CalendarContract.View calendarView, ReplacementHistoryRepository replacementHistoryRepository) {
         this.calendarView = calendarView;
-        this.calendarModel = new CalendarModel(replacementHistoryRepository);
+        this.calendarModel = CalendarModel.getInstance(replacementHistoryRepository);
     }
 
     @Override

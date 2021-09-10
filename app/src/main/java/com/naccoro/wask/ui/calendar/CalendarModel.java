@@ -12,6 +12,7 @@ import com.naccoro.wask.utils.DateUtils;
 
 
 public class CalendarModel {
+    static private CalendarModel instance;
 
     private static final String TAG = "CalendarModel";
 
@@ -24,9 +25,18 @@ public class CalendarModel {
 
     private List<Integer> replacementHistories;
 
-    public CalendarModel(ReplacementHistoryRepository replacementHistoryRepository) {
+    private CalendarModel() {}
+    private CalendarModel(ReplacementHistoryRepository replacementHistoryRepository) {
         this.replacementHistoryRepository = replacementHistoryRepository;
         this.prevPosition = 0;
+    }
+    
+    public static CalendarModel getInstance(ReplacementHistoryRepository replacementHistoryRepository) {
+        // TODO: 2021/09/10 안전한 방식으로 변경 (지금은 임시) 
+        if (instance == null) {
+            instance = new CalendarModel(replacementHistoryRepository);
+        }
+        return instance;
     }
 
     /**
